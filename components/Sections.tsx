@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { PRESS_LOGOS } from "@/data/assets";
 import { type Feature, type Step } from "@/data/content";
 import { useT } from "@/components/LanguageProvider";
 
@@ -87,17 +86,20 @@ export function Stats() {
   );
 }
 
-export function PressLogos() {
+/**
+ * Stands where a press-logo strip used to sit. Memovo has no coverage yet, and a row of
+ * publication logos would claim otherwise, so this invites coverage instead of faking it.
+ */
+export function PressStrip() {
   const t = useT();
   return (
-    <section className="bg-white py-14">
+    <section className="bg-cream py-14">
       <Container className="text-center">
-        <p className="mb-8 font-accent text-lg">{t("press.asSeenIn")}</p>
-        <div className="flex flex-wrap items-center justify-center gap-10 opacity-70">
-          {PRESS_LOGOS.map((l) => (
-            <Image key={l.src} src={l.src} alt={l.alt} width={120} height={24} className="h-6 w-auto object-contain" />
-          ))}
-        </div>
+        <p className="mb-3 font-accent text-lg">{t("page.press.kitTitle")}</p>
+        <p className="mx-auto mb-6 max-w-2xl text-sm text-navy/70">{t("page.press.kitBody")}</p>
+        <Link href="/contact" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold">
+          {t("cta.contactUs")}
+        </Link>
       </Container>
     </section>
   );
@@ -105,7 +107,7 @@ export function PressLogos() {
 
 export function QuoteBand({ children, tone = "pink" }: { children: React.ReactNode; tone?: "pink" | "coral" }) {
   const bg = tone === "coral" ? "bg-coral" : "bg-pinklight";
-  const fg = tone === "coral" ? "text-white" : "text-navy";
+  const fg = "text-navy";
   return (
     <section className={`${bg} py-14`}>
       <div className="mx-auto max-w-3xl px-6 text-center">
@@ -144,8 +146,9 @@ export function FaqAccordion({ items }: { items: string[] }) {
   return (
     <div className="grid gap-x-6 gap-y-4 md:grid-cols-2">
       {items.map((key) => (
-        <details key={key} className="rounded-full border-2 border-navy px-6 py-3 open:rounded-2xl">
-          <summary className="font-heading font-medium">{t(`faq.${key}.q` as never)}</summary>
+        <details key={key} className="rounded-full border-2 border-navy px-6 py-1 open:rounded-2xl">
+          {/* The summary carries the height, so the whole row is one 44px target. */}
+          <summary className="flex min-h-11 items-center font-heading font-medium">{t(`faq.${key}.q` as never)}</summary>
           <p className="mt-3 text-sm text-navy/70">{t(`faq.${key}.a` as never)}</p>
         </details>
       ))}
@@ -180,7 +183,7 @@ export function CtaBand({
         </svg>
       )}
       <div className="relative mx-auto max-w-3xl px-6">
-        <p className="mb-6 font-accent text-xl leading-relaxed text-white md:text-2xl">{text}</p>
+        <p className="mb-6 font-accent text-xl leading-relaxed text-navy md:text-2xl">{text}</p>
         <Link href={href} className="inline-block rounded-full bg-white px-7 py-3 font-semibold text-navy">
           {label}
         </Link>

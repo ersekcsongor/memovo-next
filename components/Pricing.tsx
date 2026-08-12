@@ -24,7 +24,7 @@ export function PricingSection({ plans }: { plans: Plan[] }) {
             type="button"
             onClick={() => setCurrency(c)}
             aria-pressed={c === currency}
-            className={`rounded-full px-3 py-1 transition-colors ${
+            className={`inline-flex min-h-11 items-center rounded-full px-4 transition-colors ${
               c === currency ? "bg-navy text-white" : "text-navy/60 hover:bg-navy/10"
             }`}
           >
@@ -33,18 +33,19 @@ export function PricingSection({ plans }: { plans: Plan[] }) {
         ))}
       </div>
 
-      <div className="grid items-start gap-8 md:grid-cols-3">
+      {/* The cards stretch to a shared height so the three CTAs line up. */}
+      <div className="grid items-stretch gap-8 md:grid-cols-3">
         {plans.map((p) => (
           <div
             key={p.name}
             className={
               p.featured
-                ? "relative rounded-2xl border-2 border-coral bg-pinklight/30 p-8 shadow-xl md:-translate-y-3"
-                : "rounded-2xl border border-gray-300 p-8"
+                ? "relative flex flex-col rounded-2xl border-2 border-coral bg-pinklight/30 p-8 shadow-xl md:-translate-y-3"
+                : "flex flex-col rounded-2xl border border-gray-300 p-8"
             }
           >
             {p.featured && (
-              <span className="absolute -top-3 right-6 rounded-full bg-coral px-3 py-1 text-xs font-bold text-white">
+              <span className="absolute -top-3 right-6 rounded-full bg-coral px-3 py-1 text-xs font-bold text-navy">
                 {t("pricing.mostPopular")}
               </span>
             )}
@@ -58,8 +59,8 @@ export function PricingSection({ plans }: { plans: Plan[] }) {
             </ul>
             <Link
               href="/pricing"
-              className={`block rounded-full py-3 text-center font-semibold ${
-                p.featured ? "bg-coral text-white" : "border-2 border-navy"
+              className={`mt-auto block rounded-full py-3 text-center font-semibold ${
+                p.featured ? "bg-coral text-navy" : "border-2 border-navy"
               }`}
             >
               {t("pricing.createGallery")}

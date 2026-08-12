@@ -248,6 +248,13 @@ const en = {
   // Reviews page
   "page.reviews.heading": "Reviews",
   "page.reviews.sub": "What our hosts say",
+  "reviews.emptyTitle": "No reviews yet — you could be the first",
+  "reviews.emptyBody": "Memovo is new. Rather than borrow someone else's words, this space stays empty until real hosts have used it and told us what they think.",
+  "reviews.emptyCta": "Be an early host",
+  "page.press.emptyTitle": "No coverage yet",
+  "page.press.emptyBody": "Memovo has not been written about anywhere yet. When that changes, the pieces will be listed here with links you can follow.",
+  "page.press.kitTitle": "For journalists",
+  "page.press.kitBody": "Working on a story about QR code photo sharing at events? Get in touch and we will send brand assets, screenshots and answer anything you need.",
   "page.reviews.cta": "Join 200,000+ hosts who kept every moment of their celebration.",
 
   // FAQ page
@@ -507,6 +514,13 @@ const hu: Record<BaseKey, string> = {
 
   "page.reviews.heading": "Vélemények",
   "page.reviews.sub": "Ezt mondják a szervezők",
+  "reviews.emptyTitle": "Még nincs vélemény – te lehetsz az első",
+  "reviews.emptyBody": "A Memovo új. Ahelyett, hogy más szavait kölcsönöznénk, ez a hely üresen marad addig, amíg valódi szervezők ki nem próbálják és el nem mondják, mit gondolnak.",
+  "reviews.emptyCta": "Legyél az első",
+  "page.press.emptyTitle": "Még nincs sajtómegjelenés",
+  "page.press.emptyBody": "A Memovóról még sehol nem írtak. Amint ez megváltozik, itt fognak szerepelni a cikkek, kattintható linkekkel.",
+  "page.press.kitTitle": "Újságíróknak",
+  "page.press.kitBody": "Cikket írsz az eseményeken használt QR-kódos fotómegosztásról? Írj nekünk, és küldünk márkaanyagokat, képernyőképeket, és válaszolunk bármire.",
   "page.reviews.cta": "Csatlakozz a 200 000+ szervezőhöz, akik megőrizték az ünnepségük minden pillanatát.",
 
   "page.faqs.heading": "Gyakori kérdések",
@@ -759,6 +773,13 @@ const ro: Record<BaseKey, string> = {
 
   "page.reviews.heading": "Recenzii",
   "page.reviews.sub": "Ce spun gazdele",
+  "reviews.emptyTitle": "Încă nicio recenzie – poți fi primul",
+  "reviews.emptyBody": "Memovo este nou. În loc să împrumutăm cuvintele altcuiva, spațiul acesta rămâne gol până când gazde reale îl folosesc și ne spun ce cred.",
+  "reviews.emptyCta": "Fii printre primii",
+  "page.press.emptyTitle": "Încă nicio apariție în presă",
+  "page.press.emptyBody": "Despre Memovo nu a scris nimeni încă. Când se schimbă asta, articolele vor apărea aici, cu linkuri.",
+  "page.press.kitTitle": "Pentru jurnaliști",
+  "page.press.kitBody": "Scrii un articol despre partajarea foto cu cod QR la evenimente? Scrie-ne și îți trimitem materiale de brand, capturi de ecran și răspundem la orice.",
   "page.reviews.cta": "Alătură-te celor peste 200.000 de gazde care au păstrat fiecare moment al sărbătorii lor.",
 
   "page.faqs.heading": "Întrebări frecvente",

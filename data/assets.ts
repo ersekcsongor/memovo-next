@@ -51,16 +51,6 @@ export const GALLERY_PHOTOS = [
   { src: `${U}/IMG_5005-scaled-rif3pgegsoesvzoommhukvu9by08dz3bpiz3ylc4bo.jpg`, alt: "Video message card at a reception" },
 ] as const;
 
-export const PRESS_LOGOS = [
-  { src: `${U}/Marie-Claire-logo-scaled-e1776127405838.png`, alt: "Marie Claire" },
-  { src: `${U}/bridal-journey-logo.png`, alt: "The Bridal Journey" },
-  { src: `${U}/the-knot-logo.png`, alt: "The Knot" },
-  { src: `${U}/Cosmopolitan-logo.png`, alt: "Cosmopolitan" },
-  { src: `${U}/FINANCIAL-REVIEW-LOGO.png`, alt: "Australian Financial Review" },
-  { src: `${U}/DAILY-MAIL-LOGO-1.png`, alt: "Daily Mail" },
-  { src: `${U}/polka-dot-weddings-bw.png`, alt: "Polka Dot Weddings" },
-] as const;
-
 export const HOME_TILES = [
   { href: "/weddings", label: "Weddings", src: `${U}/IMG_5257-1-scaled-e1763438563896.jpg` },
   { href: "/events/party", label: "Parties", src: `${U}/PartyPackageImage.jpg` },
@@ -80,15 +70,6 @@ export const FLAGS = [
 ] as const;
 
 /** One celebration photo per customer review, keyed by the reviewer's first name. */
-export const REVIEW_PHOTOS = {
-  melanie: { src: `${U}/IMG_5257-1-scaled-e1763438563896.jpg`, alt: "Couple on their wedding day" },
-  kithy: { src: `${U}/IMG_9118-scaled.jpg`, alt: "Couple celebrating their engagement" },
-  nicolette: { src: `${U}/MEMOVO-QR-CODE-WEDDING-PICTURES-320-scaled-rif3pqqovusyfp9ny8yqub8bv6l9qn8dey5g8mwsf8.jpg`, alt: "Guest scanning a wedding QR code" },
-  kimberly: { src: `${U}/memovo-Nov-2024-216-scaled-rlqux0ou1ke0g3ultpvylb0bn5ea6hhbvudnr1grtw.jpg`, alt: "Couple celebrating their wedding day" },
-  christopher: { src: `${U}/IMG_5705-1-scaled-rlqutiqglrll8cxk97fyb6sk1in3j1laqiylfynizo.jpg`, alt: "Guests enjoying an event" },
-  kate: { src: `${U}/MEMOVO-QR-CODE-WEDDING-PICTURES-71-scaled-e1769553001908.jpg`, alt: "Wedding celebration with a QR code sign" },
-} as const;
-
 export const WHATS_NEW_IMG = `${U}/memovo-youtube-overlay-768.webp`;
 export const PODCAST_IMG = `${U}/M0DE_b71xqtpp7HYsNWpa_Q1pEoUlA-rog5f21uy258eh19kbxtwf9g8tndwp6vzl52bgicx0.png`;
 export const COUPLE_IMG = `${U}/memovo-Nov-2024-216-scaled-rlqux0ou1ke0g3ultpvylb0bn5ea6hhbvudnr1grtw.jpg`;

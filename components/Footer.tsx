@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  IconBrandFacebook,
+  IconBrandInstagram,
+  IconBrandLinkedin,
+  IconBrandPinterest,
+  IconBrandTiktok,
+  IconBrandYoutube,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { EVENTS } from "@/data/events";
@@ -7,12 +15,12 @@ import { useT } from "@/components/LanguageProvider";
 import Wordmark from "@/components/Wordmark";
 
 const SOCIAL = [
-  { name: "Instagram", href: "https://www.instagram.com/memovo/" },
-  { name: "Facebook", href: "https://www.facebook.com/memovo" },
-  { name: "Pinterest", href: "https://www.pinterest.com.au/memovo/" },
-  { name: "LinkedIn", href: "https://www.linkedin.com/company/memovo/" },
-  { name: "TikTok", href: "https://www.tiktok.com/@memovo" },
-  { name: "YouTube", href: "https://www.youtube.com/@memovo" },
+  { name: "Instagram", href: "https://www.instagram.com/memovo/", Icon: IconBrandInstagram },
+  { name: "Facebook", href: "https://www.facebook.com/memovo", Icon: IconBrandFacebook },
+  { name: "Pinterest", href: "https://www.pinterest.com.au/memovo/", Icon: IconBrandPinterest },
+  { name: "LinkedIn", href: "https://www.linkedin.com/company/memovo/", Icon: IconBrandLinkedin },
+  { name: "TikTok", href: "https://www.tiktok.com/@memovo", Icon: IconBrandTiktok },
+  { name: "YouTube", href: "https://www.youtube.com/@memovo", Icon: IconBrandYoutube },
 ];
 
 export default function Footer() {
@@ -51,7 +59,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1140px] px-6">
         <div className="mb-12 grid gap-10 md:grid-cols-5">
           <div className="md:col-span-2">
-            <Link href="/" className="mb-6 inline-block">
+            <Link href="/" className="mb-6 inline-flex min-h-11 items-center">
               <Wordmark className="text-3xl" />
             </Link>
             <p className="mb-3 text-sm font-semibold">{t("footer.social")}</p>
@@ -64,9 +72,9 @@ export default function Footer() {
                   rel="noreferrer"
                   title={s.name}
                   aria-label={s.name}
-                  className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-xs font-semibold transition-colors hover:bg-coral hover:text-white"
+                  className="flex h-11 w-11 items-center justify-center rounded-md bg-white transition-colors hover:bg-coral"
                 >
-                  {s.name.slice(0, 2)}
+                  <s.Icon className="h-5 w-5" stroke={1.75} aria-hidden />
                 </a>
               ))}
             </div>
@@ -74,10 +82,10 @@ export default function Footer() {
 
           <div>
             <p className="mb-4 font-heading text-sm font-semibold">{t("footer.quickLinks")}</p>
-            <ul className="space-y-2 text-sm">
+            <ul className="text-sm">
               {quick.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href}>{l.label}</Link>
+                  <Link href={l.href} className="block py-3">{l.label}</Link>
                 </li>
               ))}
             </ul>
@@ -85,13 +93,13 @@ export default function Footer() {
 
           <div>
             <p className="mb-4 font-heading text-sm font-semibold">{t("footer.events")}</p>
-            <ul className="space-y-2 text-sm">
+            <ul className="text-sm">
               <li>
-                <Link href="/weddings">{t("event.weddings")}</Link>
+                <Link href="/weddings" className="block py-3">{t("event.weddings")}</Link>
               </li>
               {EVENTS.map((e) => (
                 <li key={e.slug}>
-                  <Link href={`/events/${e.slug}`}>{t(`event.${e.slug}` as never)}</Link>
+                  <Link href={`/events/${e.slug}`} className="block py-3">{t(`event.${e.slug}` as never)}</Link>
                 </li>
               ))}
             </ul>
@@ -99,20 +107,20 @@ export default function Footer() {
 
           <div>
             <p className="mb-4 font-heading text-sm font-semibold">{t("footer.workWithUs")}</p>
-            <ul className="space-y-2 text-sm">
+            <ul className="text-sm">
               {work.map((w) => (
                 <li key={w.label}>
-                  <Link href={w.href} className="hover:text-coral">
+                  <Link href={w.href} className="block py-3 hover:text-coral-ink">
                     {w.label}
                   </Link>
                 </li>
               ))}
             </ul>
             <p className="mt-6 mb-4 font-heading text-sm font-semibold">{t("footer.freeTools")}</p>
-            <ul className="space-y-2 text-sm">
+            <ul className="text-sm">
               {tools.map((tool) => (
                 <li key={tool.label}>
-                  <Link href={tool.href} className="hover:text-coral">
+                  <Link href={tool.href} className="block py-3 hover:text-coral-ink">
                     {tool.label}
                   </Link>
                 </li>
@@ -124,10 +132,10 @@ export default function Footer() {
         <div className="flex flex-col items-center justify-between gap-3 border-t border-navy/10 pt-6 text-sm sm:flex-row">
           <span>© 2026 Memovo™</span>
           <span className="flex gap-4">
-            <Link href="/faqs" className="hover:text-coral">
+            <Link href="/faqs" className="inline-flex min-h-11 items-center hover:text-coral-ink">
               {t("footer.terms")}
             </Link>
-            <Link href="/faqs" className="hover:text-coral">
+            <Link href="/faqs" className="inline-flex min-h-11 items-center hover:text-coral-ink">
               {t("footer.privacy")}
             </Link>
           </span>

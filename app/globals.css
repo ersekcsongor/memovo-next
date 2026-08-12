@@ -5,6 +5,10 @@
   --color-navy: #072a47;
   --color-tan: #e4d2be;
   --color-coral: #e58783;
+  /* Coral carries the brand on surfaces; text and icons take the darker ink so
+     they clear 4.5:1 on every background the site uses — white 6.2:1, cream 5.7,
+     blush 5.4, pinklight 4.7. */
+  --color-coral-ink: #a63f38;
   --color-gray-100: #f3f5f8;
   --color-gray-200: #c8d5dc;
   --color-gray-300: #cdd4da;
@@ -46,7 +50,7 @@
   --wpconsent-accept-bg: #eb8782;
   --wpconsent-cancel-bg: #ffffff;
   --wpconsent-preferences-bg: #ffffff;
-  --wpconsent-accept-color: #ffffff;
+  --wpconsent-accept-color: #072a46;
   --wpconsent-cancel-color: #072a46;
   --wpconsent-preferences-color: #072a46;
   --wpconsent-font-size: 12px;
@@ -54,6 +58,39 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* The consent bar is fixed to the bottom edge; ConsentBar publishes its height
+   so the page keeps that much room free underneath. */
+body.consent-open {
+  padding-bottom: var(--consent-height, 0px);
+}
+
+/* One focus treatment for every control, visible on white, cream and coral. */
+:focus-visible {
+  outline: 2px solid var(--color-navy);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+button:not(:disabled),
+summary,
+[role="button"] {
+  cursor: pointer;
+}
+
+/* Links inside running text carry an underline, so colour is not the only signal. */
+main p a:not([class*="rounded"]),
+section p a:not([class*="rounded"]) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 16px keeps iOS from zooming the page when a field takes focus. */
+input,
+textarea,
+select {
+  font-size: 16px;
 }
 
 /* Elementor global text style: Montserrat 400, 14px / 26px */
