@@ -255,7 +255,7 @@ const en = {
   "page.press.emptyBody": "Memovo has not been written about anywhere yet. When that changes, the pieces will be listed here with links you can follow.",
   "page.press.kitTitle": "For journalists",
   "page.press.kitBody": "Working on a story about QR code photo sharing at events? Get in touch and we will send brand assets, screenshots and answer anything you need.",
-  "page.reviews.cta": "Join 200,000+ hosts who kept every moment of their celebration.",
+  "page.reviews.cta": "Keep every moment of your celebration, from every angle.",
 
   // FAQ page
   "page.faqs.heading": "Frequently Asked Questions",
@@ -521,7 +521,7 @@ const hu: Record<BaseKey, string> = {
   "page.press.emptyBody": "A Memovóról még sehol nem írtak. Amint ez megváltozik, itt fognak szerepelni a cikkek, kattintható linkekkel.",
   "page.press.kitTitle": "Újságíróknak",
   "page.press.kitBody": "Cikket írsz az eseményeken használt QR-kódos fotómegosztásról? Írj nekünk, és küldünk márkaanyagokat, képernyőképeket, és válaszolunk bármire.",
-  "page.reviews.cta": "Csatlakozz a 200 000+ szervezőhöz, akik megőrizték az ünnepségük minden pillanatát.",
+  "page.reviews.cta": "Őrizd meg az ünnepséged minden pillanatát, minden szögből.",
 
   "page.faqs.heading": "Gyakori kérdések",
   "page.faqs.sub": "Minden, amire épp rá akartál keresni",
@@ -780,7 +780,7 @@ const ro: Record<BaseKey, string> = {
   "page.press.emptyBody": "Despre Memovo nu a scris nimeni încă. Când se schimbă asta, articolele vor apărea aici, cu linkuri.",
   "page.press.kitTitle": "Pentru jurnaliști",
   "page.press.kitBody": "Scrii un articol despre partajarea foto cu cod QR la evenimente? Scrie-ne și îți trimitem materiale de brand, capturi de ecran și răspundem la orice.",
-  "page.reviews.cta": "Alătură-te celor peste 200.000 de gazde care au păstrat fiecare moment al sărbătorii lor.",
+  "page.reviews.cta": "Păstrează fiecare moment al sărbătorii tale, din fiecare unghi.",
 
   "page.faqs.heading": "Întrebări frecvente",
   "page.faqs.sub": "Tot ce urma să cauți pe Google",

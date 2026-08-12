@@ -2,7 +2,7 @@
 
 export const homeEn = {
   "home.h1": "Private QR Code Photo Sharing & Digital Guestbook",
-  "home.lead": "The Original QR Code Photo Sharing Platform For Events.",
+  "home.lead": "QR code photo sharing and a digital guestbook for events.",
   "home.leadOriginal": "Original",
   "home.tagline": "Because it only happens once!",
   "home.noAppEyebrow": "2 mins to set up, it's so easy!",
@@ -48,11 +48,11 @@ export const homeEn = {
   "home.more5":
     "If you're searching for the best photo-sharing websites, Memovo™ balances convenience, security, and accessibility across all device types and levels of technical know-how. The ideal solution should allow guests to easily view, download, and share pictures in full resolution while keeping their privacy protected.",
   "home.more6":
-    "With digital galleries, smart-sharing solutions and our unique and simple private social network, capturing and preserving event memories has never been easier. Whether you're an event planner, a photographer, or a host looking for a new way to collect photos come and see why Memovo™ is the #1 global platform for event photo collection trusted by in excess of 100K events.",
+    "With digital galleries, smart-sharing solutions and our unique and simple private social network, capturing and preserving event memories has never been easier. Whether you're an event planner, a photographer, or a host looking for a new way to collect photos come and see how Memovo collects event photos.",
 
   // Weddings page
   "wed.pill": "Because It Only Happens Once!",
-  "wed.badge": "Trusted by 200k+ couples in 100+ countries",
+  "wed.badge": "Built for couples who want every angle of the day",
   "wed.h1a": "Capture Every Wedding Moment",
   "wed.h1b": "Through Your Guests Eyes",
   "wed.lead": "Your guest photos & videos all",
@@ -142,7 +142,7 @@ export type HomeKey = keyof typeof homeEn;
 
 export const homeHu: Record<HomeKey, string> = {
   "home.h1": "Privát QR-kódos fotómegosztás és digitális vendégkönyv",
-  "home.lead": "Az eredeti QR-kódos fotómegosztó eseményekre.",
+  "home.lead": "QR-kódos fotómegosztás és digitális vendégkönyv eseményekre.",
   "home.leadOriginal": "eredeti",
   "home.tagline": "Mert csak egyszer történik meg!",
   "home.noAppEyebrow": "Két perc a beállítás, ennyire egyszerű",
@@ -188,10 +188,10 @@ export const homeHu: Record<HomeKey, string> = {
   "home.more5":
     "Ha a legjobb fotómegosztót keresed, a Memovo egyensúlyt tart a kényelem, a biztonság és a hozzáférhetőség között – bármilyen eszközön és bármilyen technikai felkészültséggel. A jó megoldás engedi, hogy a vendégeid könnyen megnézzék, letöltsék és megosszák a képeket teljes felbontásban, miközben az adataik védve maradnak.",
   "home.more6":
-    "Digitális galériákkal, okos megosztással és a saját, egyszerű privát közösségi hálónkkal az emlékek megörökítése soha nem volt még ilyen könnyű. Akár eseményszervező vagy, akár fotós, akár csak új módot keresel a fotók összegyűjtésére, nézd meg, miért a Memovo a világ első számú platformja eseményfotók gyűjtésére – több mint 100 000 esemény bízott már benne.",
+    "Digitális galériákkal, okos megosztással és a saját, egyszerű privát közösségi hálónkkal az emlékek megörökítése soha nem volt még ilyen könnyű. Akár eseményszervező vagy, akár fotós, akár csak új módot keresel a fotók összegyűjtésére, nézd meg, hogyan gyűjti a Memovo az eseményfotókat.",
 
   "wed.pill": "Mert csak egyszer történik meg!",
-  "wed.badge": "200 000+ pár bízik bennünk, 100+ országban",
+  "wed.badge": "Azoknak a pároknak, akik a nap minden szögét meg akarják őrizni",
   "wed.h1a": "Örökítsd meg az esküvőd minden pillanatát",
   "wed.h1b": "a vendégeid szemével",
   "wed.lead": "A vendégeid fotói és videói mind",
@@ -279,7 +279,7 @@ export const homeHu: Record<HomeKey, string> = {
 
 export const homeRo: Record<HomeKey, string> = {
   "home.h1": "Partajare privată de fotografii cu cod QR și carte de oaspeți digitală",
-  "home.lead": "Platforma originală de partajare foto cu cod QR pentru evenimente.",
+  "home.lead": "Partajare foto cu cod QR și carte de oaspeți digitală pentru evenimente.",
   "home.leadOriginal": "originală",
   "home.tagline": "Pentru că se întâmplă o singură dată!",
   "home.noAppEyebrow": "Două minute de configurare, atât de simplu e",
@@ -325,10 +325,10 @@ export const homeRo: Record<HomeKey, string> = {
   "home.more5":
     "Dacă vrei cea mai bună soluție de partajare foto, Memovo ține echilibrul între comoditate, securitate și accesibilitate – pe orice dispozitiv și la orice nivel de cunoștințe tehnice. O soluție bună le permite invitaților să vadă, să descarce și să partajeze ușor imagini la rezoluție completă, păstrându-le totodată datele protejate.",
   "home.more6":
-    "Cu galerii digitale, partajare inteligentă și rețeaua noastră socială privată, simplă, păstrarea amintirilor nu a fost niciodată mai ușoară. Fie că ești organizator de evenimente, fotograf sau doar cauți un mod nou de a strânge fotografii, vino să vezi de ce Memovo este platforma numărul unu din lume pentru colectarea fotografiilor de eveniment – peste 100.000 de evenimente au avut deja încredere în ea.",
+    "Cu galerii digitale, partajare inteligentă și rețeaua noastră socială privată, simplă, păstrarea amintirilor nu a fost niciodată mai ușoară. Fie că ești organizator de evenimente, fotograf sau doar cauți un mod nou de a strânge fotografii, vino să vezi cum colectează Memovo fotografiile de eveniment.",
 
   "wed.pill": "Pentru că se întâmplă o singură dată!",
-  "wed.badge": "Peste 200.000 de cupluri din 100+ țări au încredere în noi",
+  "wed.badge": "Pentru cuplurile care vor fiecare unghi al zilei",
   "wed.h1a": "Surprinde fiecare moment al nunții",
   "wed.h1b": "prin ochii invitaților tăi",
   "wed.lead": "Fotografiile și videoclipurile invitaților se adună",

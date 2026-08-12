@@ -66,26 +66,6 @@ export function FeatureGrid({ features }: { features: Feature[] }) {
   );
 }
 
-export function Stats() {
-  const t = useT();
-  const stats = ["events", "memories", "leading"].map((k) => ({
-    n: t(`stats.${k}.n` as never),
-    t: t(`stats.${k}.t` as never),
-    d: t(`stats.${k}.d` as never),
-  }));
-  return (
-    <Container className="grid gap-10 text-center md:grid-cols-3">
-      {stats.map((s) => (
-        <div key={s.t}>
-          <p className="mb-2 font-heading text-3xl font-bold md:text-4xl">{s.n}</p>
-          <p className="mb-2 font-heading text-lg">{s.t}</p>
-          <p className="text-sm text-navy/70">{s.d}</p>
-        </div>
-      ))}
-    </Container>
-  );
-}
-
 /**
  * Stands where a press-logo strip used to sit. Memovo has no coverage yet, and a row of
  * publication logos would claim otherwise, so this invites coverage instead of faking it.
