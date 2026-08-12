@@ -12,7 +12,7 @@ import {
   WHATS_NEW_IMG,
 } from "@/data/assets";
 import { useT } from "@/components/LanguageProvider";
-import { Carousel, Container, CtaBand, HeroImage, PressStrip, Stats } from "@/components/Sections";
+import { Carousel, Container, CtaBand, HeroImage, PressStrip } from "@/components/Sections";
 
 const PRICING_LINKS = [
   { href: "/weddings", key: "event.weddings" },
@@ -126,9 +126,6 @@ export default function HomeView() {
         </Container>
       </section>
 
-      <section className="bg-white py-16">
-        <Stats />
-      </section>
 
       <PressStrip />
 

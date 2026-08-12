@@ -14,7 +14,6 @@ import {
   HeroImage,
   PressStrip,
   QuoteBand,
-  Stats,
   StepsGrid,
 } from "@/components/Sections";
 
@@ -144,9 +143,6 @@ export default function EventView({ event }: { event: EventPage }) {
         </Container>
       </section>
 
-      <section className="bg-white py-16">
-        <Stats />
-      </section>
 
       <PressStrip />
 

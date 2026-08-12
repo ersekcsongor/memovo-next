@@ -32,7 +32,6 @@ export default function Footer() {
     { href: "/", label: t("nav.home") },
     { href: "/how-it-works", label: t("nav.howItWorks") },
     { href: "/pricing", label: t("nav.pricing") },
-    { href: "/our-story", label: t("footer.aboutUs") },
     { href: "/design-themes", label: t("footer.designThemes") },
     { href: "/reviews", label: t("footer.reviews") },
     { href: "/faqs", label: t("footer.faqs") },

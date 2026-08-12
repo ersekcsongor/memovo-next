@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { COUPLE_IMG, GALLERY_PHOTOS, PODCAST_IMG } from "@/data/assets";
+import { GALLERY_PHOTOS } from "@/data/assets";
 import { ALL_FAQS, FEATURES, STEPS, THEMES, WEDDING_PLANS } from "@/data/content";
 import { useT } from "@/components/LanguageProvider";
 import { PricingSection } from "@/components/Pricing";
@@ -16,7 +16,6 @@ import {
   PageBanner,
   PressStrip,
   QuoteBand,
-  Stats,
   StepsGrid,
 } from "@/components/Sections";
 
@@ -93,63 +92,6 @@ export function HowItWorksView() {
         <FeatureGrid features={FEATURES} />
       </section>
 
-      <section className="bg-white pb-20">
-        <Stats />
-      </section>
-    </>
-  );
-}
-
-export function StoryView() {
-  const t = useT();
-  return (
-    <>
-      <PageBanner heading={t("page.story.heading")} sub={t("page.story.sub")} />
-
-      <section className="bg-white py-20">
-        <Container className="grid items-center gap-12 md:grid-cols-2">
-          <div className="relative h-[420px] overflow-hidden rounded-2xl shadow-lg">
-            <Image src={COUPLE_IMG} alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
-          </div>
-          <div className="space-y-4 text-navy/80">
-            <p>{t("page.story.p1")}</p>
-            <p>{t("page.story.p2")}</p>
-            <p>{t("page.story.p3")}</p>
-            <p>{t("page.story.p4")}</p>
-            <p className="font-accent text-lg text-coral-ink">{t("page.story.quote")}</p>
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-white pb-20">
-        <Stats />
-      </section>
-
-      <CtaBand text={t("page.story.cta")} />
-    </>
-  );
-}
-
-export function FoundersView() {
-  const t = useT();
-  return (
-    <>
-      <PageBanner heading={t("page.founders.heading")} sub={t("page.founders.sub")} />
-
-      <section className="bg-white py-20">
-        <Container className="grid items-center gap-12 md:grid-cols-2">
-          <div className="relative h-[380px] overflow-hidden rounded-2xl shadow-lg">
-            <Image src={PODCAST_IMG} alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
-          </div>
-          <div className="space-y-4 text-navy/80">
-            <p>{t("page.founders.p1")}</p>
-            <p>{t("page.founders.p2")}</p>
-            <p>{t("page.founders.p3")}</p>
-          </div>
-        </Container>
-      </section>
-
-      <CtaBand text={t("page.founders.cta")} />
     </>
   );
 }

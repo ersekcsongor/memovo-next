@@ -57,11 +57,6 @@ export default function WeddingsView() {
           <p className="mx-auto mt-5 max-w-2xl text-base md:text-lg">
             {t("wed.lead")} <span className="font-semibold text-coral-ink">{t("wed.leadHighlight")}</span> {t("wed.leadEnd")}
           </p>
-          <p className="mt-3 text-sm text-navy/70">
-            <span className="font-semibold text-coral-ink">{t("wed.stat1")}</span> {t("wed.stat1label")} ·{" "}
-            <span className="font-semibold text-coral-ink">{t("wed.stat2")}</span> {t("wed.stat2label")} ·{" "}
-            <span className="font-semibold text-coral-ink">{t("wed.stat3")}</span> {t("wed.stat3label")}
-          </p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <Link href="/pricing" className="rounded-full bg-coral px-7 py-3 font-semibold text-navy shadow-md">
               {t("cta.createGallery")}

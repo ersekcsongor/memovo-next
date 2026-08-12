@@ -98,8 +98,6 @@ export default function Header() {
   ];
 
   const about = [
-    { href: "/our-story", label: t("about.ourStory") },
-    { href: "/meet-the-founders", label: t("about.founders") },
     { href: "/press-features", label: t("about.press") },
     { href: "/community-events", label: t("about.community") },
     { href: "/reviews", label: t("footer.reviews") },
