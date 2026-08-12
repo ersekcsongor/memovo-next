@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: "%s | Memovo",
   },
   description:
-    "The original QR code photo sharing platform for events. Your guest photos and videos captured for you with a simple QR code and link.",
+    "QR code photo sharing and a digital guestbook for events. Your guest photos and videos collected for you with a simple QR code and link.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
