@@ -1,6 +1,6 @@
 import type { Lang } from "./i18n";
 
-const U = "https://guestpix.com/wp-content/uploads";
+const U = "/images";
 
 /** The prose that changes per language. */
 export type EventCopy = {
@@ -337,7 +337,7 @@ export const EVENTS: EventPage[] = [
     label: "Seasonal Holidays",
     title: "Effortless Holiday Photo Sharing with QR Codes",
     description: "Seasonal holiday photo collection for Christmas, New Year's Eve, Thanksgiving and Easter.",
-    hero: `${U}/Guest-Pix-Nov-2024-199-scaled.jpg`,
+    hero: `${U}/memovo-Nov-2024-199-scaled.jpg`,
     prices: TIERS,
     copy: {
       en: {
@@ -392,7 +392,7 @@ export const EVENTS: EventPage[] = [
     label: "Company Christmas Parties",
     title: "Company Christmas Parties",
     description: "Company Christmas party photo sharing with a branded QR code and content moderation.",
-    hero: `${U}/guestpix-christmas-nye-party-scaled.jpg`,
+    hero: `${U}/memovo-christmas-nye-party-scaled.jpg`,
     prices: BUSINESS_TIERS,
     copy: {
       en: {
