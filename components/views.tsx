@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { COUPLE_IMG, GALLERY_PHOTOS, PODCAST_IMG } from "@/data/assets";
-import { ALL_FAQS, FEATURES, REVIEWS, STEPS, THEMES, WEDDING_PLANS } from "@/data/content";
+import { ALL_FAQS, FEATURES, STEPS, THEMES, WEDDING_PLANS } from "@/data/content";
 import { useT } from "@/components/LanguageProvider";
 import { PricingSection } from "@/components/Pricing";
 import {
@@ -14,7 +14,7 @@ import {
   FaqAccordion,
   FeatureGrid,
   PageBanner,
-  PressLogos,
+  PressStrip,
   QuoteBand,
   Stats,
   StepsGrid,
@@ -38,22 +38,22 @@ export function PricingView() {
       <section className="bg-white py-16">
         <Container>
           <div className="mb-10 flex justify-center">
-            <span className="rounded-full bg-pinklight px-4 py-1.5 text-center text-xs font-bold text-coral">
+            <span className="rounded-full bg-pinklight px-4 py-1.5 text-center text-xs font-bold text-coral-ink">
               {t("page.pricing.offer")}
             </span>
           </div>
           <PricingSection plans={WEDDING_PLANS} />
-          <p className="mt-10 text-center text-xs text-navy/50">{t("page.pricing.footnote")}</p>
+          <p className="mx-auto mt-10 max-w-2xl text-center text-xs text-navy/50">{t("page.pricing.footnote")}</p>
         </Container>
       </section>
 
       <section className="bg-cream py-16 text-center">
         <Container>
-          <h2 className="mb-3 font-accent text-2xl text-coral md:text-3xl">{t("page.pricing.tailored")}</h2>
+          <h2 className="mb-3 font-accent text-2xl text-coral-ink md:text-3xl">{t("page.pricing.tailored")}</h2>
           <p className="mb-8 text-navy/80">{t("page.pricing.tailoredSub")}</p>
           <div className="flex flex-wrap justify-center gap-3">
             {EVENT_PRICING.map((p) => (
-              <Link key={p.href} href={p.href} className="rounded-full bg-coral px-5 py-2 text-xs font-semibold text-white">
+              <Link key={p.href} href={p.href} className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-xs font-semibold text-navy">
                 {t(p.key)} – {t("cta.pricing")}
               </Link>
             ))}
@@ -61,7 +61,7 @@ export function PricingView() {
         </Container>
       </section>
 
-      <PressLogos />
+      <PressStrip />
     </>
   );
 }
@@ -75,10 +75,10 @@ export function HowItWorksView() {
       <section className="bg-white py-16">
         <StepsGrid steps={STEPS} />
         <div className="flex justify-center gap-4 pt-12">
-          <Link href="/pricing" className="rounded-full bg-coral px-6 py-2.5 text-sm font-semibold text-white">
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy">
             {t("cta.pricing")}
           </Link>
-          <Link href="/faqs" className="rounded-full border-2 border-navy px-6 py-2.5 text-sm font-semibold">
+          <Link href="/faqs" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold">
             {t("cta.faqs")}
           </Link>
         </div>
@@ -87,7 +87,7 @@ export function HowItWorksView() {
       <QuoteBand>{t("page.how.quote")}</QuoteBand>
 
       <section className="bg-coral py-8 text-center">
-        <h2 className="font-heading text-xl font-bold text-white md:text-2xl">{t("features.bandEvents")}</h2>
+        <h2 className="font-heading text-xl font-bold text-navy md:text-2xl">{t("features.bandEvents")}</h2>
       </section>
       <section className="bg-white py-16">
         <FeatureGrid features={FEATURES} />
@@ -116,7 +116,7 @@ export function StoryView() {
             <p>{t("page.story.p2")}</p>
             <p>{t("page.story.p3")}</p>
             <p>{t("page.story.p4")}</p>
-            <p className="font-accent text-lg text-coral">{t("page.story.quote")}</p>
+            <p className="font-accent text-lg text-coral-ink">{t("page.story.quote")}</p>
           </div>
         </Container>
       </section>
@@ -160,20 +160,15 @@ export function PressView() {
     <>
       <PageBanner heading={t("page.press.heading")} sub={t("page.press.sub")} />
 
-      <PressLogos />
-
+      {/* Nothing has been written about Memovo yet, so this says so rather than inventing coverage. */}
       <section className="bg-white py-20">
-        <Container className="grid items-center gap-12 md:grid-cols-2">
-          <div className="relative h-[380px] overflow-hidden rounded-2xl shadow-lg">
-            <Image src={PODCAST_IMG} alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
-          </div>
-          <div>
-            <p className="mb-2 text-xs font-semibold tracking-wide text-coral">{t("page.press.label")}</p>
-            <h2 className="mb-4 font-heading text-2xl font-bold md:text-3xl">{t("page.press.title")}</h2>
-            <p className="text-navy/80">{t("page.press.body")}</p>
-          </div>
+        <Container className="mx-auto max-w-2xl text-center">
+          <h2 className="mb-4 font-accent text-2xl md:text-3xl">{t("page.press.emptyTitle")}</h2>
+          <p className="text-navy/70">{t("page.press.emptyBody")}</p>
         </Container>
       </section>
+
+      <PressStrip />
 
       <CtaBand text={t("page.press.cta")} cta={t("cta.contactUs")} href="/contact" />
     </>
@@ -209,28 +204,18 @@ export function ReviewsView() {
     <>
       <PageBanner heading={t("page.reviews.heading")} sub={t("page.reviews.sub")} />
 
-      <section className="bg-white py-16">
-        <Container>
-          <div className="mb-12 text-center">
-            <p className="text-4xl font-bold">4.8</p>
-            <p className="text-xl text-coral">★★★★★</p>
-            <p className="mt-1 text-xs text-navy/50">{t("reviews.basedOn")}</p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            {REVIEWS.map((r) => (
-              <div key={r.name} className="rounded-2xl bg-gray-100 p-8">
-                <p className="mb-3 text-coral">★★★★★</p>
-                <p className="mb-2 font-semibold">
-                  {r.name} <span className="text-xs font-normal text-navy/50">{t("reviews.verified")}</span>
-                </p>
-                <p className="text-sm text-navy/70">{r.quote}</p>
-              </div>
-            ))}
-          </div>
+      {/* No testimonials until real hosts have written them. */}
+      <section className="bg-white py-20">
+        <Container className="mx-auto max-w-2xl text-center">
+          <h2 className="mb-4 font-accent text-2xl md:text-3xl">{t("reviews.emptyTitle")}</h2>
+          <p className="mb-8 text-navy/70">{t("reviews.emptyBody")}</p>
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-navy">
+            {t("reviews.emptyCta")}
+          </Link>
         </Container>
       </section>
 
-      <PressLogos />
+      <PressStrip />
 
       <CtaBand text={t("page.reviews.cta")} />
     </>
@@ -248,7 +233,7 @@ export function FaqsView() {
           <FaqAccordion items={ALL_FAQS} />
           <p className="mt-10 text-center text-sm">
             {t("page.faqs.still")}{" "}
-            <Link href="/contact" className="text-coral">
+            <Link href="/contact" className="text-coral-ink">
               {t("page.faqs.contact")}
             </Link>
           </p>
@@ -270,7 +255,7 @@ export function ThemesView() {
 
       <section className="bg-white py-16">
         <Container>
-          <p className="mb-12 text-center font-accent text-coral">{t("page.themes.tap")}</p>
+          <p className="mb-12 text-center font-accent text-coral-ink">{t("page.themes.tap")}</p>
           <div className="grid grid-cols-2 gap-8 text-center sm:grid-cols-3 md:grid-cols-5">
             {THEMES.map((theme) => {
               const active = theme.name === selected.name;
@@ -288,7 +273,7 @@ export function ThemesView() {
                     }`}
                     style={{ background: theme.color }}
                   />
-                  <span className={`block font-heading text-sm ${active ? "text-coral" : ""}`}>{theme.name}</span>
+                  <span className={`block font-heading text-sm ${active ? "text-coral-ink" : ""}`}>{theme.name}</span>
                 </button>
               );
             })}
@@ -319,10 +304,11 @@ export function ThemesView() {
 export function ContactView() {
   const t = useT();
   const [sent, setSent] = useState(false);
+  // `autoComplete` lets the browser fill the two fields it already knows.
   const fields = [
-    { id: "name", label: t("page.contact.name"), type: "text" },
-    { id: "email", label: t("page.contact.email"), type: "email" },
-    { id: "subject", label: t("page.contact.subject"), type: "text" },
+    { id: "name", label: t("page.contact.name"), type: "text", autoComplete: "name" },
+    { id: "email", label: t("page.contact.email"), type: "email", autoComplete: "email" },
+    { id: "subject", label: t("page.contact.subject"), type: "text", autoComplete: "off" },
   ];
 
   return (
@@ -349,7 +335,8 @@ export function ContactView() {
                   id={f.id}
                   name={f.id}
                   type={f.type}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm"
+                  autoComplete={f.autoComplete}
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3"
                 />
               </div>
             ))}
@@ -357,13 +344,13 @@ export function ContactView() {
               <label htmlFor="message" className="mb-1 block text-sm font-semibold">
                 {t("page.contact.message")}
               </label>
-              <textarea id="message" name="message" rows={5} className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm" />
+              <textarea id="message" name="message" rows={5} className="w-full rounded-lg border border-gray-300 px-4 py-3" />
             </div>
-            <button type="submit" className="rounded-full bg-coral px-7 py-3 font-semibold text-white">
+            <button type="submit" className="rounded-full bg-coral px-7 py-3 font-semibold text-navy">
               {t("page.contact.send")}
             </button>
             {sent && (
-              <p role="status" className="rounded-lg bg-blush px-4 py-3 text-sm text-coral">
+              <p role="status" className="rounded-lg bg-blush px-4 py-3 text-sm text-coral-ink">
                 {t("page.contact.sentDemo")}
               </p>
             )}
@@ -378,7 +365,7 @@ export function ContactView() {
               <h3 className="mb-2 font-heading text-lg font-bold">{t("page.contact.helpTitle")}</h3>
               <p className="text-sm text-navy/70">
                 {t("page.contact.helpBody")}{" "}
-                <Link href="/faqs" className="text-coral">
+                <Link href="/faqs" className="text-coral-ink">
                   {t("footer.faqs")}
                 </Link>
                 .
@@ -392,7 +379,7 @@ export function ContactView() {
               <h3 className="mb-2 font-heading text-lg font-bold">{t("page.contact.mediaTitle")}</h3>
               <p className="text-sm text-navy/70">
                 {t("page.contact.mediaBody")}{" "}
-                <Link href="/press-features" className="text-coral">
+                <Link href="/press-features" className="text-coral-ink">
                   {t("about.press")}
                 </Link>
                 .

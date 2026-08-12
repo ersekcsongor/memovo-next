@@ -9,13 +9,10 @@ import {
   HERO_HOME,
   HOME_TILES,
   PHONE,
-  PODCAST_IMG,
   WHATS_NEW_IMG,
 } from "@/data/assets";
-import { REVIEWS } from "@/data/content";
 import { useT } from "@/components/LanguageProvider";
-import { Carousel, Container, CtaBand, HeroImage, PressLogos, Stats } from "@/components/Sections";
-import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
+import { Carousel, Container, CtaBand, HeroImage, PressStrip, Stats } from "@/components/Sections";
 
 const PRICING_LINKS = [
   { href: "/weddings", key: "event.weddings" },
@@ -31,13 +28,6 @@ const MORE_KEYS = ["home.more1", "home.more2", "home.more3", "home.more4", "home
 export default function HomeView() {
   const t = useT();
 
-  const testimonials = REVIEWS.map((r) => ({
-    quote: r.quote,
-    name: r.name,
-    designation: t("reviews.host"),
-    src: r.photo.src,
-    alt: r.photo.alt,
-  }));
 
   return (
     <>
@@ -49,7 +39,7 @@ export default function HomeView() {
             {t("home.h1")}
           </h1>
           <p className="mt-6">{t("home.lead")}</p>
-          <p className="mt-3 font-accent text-lg text-coral">{t("home.tagline")}</p>
+          <p className="mt-3 font-accent text-lg text-coral-ink">{t("home.tagline")}</p>
         </div>
       </section>
 
@@ -60,6 +50,8 @@ export default function HomeView() {
           return (
             <Link key={tile.href} href={tile.href} className="event-tile relative h-52 lg:h-[290px]">
               <Image src={tile.src} alt={label} fill className="object-cover" sizes="(max-width: 768px) 50vw, 16vw" />
+              {/* Scrim, so the label holds up over a light photo. */}
+              <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" aria-hidden />
               <span className="absolute inset-x-0 bottom-6 text-center font-heading text-lg text-white drop-shadow-lg">
                 {label}
               </span>
@@ -68,23 +60,13 @@ export default function HomeView() {
         })}
       </section>
 
-      {/* What our hosts say */}
+      {/* No testimonial carousel until real hosts have written the quotes. */}
       <section className="bg-cream py-16 md:py-20">
-        <Container className="text-center">
-          <p className="text-xl leading-none text-coral">★★★★★</p>
-          <h2 className="mt-3 font-accent text-2xl md:text-3xl">{t("page.reviews.sub")}</h2>
-          <p className="mt-2 text-xs text-navy/50">{t("reviews.basedOn")}</p>
-        </Container>
-        <AnimatedTestimonials
-          testimonials={testimonials}
-          autoplay
-          className="px-6 py-10 md:py-14"
-          prevLabel={t("reviews.prev")}
-          nextLabel={t("reviews.next")}
-        />
-        <Container className="text-center">
-          <Link href="/reviews" className="inline-block rounded-full border-2 border-navy px-6 py-2.5 text-sm font-semibold">
-            {t("footer.reviews")}
+        <Container className="mx-auto max-w-2xl text-center">
+          <h2 className="mb-4 font-accent text-2xl md:text-3xl">{t("reviews.emptyTitle")}</h2>
+          <p className="mb-8 text-navy/70">{t("reviews.emptyBody")}</p>
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-navy">
+            {t("reviews.emptyCta")}
           </Link>
         </Container>
       </section>
@@ -120,8 +102,8 @@ export default function HomeView() {
                 <strong>{t("home.celebration3")}</strong>
               </p>
               <p>{t("home.celebration4")}</p>
-              <p className="font-accent text-lg text-coral">{t("home.celebrationQuote")}</p>
-              <Link href="/how-it-works" className="mt-2 inline-block rounded-full border-2 border-navy px-6 py-2.5 text-sm font-semibold">
+              <p className="font-accent text-lg text-coral-ink">{t("home.celebrationQuote")}</p>
+              <Link href="/how-it-works" className="mt-2 inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold">
                 {t("cta.howItWorks")}
               </Link>
             </div>
@@ -132,11 +114,11 @@ export default function HomeView() {
       {/* Pricing by event type */}
       <section className="bg-cream py-16 text-center">
         <Container>
-          <h2 className="mb-3 font-accent text-2xl text-coral md:text-3xl">{t("page.pricing.tailored")}</h2>
+          <h2 className="mb-3 font-accent text-2xl text-coral-ink md:text-3xl">{t("page.pricing.tailored")}</h2>
           <p className="mb-8 text-navy/80">{t("page.pricing.tailoredSub")}</p>
           <div className="flex flex-wrap justify-center gap-3">
             {PRICING_LINKS.map((p) => (
-              <Link key={p.href} href={p.href} className="rounded-full bg-coral px-5 py-2 text-xs font-semibold text-white">
+              <Link key={p.href} href={p.href} className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-xs font-semibold text-navy">
                 {t(p.key)} – {t("cta.pricing")}
               </Link>
             ))}
@@ -148,7 +130,7 @@ export default function HomeView() {
         <Stats />
       </section>
 
-      <PressLogos />
+      <PressStrip />
 
       <section className="overflow-hidden bg-cream py-10">
         <Carousel photos={GALLERY_PHOTOS} short />
@@ -165,21 +147,10 @@ export default function HomeView() {
               <Image src={WHATS_NEW_IMG} alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
             <div>
-              <p className="mb-2 text-xs font-semibold tracking-wide text-coral">{t("home.newFeature")}</p>
-              <h3 className="mb-3 font-accent text-xl text-coral md:text-2xl">{t("home.langTitle")}</h3>
+              <p className="mb-2 text-xs font-semibold tracking-wide text-coral-ink">{t("home.newFeature")}</p>
+              <h3 className="mb-3 font-accent text-xl text-coral-ink md:text-2xl">{t("home.langTitle")}</h3>
               <p className="text-navy/80">{t("home.langBody")}</p>
               <p className="mt-3 text-sm text-navy/70">{t("home.langBody2")}</p>
-            </div>
-          </div>
-          <div className="grid items-center gap-10 md:grid-cols-2">
-            <div className="order-2 md:order-1">
-              <p className="mb-2 text-xs font-semibold tracking-wide text-coral">{t("home.newInterview")}</p>
-              <h3 className="mb-2 font-heading text-xl font-bold md:text-2xl">{t("home.podcastTitle")}</h3>
-              <p className="mb-3 font-accent">{t("home.podcastSub")}</p>
-              <p className="text-sm text-navy/70">{t("home.podcastBody")}</p>
-            </div>
-            <div className="relative order-1 h-[320px] overflow-hidden rounded-xl md:order-2">
-              <Image src={PODCAST_IMG} alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
         </Container>
@@ -188,7 +159,7 @@ export default function HomeView() {
       <section className="bg-pinklight py-16 text-center">
         <Container>
           <h2 className="mb-6 font-accent text-2xl md:text-3xl">{t("home.memoriesTitle")}</h2>
-          <Link href="/pricing" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-white">
+          <Link href="/pricing" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-navy">
             {t("cta.pricing")}
           </Link>
         </Container>
@@ -208,7 +179,7 @@ export default function HomeView() {
 
       <section className="bg-white pb-20">
         <Container>
-          <h2 className="mb-6 text-sm font-semibold text-coral">{t("home.moreTitle")}</h2>
+          <h2 className="mb-6 text-sm font-semibold text-coral-ink">{t("home.moreTitle")}</h2>
           <div className="space-y-5 text-sm text-navy/70">
             {MORE_KEYS.map((k) => (
               <p key={k}>{t(k)}</p>

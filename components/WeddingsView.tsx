@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BLUR_BG, BLUR_BG_2, HERO_WEDDING, INVITE_RSVP, PHONE, TEMPLATE_PHOTOS } from "@/data/assets";
-import { FEATURES, REVIEWS, STEPS, WEDDING_FAQS, WEDDING_PLANS } from "@/data/content";
+import { FEATURES, STEPS, WEDDING_FAQS, WEDDING_PLANS } from "@/data/content";
 import { useT } from "@/components/LanguageProvider";
 import { PricingSection } from "@/components/Pricing";
 import {
@@ -12,7 +12,7 @@ import {
   CtaBand,
   FaqAccordion,
   FeatureGrid,
-  PressLogos,
+  PressStrip,
   QuoteBand,
   StepsGrid,
 } from "@/components/Sections";
@@ -40,13 +40,13 @@ export default function WeddingsView() {
       <section className="relative h-[420px] w-full overflow-hidden bg-gray-100 md:h-[670px]">
         <Image src={HERO_WEDDING} alt={t("wed.h1a")} fill className="object-cover" priority sizes="100vw" />
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-cream px-8 py-3 shadow-lg md:bottom-10">
-          <p className="font-accent text-lg whitespace-nowrap text-coral md:text-xl">{t("wed.pill")}</p>
+          <p className="font-accent text-lg whitespace-nowrap text-coral-ink md:text-xl">{t("wed.pill")}</p>
         </div>
       </section>
 
       <section className="bg-blush py-16 md:py-[72px]">
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <span className="mb-6 inline-block rounded-full border border-coral px-5 py-1.5 text-xs font-semibold text-coral">
+          <span className="mb-6 inline-block rounded-full border border-coral px-5 py-1.5 text-xs font-semibold text-coral-ink">
             {t("wed.badge")}
           </span>
           <h1 className="font-heading text-3xl leading-tight font-bold md:text-5xl">
@@ -55,15 +55,15 @@ export default function WeddingsView() {
             {t("wed.h1b")}
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base md:text-lg">
-            {t("wed.lead")} <span className="font-semibold text-coral">{t("wed.leadHighlight")}</span> {t("wed.leadEnd")}
+            {t("wed.lead")} <span className="font-semibold text-coral-ink">{t("wed.leadHighlight")}</span> {t("wed.leadEnd")}
           </p>
           <p className="mt-3 text-sm text-navy/70">
-            <span className="font-semibold text-coral">{t("wed.stat1")}</span> {t("wed.stat1label")} ·{" "}
-            <span className="font-semibold text-coral">{t("wed.stat2")}</span> {t("wed.stat2label")} ·{" "}
-            <span className="font-semibold text-coral">{t("wed.stat3")}</span> {t("wed.stat3label")}
+            <span className="font-semibold text-coral-ink">{t("wed.stat1")}</span> {t("wed.stat1label")} ·{" "}
+            <span className="font-semibold text-coral-ink">{t("wed.stat2")}</span> {t("wed.stat2label")} ·{" "}
+            <span className="font-semibold text-coral-ink">{t("wed.stat3")}</span> {t("wed.stat3label")}
           </p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <Link href="/pricing" className="rounded-full bg-coral px-7 py-3 font-semibold text-white shadow-md">
+            <Link href="/pricing" className="rounded-full bg-coral px-7 py-3 font-semibold text-navy shadow-md">
               {t("cta.createGallery")}
             </Link>
             <Link href="/how-it-works" className="rounded-full bg-navy px-7 py-3 font-semibold text-white">
@@ -79,7 +79,7 @@ export default function WeddingsView() {
         <div className="absolute inset-0 bg-forest/55" />
         <Container className="relative grid items-center gap-10 md:grid-cols-2">
           <div>
-            <p className="mb-2 text-sm font-semibold text-coral">{t("wed.noAppEyebrow")}</p>
+            <p className="mb-2 text-sm font-semibold text-coral-ink">{t("wed.noAppEyebrow")}</p>
             <h2 className="mb-4 font-heading text-2xl font-bold text-white md:text-4xl">{t("wed.noAppTitle")}</h2>
             <p className="mb-4 max-w-md text-white/85">{t("wed.noAppBody")}</p>
             <p className="font-accent text-lg text-white">{t("wed.noAppQuote")}</p>
@@ -98,10 +98,10 @@ export default function WeddingsView() {
       <section className="bg-white py-16">
         <StepsGrid steps={STEPS} />
         <div className="flex justify-center gap-4 pt-12">
-          <Link href="/pricing" className="rounded-full bg-coral px-6 py-2.5 text-sm font-semibold text-white">
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy">
             {t("cta.pricing")}
           </Link>
-          <Link href="/how-it-works" className="rounded-full bg-coral px-6 py-2.5 text-sm font-semibold text-white">
+          <Link href="/how-it-works" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy">
             {t("cta.moreOnHow")}
           </Link>
         </div>
@@ -111,7 +111,7 @@ export default function WeddingsView() {
 
       {/* Features */}
       <section className="bg-coral py-8 text-center">
-        <h2 className="font-heading text-xl font-bold text-white md:text-2xl">{t("features.bandWeddings")}</h2>
+        <h2 className="font-heading text-xl font-bold text-navy md:text-2xl">{t("features.bandWeddings")}</h2>
       </section>
       <section className="bg-white py-16">
         <FeatureGrid features={FEATURES} />
@@ -128,13 +128,13 @@ export default function WeddingsView() {
             <p className="mb-5 max-w-md text-navy/80">{t("wed.slideshowBody")}</p>
             <ul className="space-y-2 text-sm">
               <li>
-                <span className="text-coral">●</span> {t("wed.slideshow1")}
+                <span className="text-coral-ink">●</span> {t("wed.slideshow1")}
               </li>
               <li>
-                <span className="text-coral">●</span> {t("wed.slideshow2")}
+                <span className="text-coral-ink">●</span> {t("wed.slideshow2")}
               </li>
               <li>
-                <span className="text-coral">●</span> {t("wed.slideshow3")}
+                <span className="text-coral-ink">●</span> {t("wed.slideshow3")}
               </li>
             </ul>
           </div>
@@ -150,7 +150,7 @@ export default function WeddingsView() {
           <div className="grid gap-6 md:grid-cols-3">
             {QUICK_ANSWERS.map((q) => (
               <div key={q.q} className="rounded-2xl bg-white/95 p-6">
-                <h3 className="mb-2 font-heading text-base font-semibold text-coral">{t(q.q)}</h3>
+                <h3 className="mb-2 font-heading text-base font-semibold text-coral-ink">{t(q.q)}</h3>
                 <p className="text-sm text-navy/75">{t(q.a)}</p>
               </div>
             ))}
@@ -161,12 +161,12 @@ export default function WeddingsView() {
       {/* Bonus templates */}
       <section className="bg-blush py-16 text-center">
         <div className="mx-auto max-w-4xl px-6">
-          <h2 className="mb-3 font-accent text-2xl text-coral md:text-3xl">{t("wed.bonusTitle")}</h2>
+          <h2 className="mb-3 font-accent text-2xl text-coral-ink md:text-3xl">{t("wed.bonusTitle")}</h2>
           <p className="mx-auto max-w-2xl text-sm text-navy/80">{t("wed.bonusBody")}</p>
         </div>
       </section>
       <section className="overflow-hidden bg-white py-8 text-center">
-        <p className="mb-8 font-accent text-coral">{t("wed.browse")}</p>
+        <p className="mb-8 font-accent text-coral-ink">{t("wed.browse")}</p>
         <Carousel photos={TEMPLATE_PHOTOS} />
       </section>
 
@@ -178,36 +178,25 @@ export default function WeddingsView() {
             <p className="mt-2 font-accent text-lg">{t("page.pricing.sub")}</p>
           </div>
           <div className="mb-10 flex justify-center">
-            <span className="rounded-full bg-pinklight px-4 py-1.5 text-center text-xs font-bold text-coral">
+            <span className="rounded-full bg-pinklight px-4 py-1.5 text-center text-xs font-bold text-coral-ink">
               {t("page.pricing.offer")}
             </span>
           </div>
           <PricingSection plans={WEDDING_PLANS} />
-          <p className="mt-10 text-center text-xs text-navy/50">{t("page.pricing.footnote")}</p>
+          <p className="mx-auto mt-10 max-w-2xl text-center text-xs text-navy/50">{t("page.pricing.footnote")}</p>
         </Container>
       </section>
 
-      <PressLogos />
+      <PressStrip />
 
-      {/* Reviews */}
+      {/* No testimonials until real couples have written them. */}
       <section className="bg-white py-20">
-        <Container>
-          <div className="mb-12 text-center">
-            <p className="text-3xl font-bold">4.8</p>
-            <p className="text-lg text-coral">★★★★★</p>
-            <p className="mt-1 text-xs text-navy/50">{t("reviews.basedOn")}</p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            {REVIEWS.slice(0, 3).map((r) => (
-              <div key={r.name} className="rounded-2xl bg-gray-100 p-8">
-                <p className="mb-3 text-coral">★★★★★</p>
-                <p className="mb-2 font-semibold">
-                  {r.name} <span className="text-xs font-normal text-navy/50">{t("reviews.verified")}</span>
-                </p>
-                <p className="text-sm text-navy/70">{r.quote}</p>
-              </div>
-            ))}
-          </div>
+        <Container className="mx-auto max-w-2xl text-center">
+          <h2 className="mb-4 font-accent text-2xl md:text-3xl">{t("reviews.emptyTitle")}</h2>
+          <p className="mb-8 text-navy/70">{t("reviews.emptyBody")}</p>
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-navy">
+            {t("reviews.emptyCta")}
+          </Link>
         </Container>
       </section>
 
@@ -216,7 +205,7 @@ export default function WeddingsView() {
         <Image src={BLUR_BG_2} alt="" fill className="object-cover" sizes="100vw" />
         <div className="absolute inset-0 bg-forest/45" />
         <Container className="relative text-center">
-          <h2 className="mb-4 font-heading text-2xl font-bold text-coral md:text-4xl">{t("wed.inviteTitle")}</h2>
+          <h2 className="mb-4 font-heading text-2xl font-bold text-coral-ink md:text-4xl">{t("wed.inviteTitle")}</h2>
           <p className="mx-auto mb-14 max-w-2xl text-white">{t("wed.inviteBody")}</p>
           <Image src={INVITE_RSVP} alt="" width={640} height={480} className="mx-auto w-full max-w-md drop-shadow-2xl" />
         </Container>
@@ -239,16 +228,16 @@ export default function WeddingsView() {
 
       <section className="bg-coral py-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="font-accent text-xl leading-relaxed text-white md:text-2xl">{t("wed.coralQuote")}</p>
+          <p className="font-accent text-xl leading-relaxed text-navy md:text-2xl">{t("wed.coralQuote")}</p>
         </div>
       </section>
 
       {/* Demo */}
       <section className="bg-white py-20 text-center">
         <Container>
-          <h2 className="mb-4 font-accent text-2xl text-coral md:text-3xl">{t("wed.demoTitle")}</h2>
+          <h2 className="mb-4 font-accent text-2xl text-coral-ink md:text-3xl">{t("wed.demoTitle")}</h2>
           <p className="mx-auto mb-8 max-w-2xl text-navy/80">{t("wed.demoBody")}</p>
-          <Link href="/how-it-works" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-white">
+          <Link href="/how-it-works" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-navy">
             {t("cta.freeDemo")}
           </Link>
         </Container>
@@ -261,7 +250,7 @@ export default function WeddingsView() {
           <FaqAccordion items={WEDDING_FAQS} />
           <p className="mt-10 text-center text-sm">
             {t("wed.moreQuestions")}{" "}
-            <Link href="/faqs" className="text-coral">
+            <Link href="/faqs" className="text-coral-ink">
               {t("wed.visitFaq")}
             </Link>
           </p>
@@ -271,7 +260,7 @@ export default function WeddingsView() {
       {/* Destination weddings */}
       <section className="bg-cream py-20">
         <div className="mx-auto max-w-3xl space-y-4 px-6 text-center">
-          <h2 className="mb-4 font-accent text-2xl text-coral md:text-3xl">{t("wed.destTitle")}</h2>
+          <h2 className="mb-4 font-accent text-2xl text-coral-ink md:text-3xl">{t("wed.destTitle")}</h2>
           <p className="text-navy/80">{t("wed.destBody")}</p>
           <p className="font-accent text-lg">{t("wed.destQuote")}</p>
         </div>
@@ -279,7 +268,7 @@ export default function WeddingsView() {
 
       <section className="bg-coral py-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-white">{t("wed.embrace")}</p>
+          <p className="text-navy">{t("wed.embrace")}</p>
         </div>
       </section>
 
@@ -291,14 +280,14 @@ export default function WeddingsView() {
             <p>{t("wed.whatIs1")}</p>
             <p>{t("wed.whatIs2")}</p>
             <p>{t("wed.whatIs3")}</p>
-            <p className="font-accent text-lg text-coral">{t("wed.whatIsQuote")}</p>
+            <p className="font-accent text-lg text-coral-ink">{t("wed.whatIsQuote")}</p>
           </div>
         </div>
       </section>
 
       <section className="bg-cream py-16">
         <Container>
-          <h2 className="mb-6 text-sm font-semibold text-coral">{t("wed.moreTitle")}</h2>
+          <h2 className="mb-6 text-sm font-semibold text-coral-ink">{t("wed.moreTitle")}</h2>
           <div className="space-y-5 text-sm text-navy/70">
             {ABOUT_KEYS.map((k) => (
               <p key={k}>{t(k)}</p>
