@@ -2,6 +2,18 @@
 
 The Memovo site: 21 pages in English, Hungarian and Romanian, built with Next.js 16 (App Router), React 19, TypeScript and Tailwind CSS v4.
 
+## What the product is
+
+Memovo is a QR code photo gallery for events. The host creates a gallery in a couple of minutes, then prints or displays the QR code — on a welcome sign, a table card, a take-home card. Guests point a phone at it and upload their photos, videos and written messages straight from the camera roll. They install nothing and they register for nothing, and every upload carries the name of the guest who added it.
+
+Everything lands in one gallery that the host and the guests watch fill up while the event is still running. A live slideshow can put the same stream on a screen at the venue, and guests interact with each other's uploads inside the gallery, private to the event — the feature the copy credits for double the photos and five times the video. Once the day is over the host downloads the lot as a full-resolution zip; the gallery itself stays online for 12 to 24 months depending on the plan.
+
+Around that core sit the pieces an event actually needs: digital invitations with RSVPs, a written and video guestbook delivered as a CSV, content moderation, 20 colour themes, and 180+ Canva templates for the printed signage.
+
+The site sells this across seven kinds of event — weddings, engagements, parties, kids' parties, business events, memorials and seasonal holidays — each with its own page and its own photography. Prices run from $49 to $119 per gallery, converted into six currencies, and every page reads in English, Hungarian or Romanian.
+
+## Running it
+
 ```bash
 npm run dev     # http://localhost:3000
 npm run build   # production build, prerenders all 21 routes
