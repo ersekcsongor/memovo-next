@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useT } from "@/components/LanguageProvider";
 
 /** Cookie consent bar, styled from the live site's consent CSS variables. */
@@ -11,15 +11,33 @@ export default function ConsentBar() {
   const [marketing, setMarketing] = useState(false);
   const t = useT();
 
+  const barRef = useRef<HTMLDivElement>(null);
+
+  // The bar is fixed to the bottom, so the page reserves exactly its height underneath.
   useEffect(() => {
     document.body.classList.toggle("consent-open", open);
-    return () => document.body.classList.remove("consent-open");
-  }, [open]);
+    if (!open) {
+      document.body.style.removeProperty("--consent-height");
+      return;
+    }
+    const el = barRef.current;
+    if (!el) return;
+    const publish = () => document.body.style.setProperty("--consent-height", `${el.offsetHeight}px`);
+    publish();
+    const ro = new ResizeObserver(publish);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      document.body.classList.remove("consent-open");
+      document.body.style.removeProperty("--consent-height");
+    };
+  }, [open, showPrefs]);
 
   if (!open) return null;
 
   return (
     <div
+      ref={barRef}
       className="fixed inset-x-0 bottom-0 border-t px-5 py-2.5"
       style={{
         zIndex: "var(--consent-z-index)" as unknown as number,
@@ -33,14 +51,14 @@ export default function ConsentBar() {
         <span>{t("consent.text")}</span>
         <button
           onClick={() => setOpen(false)}
-          className="rounded-full px-4 py-1.5"
+          className="inline-flex min-h-11 items-center rounded-full px-4"
           style={{ background: "var(--consent-accept-bg)", color: "var(--consent-accept-color)" }}
         >
           {t("consent.acceptAll")}
         </button>
         <button
           onClick={() => setOpen(false)}
-          className="rounded-full border px-4 py-1.5"
+          className="inline-flex min-h-11 items-center rounded-full border px-4"
           style={{
             background: "var(--consent-cancel-bg)",
             color: "var(--consent-cancel-color)",
@@ -52,7 +70,7 @@ export default function ConsentBar() {
         <button
           onClick={() => setShowPrefs((v) => !v)}
           aria-expanded={showPrefs}
-          className="rounded-full px-4 py-1.5"
+          className="inline-flex min-h-11 items-center rounded-full px-4"
           style={{ background: "var(--consent-preferences-bg)", color: "var(--consent-preferences-color)" }}
         >
           {t("consent.preferences")}
@@ -75,7 +93,7 @@ export default function ConsentBar() {
           </label>
           <button
             onClick={() => setOpen(false)}
-            className="rounded-full px-4 py-1.5"
+            className="inline-flex min-h-11 items-center rounded-full px-4"
             style={{ background: "var(--consent-accept-bg)", color: "var(--consent-accept-color)" }}
           >
             {t("consent.save")}

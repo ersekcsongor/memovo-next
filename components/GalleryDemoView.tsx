@@ -30,7 +30,7 @@ export default function GalleryDemoView() {
           <div className="mb-12 flex flex-wrap justify-center gap-10 text-center">
             {stats.map((s) => (
               <div key={s.label}>
-                <p className="font-heading text-3xl font-bold text-coral">{s.n}</p>
+                <p className="font-heading text-3xl font-bold text-coral-ink">{s.n}</p>
                 <p className="text-sm text-navy/60">{s.label}</p>
               </div>
             ))}

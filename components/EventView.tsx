@@ -12,7 +12,7 @@ import {
   CtaBand,
   FeatureGrid,
   HeroImage,
-  PressLogos,
+  PressStrip,
   QuoteBand,
   Stats,
   StepsGrid,
@@ -46,7 +46,7 @@ export default function EventView({ event }: { event: EventPage }) {
 
       <section className="bg-blush py-14 text-center">
         <Container>
-          <h1 className="mb-5 font-accent text-2xl text-coral md:text-4xl">{copy.heading}</h1>
+          <h1 className="mb-5 font-accent text-2xl text-coral-ink md:text-4xl">{copy.heading}</h1>
           <p className="mx-auto mb-3 max-w-3xl text-navy/80">{copy.intro}</p>
           <p className="mx-auto max-w-3xl text-navy/80">{copy.sub}</p>
         </Container>
@@ -54,7 +54,7 @@ export default function EventView({ event }: { event: EventPage }) {
 
       <section className="bg-white py-8">
         <Container className="text-center">
-          <p className="mb-5 font-accent text-coral">{copy.tagline}</p>
+          <p className="mb-5 font-accent text-coral-ink">{copy.tagline}</p>
           <div className="flex flex-wrap justify-center gap-3">
             {copy.tabs.map((tab) => (
               <a
@@ -92,12 +92,12 @@ export default function EventView({ event }: { event: EventPage }) {
           <div>
             <h2 className="mb-4 font-accent text-2xl md:text-3xl">{copy.whyTitle}</h2>
             <p className="mb-5 text-navy/80">{copy.whyCopy}</p>
-            <p className="mb-6 font-accent text-lg text-coral">{copy.quote}</p>
+            <p className="mb-6 font-accent text-lg text-coral-ink">{copy.quote}</p>
             <div className="flex gap-4">
-              <Link href="/how-it-works" className="rounded-full bg-coral px-6 py-2.5 text-sm font-semibold text-white">
+              <Link href="/how-it-works" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy">
                 {t("cta.howItWorks")}
               </Link>
-              <Link href="/pricing" className="rounded-full border-2 border-navy px-6 py-2.5 text-sm font-semibold">
+              <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold">
                 {t("cta.pricing")}
               </Link>
             </div>
@@ -114,7 +114,7 @@ export default function EventView({ event }: { event: EventPage }) {
       </section>
 
       <section className="bg-coral py-8 text-center">
-        <h2 className="font-heading text-xl font-bold text-white md:text-2xl">{t("features.bandEvents")}</h2>
+        <h2 className="font-heading text-xl font-bold text-navy md:text-2xl">{t("features.bandEvents")}</h2>
       </section>
       <section className="bg-white py-16">
         <FeatureGrid features={FEATURES} />
@@ -126,7 +126,7 @@ export default function EventView({ event }: { event: EventPage }) {
       <section className="bg-white py-16 text-center">
         <Container>
           <h2 className="mb-2 font-accent text-2xl md:text-3xl">{t("page.themes.heading")}</h2>
-          <p className="mb-10 text-xs font-semibold tracking-wide text-coral">{t("page.themes.tap")}</p>
+          <p className="mb-10 text-xs font-semibold tracking-wide text-coral-ink">{t("page.themes.tap")}</p>
           <div className="mb-10 flex flex-wrap justify-center gap-5">
             {THEMES.slice(0, 10).map((theme) => (
               <Link key={theme.name} href="/design-themes" className="group w-24">
@@ -134,11 +134,11 @@ export default function EventView({ event }: { event: EventPage }) {
                   className="mx-auto mb-2 block h-16 w-16 rounded-full border-4 border-white shadow-lg transition-transform group-hover:scale-110"
                   style={{ background: theme.color }}
                 />
-                <span className="block font-heading text-xs group-hover:text-coral">{theme.name}</span>
+                <span className="block font-heading text-xs group-hover:text-coral-ink">{theme.name}</span>
               </Link>
             ))}
           </div>
-          <Link href="/design-themes" className="rounded-full border-2 border-navy px-6 py-2.5 text-sm font-semibold">
+          <Link href="/design-themes" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold">
             {t("cta.seeAllThemes")}
           </Link>
         </Container>
@@ -148,25 +148,25 @@ export default function EventView({ event }: { event: EventPage }) {
         <Stats />
       </section>
 
-      <PressLogos />
+      <PressStrip />
 
       <section id="pricing" className="scroll-mt-6 bg-white py-20">
         <Container>
           <div className="mb-4 text-center">
-            <h2 className="font-accent text-2xl text-coral md:text-4xl">{copy.pricingTitle}</h2>
+            <h2 className="font-accent text-2xl text-coral-ink md:text-4xl">{copy.pricingTitle}</h2>
             <p className="mt-2 text-navy/70">{t("page.pricing.tailoredSub")}</p>
           </div>
           <PricingSection plans={plans} />
-          <p className="mt-10 text-center text-xs text-navy/50">{t("page.pricing.footnote")}</p>
+          <p className="mx-auto mt-10 max-w-2xl text-center text-xs text-navy/50">{t("page.pricing.footnote")}</p>
         </Container>
       </section>
 
       {/* Demo */}
       <section className="bg-white py-16 text-center">
         <Container>
-          <h2 className="mb-4 font-accent text-2xl text-coral md:text-3xl">{t("wed.demoTitle")}</h2>
+          <h2 className="mb-4 font-accent text-2xl text-coral-ink md:text-3xl">{t("wed.demoTitle")}</h2>
           <p className="mx-auto mb-8 max-w-2xl text-navy/80">{t("wed.demoBody")}</p>
-          <Link href="/how-it-works" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-white">
+          <Link href="/how-it-works" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-navy">
             {t("cta.freeDemo")}
           </Link>
         </Container>
@@ -174,7 +174,7 @@ export default function EventView({ event }: { event: EventPage }) {
 
       <section className="bg-coral py-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-white">{t("wed.embrace")}</p>
+          <p className="text-navy">{t("wed.embrace")}</p>
         </div>
       </section>
 
@@ -186,7 +186,7 @@ export default function EventView({ event }: { event: EventPage }) {
             <p>{t("wed.whatIs1")}</p>
             <p>{t("wed.whatIs2")}</p>
             <p>{t("wed.whatIs3")}</p>
-            <p className="font-accent text-lg text-coral">{t("wed.whatIsQuote")}</p>
+            <p className="font-accent text-lg text-coral-ink">{t("wed.whatIsQuote")}</p>
           </div>
         </div>
       </section>

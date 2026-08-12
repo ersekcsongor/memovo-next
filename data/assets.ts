@@ -51,16 +51,6 @@ export const GALLERY_PHOTOS = [
   { src: `${U}/video-message.jpg`, alt: "Video message card at a reception" },
 ] as const;
 
-export const PRESS_LOGOS = [
-  { src: `${U}/Marie-Claire-logo-scaled-e1776127405838.png`, alt: "Marie Claire" },
-  { src: `${U}/bridal-journey-logo.png`, alt: "The Bridal Journey" },
-  { src: `${U}/the-knot-logo.png`, alt: "The Knot" },
-  { src: `${U}/Cosmopolitan-logo.png`, alt: "Cosmopolitan" },
-  { src: `${U}/FINANCIAL-REVIEW-LOGO.png`, alt: "Australian Financial Review" },
-  { src: `${U}/DAILY-MAIL-LOGO-1.png`, alt: "Daily Mail" },
-  { src: `${U}/polka-dot-weddings-bw.png`, alt: "Polka Dot Weddings" },
-] as const;
-
 export const HOME_TILES = [
   { href: "/weddings", label: "Weddings", src: `${U}/tile-weddings.jpg` },
   { href: "/events/party", label: "Parties", src: `${U}/PartyPackageImage.jpg` },
@@ -80,15 +70,6 @@ export const FLAGS = [
 ] as const;
 
 /** One celebration photo per customer review, keyed by the reviewer's first name. */
-export const REVIEW_PHOTOS = {
-  melanie: { src: `${U}/tile-weddings.jpg`, alt: "Couple on their wedding day" },
-  kithy: { src: `${U}/tile-engagements.jpg`, alt: "Couple celebrating their engagement" },
-  nicolette: { src: `${U}/guest-scanning.jpg`, alt: "Guest scanning a wedding QR code" },
-  kimberly: { src: `${U}/couple-celebrating.jpg`, alt: "Couple celebrating their wedding day" },
-  christopher: { src: `${U}/guests-celebrating.jpg`, alt: "Guests enjoying an event" },
-  kate: { src: `${U}/hero-wedding.jpg`, alt: "Wedding celebration with a QR code sign" },
-} as const;
-
 export const WHATS_NEW_IMG = `${U}/memovo-youtube-overlay-768.webp`;
 export const PODCAST_IMG = `${U}/podcast-cover.png`;
 export const COUPLE_IMG = `${U}/couple-celebrating.jpg`;
