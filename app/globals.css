@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* Design tokens taken from the live site's Elementor globals. */
+@theme {
+  --color-navy: #072a47;
+  --color-tan: #e4d2be;
+  --color-coral: #e58783;
+  --color-gray-100: #f3f5f8;
+  --color-gray-200: #c8d5dc;
+  --color-gray-300: #cdd4da;
+  --color-offwhite: #f9fafd;
+  --color-cream: #f9f4ef;
+  --color-blush: #fdecea;
+  --color-pinkband: #f7c9c6;
+  --color-teal: #69c9ca;
+  --color-orange: #fcbe87;
+  --color-pinklight: #fcd8d8;
+  --color-footerpink: #fbd9d6;
+  --color-forest: #0b1a12;
+
+  --font-heading: var(--font-comfortaa), sans-serif;
+  --font-body: var(--font-montserrat), sans-serif;
+  --font-accent: var(--font-playfair), serif;
+
+  /* Semantic tokens in the shadcn naming scheme, mapped onto the palette above.
+     Components copied from shadcn registries reference these names, so this
+     mapping lands them on the Memovo colours with no class edits. */
+  --color-background: #ffffff;
+  --color-foreground: #072a47;
+  --color-card: #f9f4ef;
+  --color-card-foreground: #072a47;
+  --color-muted: #f3f5f8;
+  /* Navy at ~70%, the body-copy tone used across the site. Reads at 5.5:1 on cream. */
+  --color-muted-foreground: #4f6479;
+  --color-border: #cdd4da;
+  --color-secondary: #fdecea;
+  --color-secondary-foreground: #072a47;
+}
+
+/* Cookie consent bar tokens, mirrored from the live wpconsent vars. */
+:root {
+  --wpconsent-z-index: 900000;
+  --wpconsent-background: #faf4ef;
+  --wpconsent-text: #072a46;
+  --wpconsent-outline-color: rgba(7, 42, 70, 0.2);
+  --wpconsent-accept-bg: #eb8782;
+  --wpconsent-cancel-bg: #ffffff;
+  --wpconsent-preferences-bg: #ffffff;
+  --wpconsent-accept-color: #ffffff;
+  --wpconsent-cancel-color: #072a46;
+  --wpconsent-preferences-color: #072a46;
+  --wpconsent-font-size: 12px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Elementor global text style: Montserrat 400, 14px / 26px */
+body {
+  font-family: var(--font-body);
+  color: var(--color-navy);
+  font-size: 14px;
+  line-height: 26px;
+  -webkit-font-smoothing: antialiased;
+  background: #fff;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+}
+
+/* FAQ accordion markers */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details > summary::after {
+  content: "+";
+  float: right;
+  font-size: 1.25rem;
+  color: var(--color-coral);
+}
+details[open] > summary::after {
+  content: "\2212";
+}
+
+/* Auto-scrolling carousel: 350px slides, 8px gap, drifting left,
+   matching the live Swiper (8px transparent border + 25px radius). */
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+.carousel-track {
+  display: flex;
+  width: max-content;
+  animation: carousel-scroll 40s linear infinite;
+}
+.carousel-slide {
+  flex: 0 0 350px;
+  margin-right: 8px;
+}
+.carousel-slide img {
+  width: 350px;
+  height: 490px;
+  object-fit: cover;
+  display: block;
+  border: 8px solid transparent;
+  border-radius: 25px;
+  box-sizing: border-box;
+}
+.carousel-slide.short img {
+  height: 300px;
+}
+/* one full set = 8 slides x (350 + 8) = 2864px */
+@keyframes carousel-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2864px, 0, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    animation: none;
+  }
+}
+
+/* Event category tiles */
+.event-tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.event-tile img {
+  transition: transform 0.4s ease;
+}
+.event-tile:hover img {
+  transform: scale(1.05);
+}
