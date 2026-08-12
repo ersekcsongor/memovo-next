@@ -31,7 +31,7 @@ Each route splits into a server shim that carries `metadata` and a `"use client"
 
 Page copy and assets live in `data/`, so the same content feeds several routes:
 
-- `data/assets.ts` — every image URL, hot-linked from the source CDN at `https://assets.memovo.com` (the host the photos still live on). No images are stored in this repo.
+- `data/assets.ts` — every image path. The files ship with the repo in `public/images` and `public/flags`.
 - `data/content.ts` — steps, features, plans, FAQs, reviews and gallery themes. Text fields hold translation keys.
 - `data/events.ts` — the seven event pages, typed as `EventPage`, with a `copy` block per language.
 - `data/currency.ts` — the six currencies and their rates.
@@ -51,7 +51,7 @@ Customer review quotes stay in English — they are verbatim words from named pe
 
 ## Images
 
-`next.config.ts` allowlists the two CDN hosts the photos load from, `memovo.com` and `assets.memovo.com`, in `images.remotePatterns`, and the built-in optimizer caches each file on disk for 30 days. Requesting the originals directly from the browser makes the CDN drop responses once a page fires 30+ of them at once, so requests go through the optimizer.
+All 52 photos and the 6 language flags live in `public/images` and `public/flags`, about 6 MB in total. Nothing is fetched from a remote host, so `images.remotePatterns` is empty and the pages render with no third-party requests. The built-in optimizer serves resized WebP copies and caches them on disk for 30 days.
 
 Carousel slides load eagerly: they sit outside the viewport horizontally, where lazy loading never triggers.
 

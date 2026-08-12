@@ -1,6 +1,6 @@
 import type { Lang } from "./i18n";
 
-const U = "https://assets.memovo.com";
+const U = "/images";
 
 /** The prose that changes per language. */
 export type EventCopy = {
@@ -337,7 +337,7 @@ export const EVENTS: EventPage[] = [
     label: "Seasonal Holidays",
     title: "Effortless Holiday Photo Sharing with QR Codes",
     description: "Seasonal holiday photo collection for Christmas, New Year's Eve, Thanksgiving and Easter.",
-    hero: `${U}/Memovo-Nov-2024-199-scaled.jpg`,
+    hero: `${U}/hero-seasonal-holidays.jpg`,
     prices: TIERS,
     copy: {
       en: {

@@ -1,8 +1,7 @@
-/* Every image is hot-linked from the live memovo.com CDN. Nothing is stored locally. */
+/* Every image is served from public/images. Nothing is loaded from a remote host. */
 
-const U = "https://assets.memovo.com";
+const U = "/images";
 
-export const LOGO = `${U}/2023/11/MEMOVO-TM-LOGO_DARK-PINK_HEX-EB8783-2-e1785123476138-1024x288.webp`;
 export const PHONE = `${U}/phone-invite.png`;
 export const BLUR_BG = `${U}/backdrop-blur.jpg`;
 export const BLUR_BG_2 = `${U}/backdrop-blur-2.jpg`;
@@ -30,28 +29,26 @@ export const FEATURE_ICONS = {
   zip: `${U}/Infographics_Pink_-24-e1764633884638.png`,
 } as const;
 
-const T = `${U}/elementor/thumbs`;
-
 export const TEMPLATE_PHOTOS = [
-  { src: `${T}/floral-qr-sign.jpg`, alt: "Floral display with a QR code sign on an easel at an outdoor ceremony" },
-  { src: `${T}/i-spy-card.jpg`, alt: "I Spy game card with a QR code" },
-  { src: `${T}/qr-signage.jpg`, alt: "Wedding QR code signage" },
-  { src: `${T}/welcome-banner.jpg`, alt: "Wedding banner with the couple's names and a QR code" },
-  { src: `${T}/take-home-card.jpg`, alt: "Mini take-home QR code card" },
-  { src: `${T}/table-card.jpg`, alt: "Wedding table card template" },
-  { src: `${T}/guest-scanning.jpg`, alt: "Guest scanning a wedding QR code" },
-  { src: `${T}/video-message.jpg`, alt: "Two champagne glasses with a video message card at a reception" },
+  { src: `${U}/floral-qr-sign.jpg`, alt: "Floral display with a QR code sign on an easel at an outdoor ceremony" },
+  { src: `${U}/i-spy-card.jpg`, alt: "I Spy game card with a QR code" },
+  { src: `${U}/qr-signage.jpg`, alt: "Wedding QR code signage" },
+  { src: `${U}/welcome-banner.jpg`, alt: "Wedding banner with the couple's names and a QR code" },
+  { src: `${U}/take-home-card.jpg`, alt: "Mini take-home QR code card" },
+  { src: `${U}/table-card.jpg`, alt: "Wedding table card template" },
+  { src: `${U}/guest-scanning.jpg`, alt: "Guest scanning a wedding QR code" },
+  { src: `${U}/video-message.jpg`, alt: "Two champagne glasses with a video message card at a reception" },
 ] as const;
 
 export const GALLERY_PHOTOS = [
-  { src: `${T}/guests-celebrating.jpg`, alt: "Guests enjoying an event" },
-  { src: `${T}/qr-signage-2.jpg`, alt: "Wedding QR code signage" },
-  { src: `${T}/welcome-banner.jpg`, alt: "Wedding welcome banner with a QR code" },
-  { src: `${T}/floral-qr-sign.jpg`, alt: "Floral display with a QR code sign" },
-  { src: `${T}/i-spy-card.jpg`, alt: "I Spy game card with a QR code" },
-  { src: `${T}/couple-celebrating.jpg`, alt: "Couple celebrating their wedding day" },
-  { src: `${T}/take-home-card.jpg`, alt: "Mini take-home QR code card" },
-  { src: `${T}/video-message.jpg`, alt: "Video message card at a reception" },
+  { src: `${U}/guests-celebrating.jpg`, alt: "Guests enjoying an event" },
+  { src: `${U}/qr-signage-2.jpg`, alt: "Wedding QR code signage" },
+  { src: `${U}/welcome-banner.jpg`, alt: "Wedding welcome banner with a QR code" },
+  { src: `${U}/floral-qr-sign.jpg`, alt: "Floral display with a QR code sign" },
+  { src: `${U}/i-spy-card.jpg`, alt: "I Spy game card with a QR code" },
+  { src: `${U}/couple-celebrating.jpg`, alt: "Couple celebrating their wedding day" },
+  { src: `${U}/take-home-card.jpg`, alt: "Mini take-home QR code card" },
+  { src: `${U}/video-message.jpg`, alt: "Video message card at a reception" },
 ] as const;
 
 export const PRESS_LOGOS = [
@@ -86,12 +83,12 @@ export const FLAGS = [
 export const REVIEW_PHOTOS = {
   melanie: { src: `${U}/tile-weddings.jpg`, alt: "Couple on their wedding day" },
   kithy: { src: `${U}/tile-engagements.jpg`, alt: "Couple celebrating their engagement" },
-  nicolette: { src: `${T}/guest-scanning.jpg`, alt: "Guest scanning a wedding QR code" },
-  kimberly: { src: `${T}/couple-celebrating.jpg`, alt: "Couple celebrating their wedding day" },
-  christopher: { src: `${T}/guests-celebrating.jpg`, alt: "Guests enjoying an event" },
+  nicolette: { src: `${U}/guest-scanning.jpg`, alt: "Guest scanning a wedding QR code" },
+  kimberly: { src: `${U}/couple-celebrating.jpg`, alt: "Couple celebrating their wedding day" },
+  christopher: { src: `${U}/guests-celebrating.jpg`, alt: "Guests enjoying an event" },
   kate: { src: `${U}/hero-wedding.jpg`, alt: "Wedding celebration with a QR code sign" },
 } as const;
 
 export const WHATS_NEW_IMG = `${U}/memovo-youtube-overlay-768.webp`;
-export const PODCAST_IMG = `${T}/podcast-cover.png`;
-export const COUPLE_IMG = `${T}/couple-celebrating.jpg`;
+export const PODCAST_IMG = `${U}/podcast-cover.png`;
+export const COUPLE_IMG = `${U}/couple-celebrating.jpg`;

@@ -5,14 +5,9 @@ const nextConfig: NextConfig = {
   // The static site one level up has its own lockfile, so pin the root here.
   turbopack: { root: path.resolve(__dirname) },
   images: {
-    // Images are served from the live memovo.com CDN, nothing is stored locally.
-    // Requests go through the built-in optimizer, which caches each file on disk.
-    // The CDN drops requests when a page fires 30+ of them at once.
+    // Every image ships in public/, so the optimizer reads them off disk and no
+    // remote host is involved. Optimized copies stay cached for 30 days.
     minimumCacheTTL: 60 * 60 * 24 * 30,
-    remotePatterns: [
-      { protocol: "https", hostname: "memovo.com", pathname: "/uploads/**" },
-      { protocol: "https", hostname: "assets.memovo.com", pathname: "/flags/**" },
-    ],
   },
 };
 
