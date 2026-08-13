@@ -114,12 +114,13 @@ select {
   font-size: 16px;
 }
 
-/* Elementor global text style: Montserrat 400, 14px / 26px */
+/* Montserrat 400. 16px is the floor that keeps mobile readable and stops iOS
+   zooming; 1.6 sits inside the 1.5-1.75 band and holds the old 26px rhythm. */
 body {
   font-family: var(--font-body);
   color: var(--color-navy);
-  font-size: 14px;
-  line-height: 26px;
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   background: #fff;
 }

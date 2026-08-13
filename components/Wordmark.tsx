@@ -6,7 +6,7 @@ export default function Wordmark({ className = "" }: { className?: string }) {
   return (
     <span className={`font-heading leading-none font-bold tracking-tight text-coral-ink ${className}`}>
       memovo
-      <span className="align-super text-[0.45em] font-normal">™</span>
+      <span className="align-super text-xs font-normal">™</span>
     </span>
   );
 }

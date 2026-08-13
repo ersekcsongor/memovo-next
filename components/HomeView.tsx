@@ -118,7 +118,7 @@ export default function HomeView() {
           <p className="mb-8 text-navy/80">{t("page.pricing.tailoredSub")}</p>
           <div className="flex flex-wrap justify-center gap-3">
             {PRICING_LINKS.map((p) => (
-              <Link key={p.href} href={p.href} className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-xs font-semibold text-navy transition hover:brightness-95">
+              <Link key={p.href} href={p.href} className="inline-flex min-h-11 items-center rounded-full border border-coral bg-blush px-5 text-xs font-semibold text-navy transition-colors hover:bg-pinklight">
                 {t(p.key)} – {t("cta.pricing")}
               </Link>
             ))}
@@ -165,7 +165,7 @@ export default function HomeView() {
       <CtaBand text={t("home.cta")} cta={t("cta.howItWorks")} href="/how-it-works" curveFrom="#FCD8D8" />
 
       <section className="bg-white py-20">
-        <div className="mx-auto max-w-4xl px-6 text-center">
+        <div className="mx-auto max-w-[70ch] px-6 text-center">
           <h2 className="mb-8 font-accent text-2xl md:text-3xl">{t("home.whatIsTitle")}</h2>
           <div className="space-y-5 text-sm leading-relaxed text-navy/70 md:text-base">
             <p>{t("home.whatIs1")}</p>
@@ -177,7 +177,7 @@ export default function HomeView() {
       <section className="bg-white pb-20">
         <Container>
           <h2 className="mb-6 text-sm font-semibold text-coral-ink">{t("home.moreTitle")}</h2>
-          <div className="space-y-5 text-sm text-navy/70">
+          <div className="max-w-[70ch] space-y-5 text-sm text-navy/70">
             {MORE_KEYS.map((k) => (
               <p key={k}>{t(k)}</p>
             ))}
