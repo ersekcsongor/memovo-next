@@ -1,5 +1,9 @@
 node_modules
 dist
 uploads
-.env
+
+# Connection strings and keys live here and never leave the machine.
+.env*
+!.env.example
+
 *.log
