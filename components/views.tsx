@@ -52,7 +52,7 @@ export function PricingView() {
           <p className="mb-8 text-navy/80">{t("page.pricing.tailoredSub")}</p>
           <div className="flex flex-wrap justify-center gap-3">
             {EVENT_PRICING.map((p) => (
-              <Link key={p.href} href={p.href} className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-xs font-semibold text-navy transition hover:brightness-95">
+              <Link key={p.href} href={p.href} className="inline-flex min-h-11 items-center rounded-full border border-coral bg-blush px-5 text-xs font-semibold text-navy transition-colors hover:bg-pinklight">
                 {t(p.key)} – {t("cta.pricing")}
               </Link>
             ))}

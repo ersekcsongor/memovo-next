@@ -170,13 +170,13 @@ export default function EventView({ event }: { event: EventPage }) {
 
       <section className="bg-coral py-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-navy">{t("wed.embrace")}</p>
+          <p className="mx-auto max-w-[65ch] text-navy">{t("wed.embrace")}</p>
         </div>
       </section>
 
       {/* What is memovo */}
       <section className="bg-white py-20">
-        <div className="mx-auto max-w-4xl px-6 text-center">
+        <div className="mx-auto max-w-[70ch] px-6 text-center">
           <h2 className="mb-8 font-accent text-2xl md:text-3xl">{t("wed.whatIsTitle")}</h2>
           <div className="space-y-5 text-navy/75">
             <p>{t("wed.whatIs1")}</p>
