@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { EVENTS } from "@/data/events";
 import { LANGS } from "@/data/i18n";
@@ -91,7 +92,14 @@ function LanguagePicker() {
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
   const t = useT();
+
+  // The current page is marked in the nav, so the visitor can see where they are.
+  const navClass = (href: string) =>
+    `inline-flex min-h-11 items-center font-heading text-base text-coral-ink${
+      pathname === href ? " underline decoration-2 underline-offset-8" : ""
+    }`;
 
   const eventLinks = [
     { href: "/weddings", label: t("event.weddings") },
@@ -125,18 +133,18 @@ export default function Header() {
 
         <nav className="hidden items-center gap-9 lg:flex">
           <Dropdown label={t("nav.events")} items={eventLinks} />
-          <Link href="/how-it-works" className="inline-flex min-h-11 items-center font-heading text-base text-coral-ink">
+          <Link href="/how-it-works" aria-current={pathname === "/how-it-works" ? "page" : undefined} className={navClass("/how-it-works")}>
             {t("nav.howItWorks")}
           </Link>
           <Dropdown label={t("nav.pricing")} items={pricing} />
           <Dropdown label={t("nav.about")} items={about} />
-          <Link href="/faqs" className="inline-flex min-h-11 items-center font-heading text-base text-coral-ink">
+          <Link href="/faqs" aria-current={pathname === "/faqs" ? "page" : undefined} className={navClass("/faqs")}>
             {t("nav.helpCenter")}
           </Link>
-          <Link href="/gallery-demo" className="inline-flex min-h-11 items-center font-heading text-base text-coral-ink">
+          <Link href="/gallery-demo" aria-current={pathname === "/gallery-demo" ? "page" : undefined} className={navClass("/gallery-demo")}>
             {t("nav.gallery")}
           </Link>
-          <Link href="/gallery" className="inline-flex min-h-11 items-center font-heading text-base text-coral-ink">
+          <Link href="/gallery" aria-current={pathname === "/gallery" ? "page" : undefined} className={navClass("/gallery")}>
             {t("nav.photoGallery")}
           </Link>
         </nav>
@@ -175,30 +183,30 @@ export default function Header() {
 
       {mobileOpen && (
         <nav className="border-t border-gray-300/60 px-6 py-2 text-sm lg:hidden">
-          <Link href="/" className="flex min-h-11 items-center">
+          <Link href="/" aria-current={pathname === "/" ? "page" : undefined} className="flex min-h-11 items-center aria-[current=page]:font-semibold">
             {t("nav.home")}
           </Link>
           {eventLinks.map((i) => (
-            <Link key={i.href} href={i.href} className="flex min-h-11 items-center">
+            <Link key={i.href} href={i.href} aria-current={pathname === i.href ? "page" : undefined} className="flex min-h-11 items-center aria-[current=page]:font-semibold">
               {i.label}
             </Link>
           ))}
-          <Link href="/how-it-works" className="flex min-h-11 items-center">
+          <Link href="/how-it-works" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
             {t("nav.howItWorks")}
           </Link>
-          <Link href="/pricing" className="flex min-h-11 items-center">
+          <Link href="/pricing" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
             {t("nav.pricing")}
           </Link>
-          <Link href="/contact" className="flex min-h-11 items-center">
+          <Link href="/contact" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
             {t("nav.contact")}
           </Link>
-          <Link href="/faqs" className="flex min-h-11 items-center">
+          <Link href="/faqs" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
             {t("nav.helpCenter")}
           </Link>
-          <Link href="/gallery-demo" className="flex min-h-11 items-center">
+          <Link href="/gallery-demo" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
             {t("nav.gallery")}
           </Link>
-          <Link href="/gallery" className="flex min-h-11 items-center">
+          <Link href="/gallery" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
             {t("nav.photoGallery")}
           </Link>
         </nav>
