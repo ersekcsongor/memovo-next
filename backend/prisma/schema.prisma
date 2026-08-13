@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  events    Event[]
+}
+
+model Event {
+  id               String    @id @default(uuid())
+  slug             String    @unique
+  name             String
+  ownerId          String
+  owner            User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  isPublic         Boolean   @default(true)
+  requiresApproval Boolean   @default(false)
+  expiresAt        DateTime?
+  createdAt        DateTime  @default(now())
+  photos           Photo[]
+
+  @@index([ownerId])
+}
+
+model Photo {
+  id           String      @id @default(uuid())
+  eventId      String
+  event        Event       @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  uploaderName String?
+  fileUrl      String
+  thumbnailUrl String?
+  /// The storage keys are kept so a delete can clear R2 as well as the row.
+  fileKey      String
+  thumbnailKey String?
+  status       PhotoStatus @default(APPROVED)
+  uploadedAt   DateTime    @default(now())
+
+  @@index([eventId, status])
+}
+
+enum PhotoStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Lead {
+  id        String     @id @default(uuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  locale    String     @default("en")
+  status    LeadStatus @default(NEW)
+  createdAt DateTime   @default(now())
+
+  @@index([status, createdAt])
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  CONVERTED
+  CLOSED
+}

@@ -76,14 +76,22 @@ Carousel slides load eagerly: they sit outside the viewport horizontally, where 
 
 ## Backend
 
-There is none. The repo has no API routes, no server actions, no database and no environment variables — `app/` holds page files only, and the seven runtime dependencies (`next`, `react`, `react-dom`, `framer-motion`, `@tabler/icons-react`, `clsx`, `tailwind-merge`) are all frontend packages.
+A separate NestJS API lives in [`backend/`](backend/README.md), built from
+`project-backend-spec.md`. It owns accounts, events, guest photo uploads with moderation,
+and the contact form leads, on PostgreSQL through Prisma. It runs on its own port and the
+pages call it over HTTP; the two never share a process.
 
-Two pieces of work still happen outside the browser:
+The one place the pages talk to it today is the contact form, which posts to
+`POST /api/leads`. `NEXT_PUBLIC_API_URL` points at the API and falls back to
+`http://localhost:4000/api`.
+
+Inside this folder there is still no server code: `app/` holds page files only, and the
+seven runtime dependencies (`next`, `react`, `react-dom`, `framer-motion`,
+`@tabler/icons-react`, `clsx`, `tailwind-merge`) are all frontend packages. Two pieces of
+work happen outside the browser:
 
 - **Build time** — `next build` renders all 19 routes to HTML and resolves `generateStaticParams` for the event pages. The output is a folder of static files.
-- **Serve time** — `next start` runs a Node process that hands back those files and resizes images on first request through `/_next/image`. No application code of ours executes there.
-
-Features that need a real server later — gallery uploads, guest accounts, payments — would arrive as a separate service. Nothing in this repo depends on one today.
+- **Serve time** — `next start` runs a Node process that hands back those files and resizes images on first request through `/_next/image`.
 
 ## Screenshots
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { GALLERY_PHOTOS } from "@/data/assets";
 import { ALL_FAQS, FEATURES, STEPS, THEMES, WEDDING_PLANS } from "@/data/content";
-import { useT } from "@/components/LanguageProvider";
+import { useLang, useT } from "@/components/LanguageProvider";
 import { PricingSection } from "@/components/Pricing";
 import {
   Carousel,
@@ -18,6 +18,9 @@ import {
   QuoteBand,
   StepsGrid,
 } from "@/components/Sections";
+
+/** The NestJS API. Set NEXT_PUBLIC_API_URL when the backend is not on localhost. */
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
 
 const EVENT_PRICING = [
   { href: "/weddings", key: "event.weddings" },
@@ -245,7 +248,8 @@ export function ThemesView() {
 
 export function ContactView() {
   const t = useT();
-  const [sent, setSent] = useState(false);
+  const { lang } = useLang();
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
   // `autoComplete` lets the browser fill the two fields it already knows.
   const fields = [
     { id: "name", label: t("page.contact.name"), type: "text", autoComplete: "name" },
@@ -253,20 +257,36 @@ export function ContactView() {
     { id: "subject", label: t("page.contact.subject"), type: "text", autoComplete: "off" },
   ];
 
+  // The submission goes to the NestJS API, which stores the lead and sends the confirmation.
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    setState("sending");
+    try {
+      const res = await fetch(`${API_URL}/leads`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name: String(form.get("name") ?? ""),
+          email: String(form.get("email") ?? ""),
+          subject: String(form.get("subject") ?? "") || undefined,
+          message: String(form.get("message") ?? ""),
+          locale: lang,
+        }),
+      });
+      setState(res.ok ? "sent" : "failed");
+    } catch {
+      setState("failed");
+    }
+  }
+
   return (
     <>
       <PageBanner heading={t("page.contact.heading")} sub={t("page.contact.sub")} />
 
       <section className="bg-white py-16">
         <Container className="grid gap-12 md:grid-cols-2">
-          <form
-            className="space-y-5"
-            onSubmit={(e) => {
-              // There is no backend here, so the form confirms locally.
-              e.preventDefault();
-              setSent(true);
-            }}
-          >
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <h2 className="font-heading text-xl font-bold">{t("page.contact.formTitle")}</h2>
             {fields.map((f) => (
               <div key={f.id}>
@@ -288,12 +308,21 @@ export function ContactView() {
               </label>
               <textarea id="message" name="message" rows={5} className="w-full rounded-lg border border-gray-300 px-4 py-3" />
             </div>
-            <button type="submit" className="rounded-full bg-coral px-7 py-3 font-semibold text-navy transition hover:brightness-95">
-              {t("page.contact.send")}
+            <button
+              type="submit"
+              disabled={state === "sending"}
+              className="rounded-full bg-coral px-7 py-3 font-semibold text-navy transition hover:brightness-95 disabled:opacity-50"
+            >
+              {state === "sending" ? t("page.contact.sending") : t("page.contact.send")}
             </button>
-            {sent && (
+            {state === "sent" && (
               <p role="status" className="rounded-lg bg-blush px-4 py-3 text-sm text-coral-ink">
-                {t("page.contact.sentDemo")}
+                {t("page.contact.sentOk")}
+              </p>
+            )}
+            {state === "failed" && (
+              <p role="alert" className="rounded-lg border border-coral bg-blush px-4 py-3 text-sm text-coral-ink">
+                {t("page.contact.sentFailed")}
               </p>
             )}
           </form>

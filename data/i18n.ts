@@ -289,7 +289,9 @@ const en = {
   "page.contact.workBody": "Wedding professionals, venues and affiliates can reach us through the same form. Mention your business in the subject line.",
   "page.contact.mediaTitle": "Media enquiries",
   "page.contact.mediaBody": "For press, interviews and brand assets, see",
-  "page.contact.sentDemo": "Thanks! This is a demo form, so nothing was sent. Reach us at hello@memovo.com.",
+  "page.contact.sending": "Sending…",
+  "page.contact.sentOk": "Thanks! Your message reached us and we answer within one working day.",
+  "page.contact.sentFailed": "That did not go through. Try again, or write to us at hello@memovo.com.",
 } as const;
 
 type BaseKey = keyof typeof en;
@@ -553,7 +555,9 @@ const hu: Record<BaseKey, string> = {
   "page.contact.workBody": "Esküvői szakemberek, helyszínek és partnerek ugyanezen az űrlapon érnek el minket. A tárgyban írd oda a vállalkozásod nevét.",
   "page.contact.mediaTitle": "Sajtómegkeresés",
   "page.contact.mediaBody": "Sajtóval, interjúkkal és márkaanyagokkal kapcsolatban lásd:",
-  "page.contact.sentDemo": "Köszönjük! Ez egy demó űrlap, így semmi nem ment el. Írj nekünk: hello@memovo.com.",
+  "page.contact.sending": "Küldés…",
+  "page.contact.sentOk": "Köszönjük! Az üzeneted megérkezett, egy munkanapon belül válaszolunk.",
+  "page.contact.sentFailed": "Az üzenet nem ment el. Próbáld újra, vagy írj a hello@memovo.com címre.",
 };
 
 const ro: Record<BaseKey, string> = {
@@ -813,7 +817,9 @@ const ro: Record<BaseKey, string> = {
   "page.contact.workBody": "Profesioniștii din nunți, locațiile și afiliații ne găsesc pe același formular. Scrie numele afacerii tale în subiect.",
   "page.contact.mediaTitle": "Solicitări de presă",
   "page.contact.mediaBody": "Pentru presă, interviuri și materiale de brand, vezi:",
-  "page.contact.sentDemo": "Mulțumim! Acesta e un formular demo, deci nu s-a trimis nimic. Scrie-ne la hello@memovo.com.",
+  "page.contact.sending": "Se trimite…",
+  "page.contact.sentOk": "Mulțumim! Mesajul tău a ajuns la noi și îți răspundem într-o zi lucrătoare.",
+  "page.contact.sentFailed": "Mesajul nu a plecat. Încearcă din nou sau scrie-ne la hello@memovo.com.",
 };
 
 export const DICTIONARIES: Record<Lang, Record<TranslationKey, string>> = {
