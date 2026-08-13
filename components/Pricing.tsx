@@ -49,7 +49,7 @@ export function PricingSection({ plans }: { plans: Plan[] }) {
                 {t("pricing.mostPopular")}
               </span>
             )}
-            <h3 className="mb-1 font-heading text-lg font-bold">{p.name}</h3>
+            <h2 className="mb-1 font-heading text-lg font-bold">{p.name}</h2>
             <p className="mb-1 text-3xl font-bold">{formatPrice(p.usd, currency, t("pricing.contactUs"))}</p>
             <p className="mb-4 text-xs text-navy/50">{t(p.note as never)}</p>
             <ul className="mb-8 space-y-2 text-sm text-navy/70">

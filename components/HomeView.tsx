@@ -65,7 +65,7 @@ export default function HomeView() {
         <Container className="mx-auto max-w-2xl text-center">
           <h2 className="mb-4 font-accent text-2xl md:text-3xl">{t("reviews.emptyTitle")}</h2>
           <p className="mb-8 text-navy/70">{t("reviews.emptyBody")}</p>
-          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-navy">
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-navy transition hover:brightness-95">
             {t("reviews.emptyCta")}
           </Link>
         </Container>
@@ -103,7 +103,7 @@ export default function HomeView() {
               </p>
               <p>{t("home.celebration4")}</p>
               <p className="font-accent text-lg text-coral-ink">{t("home.celebrationQuote")}</p>
-              <Link href="/how-it-works" className="mt-2 inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold">
+              <Link href="/how-it-works" className="mt-2 inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold transition-colors hover:bg-navy hover:text-white">
                 {t("cta.howItWorks")}
               </Link>
             </div>
@@ -118,7 +118,7 @@ export default function HomeView() {
           <p className="mb-8 text-navy/80">{t("page.pricing.tailoredSub")}</p>
           <div className="flex flex-wrap justify-center gap-3">
             {PRICING_LINKS.map((p) => (
-              <Link key={p.href} href={p.href} className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-xs font-semibold text-navy">
+              <Link key={p.href} href={p.href} className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-xs font-semibold text-navy transition hover:brightness-95">
                 {t(p.key)} – {t("cta.pricing")}
               </Link>
             ))}
@@ -156,7 +156,7 @@ export default function HomeView() {
       <section className="bg-pinklight py-16 text-center">
         <Container>
           <h2 className="mb-6 font-accent text-2xl md:text-3xl">{t("home.memoriesTitle")}</h2>
-          <Link href="/pricing" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-navy">
+          <Link href="/pricing" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-navy transition hover:brightness-95">
             {t("cta.pricing")}
           </Link>
         </Container>
