@@ -80,6 +80,26 @@ summary,
   cursor: pointer;
 }
 
+/* Taps register without the 300ms wait, and every control answers a press. */
+a,
+button,
+summary,
+[role="button"] {
+  touch-action: manipulation;
+}
+a:active,
+button:not(:disabled):active,
+[role="button"]:active {
+  transform: scale(0.98);
+}
+@media (prefers-reduced-motion: reduce) {
+  a:active,
+  button:not(:disabled):active,
+  [role="button"]:active {
+    transform: none;
+  }
+}
+
 /* Links inside running text carry an underline, so colour is not the only signal. */
 main p a:not([class*="rounded"]),
 section p a:not([class*="rounded"]) {
