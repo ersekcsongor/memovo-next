@@ -119,7 +119,7 @@ export default function Header() {
   ];
 
   return (
-    <header id="siteHeader" className="w-full bg-white">
+    <header id="siteHeader" className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-navy focus:px-4 focus:py-2 focus:text-white"

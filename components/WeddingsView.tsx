@@ -45,7 +45,7 @@ export default function WeddingsView() {
       </section>
 
       <section className="bg-blush py-16 md:py-[72px]">
-        <div className="mx-auto max-w-4xl px-6 text-center">
+        <div className="mx-auto max-w-[70ch] px-6 text-center">
           <span className="mb-6 inline-block rounded-full border border-coral px-5 py-1.5 text-xs font-semibold text-coral-ink">
             {t("wed.badge")}
           </span>
@@ -201,7 +201,7 @@ export default function WeddingsView() {
         <div className="absolute inset-0 bg-forest/45" />
         <Container className="relative text-center">
           <h2 className="mb-4 font-heading text-2xl font-bold text-coral-ink md:text-4xl">{t("wed.inviteTitle")}</h2>
-          <p className="mx-auto mb-14 max-w-2xl text-white">{t("wed.inviteBody")}</p>
+          <p className="mx-auto mb-14 max-w-[70ch] text-white">{t("wed.inviteBody")}</p>
           <Image src={INVITE_RSVP} alt="" width={640} height={480} className="mx-auto w-full max-w-md drop-shadow-2xl" />
         </Container>
       </section>
@@ -263,13 +263,13 @@ export default function WeddingsView() {
 
       <section className="bg-coral py-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-navy">{t("wed.embrace")}</p>
+          <p className="mx-auto max-w-[65ch] text-navy">{t("wed.embrace")}</p>
         </div>
       </section>
 
       {/* What is memovo */}
       <section className="bg-white py-20">
-        <div className="mx-auto max-w-4xl px-6 text-center">
+        <div className="mx-auto max-w-[70ch] px-6 text-center">
           <h2 className="mb-8 font-accent text-2xl md:text-3xl">{t("wed.whatIsTitle")}</h2>
           <div className="space-y-5 text-navy/75">
             <p>{t("wed.whatIs1")}</p>
@@ -283,7 +283,7 @@ export default function WeddingsView() {
       <section className="bg-cream py-16">
         <Container>
           <h2 className="mb-6 text-sm font-semibold text-coral-ink">{t("wed.moreTitle")}</h2>
-          <div className="space-y-5 text-sm text-navy/70">
+          <div className="max-w-[70ch] space-y-5 text-sm text-navy/70">
             {ABOUT_KEYS.map((k) => (
               <p key={k}>{t(k)}</p>
             ))}
