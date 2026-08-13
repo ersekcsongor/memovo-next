@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LanguageProvider>
           <ConsentBar />
           <Header />
-          <main>{children}</main>
+          <main id="main">{children}</main>
           <Footer />
           <ChatBubble />
         </LanguageProvider>

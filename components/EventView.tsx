@@ -93,10 +93,10 @@ export default function EventView({ event }: { event: EventPage }) {
             <p className="mb-5 text-navy/80">{copy.whyCopy}</p>
             <p className="mb-6 font-accent text-lg text-coral-ink">{copy.quote}</p>
             <div className="flex gap-4">
-              <Link href="/how-it-works" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy">
+              <Link href="/how-it-works" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy transition hover:brightness-95">
                 {t("cta.howItWorks")}
               </Link>
-              <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold">
+              <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold transition-colors hover:bg-navy hover:text-white">
                 {t("cta.pricing")}
               </Link>
             </div>
@@ -137,7 +137,7 @@ export default function EventView({ event }: { event: EventPage }) {
               </Link>
             ))}
           </div>
-          <Link href="/design-themes" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold">
+          <Link href="/design-themes" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold transition-colors hover:bg-navy hover:text-white">
             {t("cta.seeAllThemes")}
           </Link>
         </Container>
@@ -162,7 +162,7 @@ export default function EventView({ event }: { event: EventPage }) {
         <Container>
           <h2 className="mb-4 font-accent text-2xl text-coral-ink md:text-3xl">{t("wed.demoTitle")}</h2>
           <p className="mx-auto mb-8 max-w-2xl text-navy/80">{t("wed.demoBody")}</p>
-          <Link href="/how-it-works" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-navy">
+          <Link href="/how-it-works" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-navy transition hover:brightness-95">
             {t("cta.freeDemo")}
           </Link>
         </Container>

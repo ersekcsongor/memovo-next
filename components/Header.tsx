@@ -5,6 +5,7 @@ import { useState } from "react";
 import { EVENTS } from "@/data/events";
 import { LANGS } from "@/data/i18n";
 import { useLang, useT } from "@/components/LanguageProvider";
+import { IconMenu2, IconX } from "@tabler/icons-react";
 import Wordmark from "@/components/Wordmark";
 
 function Dropdown({ label, items }: { label: string; items: { href: string; label: string }[] }) {
@@ -12,7 +13,7 @@ function Dropdown({ label, items }: { label: string; items: { href: string; labe
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="group relative" onMouseLeave={() => setOpen(false)}>
+    <div className="group relative" onMouseLeave={() => setOpen(false)} onKeyDown={(e) => e.key === "Escape" && setOpen(false)}>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -51,7 +52,7 @@ function LanguagePicker() {
   const current = LANGS.find((l) => l.code === lang) ?? LANGS[0];
 
   return (
-    <div className="group relative hidden sm:block" onMouseLeave={() => setOpen(false)}>
+    <div className="group relative hidden sm:block" onMouseLeave={() => setOpen(false)} onKeyDown={(e) => e.key === "Escape" && setOpen(false)}>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -111,6 +112,12 @@ export default function Header() {
 
   return (
     <header id="siteHeader" className="w-full bg-white">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-navy focus:px-4 focus:py-2 focus:text-white"
+      >
+        {t("nav.skip")}
+      </a>
       <div className="mx-auto flex h-[82px] max-w-[1440px] items-center justify-between px-6 xl:px-[88px]">
         <Link href="/" className="flex min-h-11 shrink-0 items-center">
           <Wordmark className="text-[28px]" />
@@ -156,11 +163,12 @@ export default function Header() {
           </Link>
 
           <button
-            className="-mr-2 flex h-11 w-11 items-center justify-center text-2xl leading-none lg:hidden"
+            className="-mr-2 flex h-11 w-11 items-center justify-center lg:hidden"
             aria-label={t("nav.toggleMenu")}
+            aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
           >
-            ☰
+            {mobileOpen ? <IconX className="h-6 w-6" /> : <IconMenu2 className="h-6 w-6" />}
           </button>
         </div>
       </div>
