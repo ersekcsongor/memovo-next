@@ -19,8 +19,21 @@ async function bootstrap() {
     }),
   );
 
+  const allowed = config
+    .get<string>("FRONTEND_ORIGIN", "http://localhost:3000")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+  const isProduction = config.get<string>("NODE_ENV") === "production";
+
   app.enableCors({
-    origin: config.get<string>("FRONTEND_ORIGIN", "http://localhost:3000").split(","),
+    origin(origin, callback) {
+      // curl and server-to-server calls send no Origin at all.
+      if (!origin || allowed.includes(origin)) return callback(null, true);
+      // Development moves between ports constantly; production keeps to the list.
+      if (!isProduction && /^http:\/\/localhost:\d+$/.test(origin)) return callback(null, true);
+      callback(new Error(`Origin ${origin} is not allowed`), false);
+    },
     credentials: true,
   });
 
