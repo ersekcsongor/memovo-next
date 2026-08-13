@@ -26,7 +26,8 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
   }, []);
 
   return (
-    <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
+    /* Pins below the 82px header, so the heading stays clear of it while the ring turns. */
+    <div className="sticky top-[82px] flex h-[calc(100vh-82px)] w-full flex-col items-center justify-center overflow-hidden">
       <div className="absolute top-10 z-10 px-4 text-center md:top-16">
         <h1 className="font-heading text-2xl font-bold text-navy sm:text-3xl md:text-4xl">
           {t("ring.heading")}
