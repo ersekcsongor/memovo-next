@@ -51,14 +51,14 @@ export default function ConsentBar() {
         <span>{t("consent.text")}</span>
         <button
           onClick={() => setOpen(false)}
-          className="inline-flex min-h-11 items-center rounded-full px-4"
+          className="inline-flex min-h-11 items-center rounded-full px-4 transition hover:brightness-95"
           style={{ background: "var(--wpconsent-accept-bg)", color: "var(--wpconsent-accept-color)" }}
         >
           {t("consent.acceptAll")}
         </button>
         <button
           onClick={() => setOpen(false)}
-          className="inline-flex min-h-11 items-center rounded-full border px-4"
+          className="inline-flex min-h-11 items-center rounded-full border px-4 transition hover:brightness-95"
           style={{
             background: "var(--wpconsent-cancel-bg)",
             color: "var(--wpconsent-cancel-color)",
@@ -70,7 +70,7 @@ export default function ConsentBar() {
         <button
           onClick={() => setShowPrefs((v) => !v)}
           aria-expanded={showPrefs}
-          className="inline-flex min-h-11 items-center rounded-full px-4"
+          className="inline-flex min-h-11 items-center rounded-full px-4 transition hover:brightness-95"
           style={{ background: "var(--wpconsent-preferences-bg)", color: "var(--wpconsent-preferences-color)" }}
         >
           {t("consent.preferences")}
@@ -93,7 +93,7 @@ export default function ConsentBar() {
           </label>
           <button
             onClick={() => setOpen(false)}
-            className="inline-flex min-h-11 items-center rounded-full px-4"
+            className="inline-flex min-h-11 items-center rounded-full px-4 transition hover:brightness-95"
             style={{ background: "var(--wpconsent-accept-bg)", color: "var(--wpconsent-accept-color)" }}
           >
             {t("consent.save")}

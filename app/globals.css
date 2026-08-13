@@ -43,7 +43,8 @@
 
 /* Cookie consent bar tokens, mirrored from the live wpconsent vars. */
 :root {
-  --wpconsent-z-index: 900000;
+  /* Stacking scale: 40 chat bubble, 50 menus, 60 consent bar, 70 skip link. */
+  --wpconsent-z-index: 60;
   --wpconsent-background: #faf4ef;
   --wpconsent-text: #072a46;
   --wpconsent-outline-color: rgba(7, 42, 70, 0.2);

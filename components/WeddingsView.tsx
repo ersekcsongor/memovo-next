@@ -58,7 +58,7 @@ export default function WeddingsView() {
             {t("wed.lead")} <span className="font-semibold text-coral-ink">{t("wed.leadHighlight")}</span> {t("wed.leadEnd")}
           </p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <Link href="/pricing" className="rounded-full bg-coral px-7 py-3 font-semibold text-navy shadow-md">
+            <Link href="/pricing" className="rounded-full bg-coral px-7 py-3 font-semibold text-navy shadow-md transition hover:brightness-95">
               {t("cta.createGallery")}
             </Link>
             <Link href="/how-it-works" className="rounded-full bg-navy px-7 py-3 font-semibold text-white">
@@ -93,10 +93,10 @@ export default function WeddingsView() {
       <section className="bg-white py-16">
         <StepsGrid steps={STEPS} />
         <div className="flex justify-center gap-4 pt-12">
-          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy">
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy transition hover:brightness-95">
             {t("cta.pricing")}
           </Link>
-          <Link href="/how-it-works" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy">
+          <Link href="/how-it-works" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy transition hover:brightness-95">
             {t("cta.moreOnHow")}
           </Link>
         </div>
@@ -189,7 +189,7 @@ export default function WeddingsView() {
         <Container className="mx-auto max-w-2xl text-center">
           <h2 className="mb-4 font-accent text-2xl md:text-3xl">{t("reviews.emptyTitle")}</h2>
           <p className="mb-8 text-navy/70">{t("reviews.emptyBody")}</p>
-          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-navy">
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-navy transition hover:brightness-95">
             {t("reviews.emptyCta")}
           </Link>
         </Container>
@@ -232,7 +232,7 @@ export default function WeddingsView() {
         <Container>
           <h2 className="mb-4 font-accent text-2xl text-coral-ink md:text-3xl">{t("wed.demoTitle")}</h2>
           <p className="mx-auto mb-8 max-w-2xl text-navy/80">{t("wed.demoBody")}</p>
-          <Link href="/how-it-works" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-navy">
+          <Link href="/how-it-works" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-navy transition hover:brightness-95">
             {t("cta.freeDemo")}
           </Link>
         </Container>

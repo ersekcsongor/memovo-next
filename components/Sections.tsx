@@ -40,7 +40,7 @@ export function StepsGrid({ steps }: { steps: Step[] }) {
         <div key={s.key} className="flex gap-4">
           <Image src={s.icon} alt="" width={56} height={56} className="h-14 w-14 shrink-0" />
           <div>
-            <h3 className="text-sm font-semibold tracking-wide">{t(`${s.key}.title` as never)}</h3>
+            <h2 className="text-sm font-semibold tracking-wide">{t(`${s.key}.title` as never)}</h2>
             <p className="text-sm text-navy/70">{t(`${s.key}.body` as never)}</p>
           </div>
         </div>
@@ -57,7 +57,7 @@ export function FeatureGrid({ features }: { features: Feature[] }) {
         {features.map((f) => (
           <div key={f.key}>
             <Image src={f.icon} alt="" width={56} height={56} className="mx-auto mb-4 h-14 w-auto" />
-            <h3 className="mb-2 font-heading text-lg">{t(`${f.key}.title` as never)}</h3>
+            <h2 className="mb-2 font-heading text-lg">{t(`${f.key}.title` as never)}</h2>
             <p className="text-sm text-navy/70">{t(`${f.key}.body` as never)}</p>
           </div>
         ))}
@@ -77,7 +77,7 @@ export function PressStrip() {
       <Container className="text-center">
         <p className="mb-3 font-accent text-lg">{t("page.press.kitTitle")}</p>
         <p className="mx-auto mb-6 max-w-2xl text-sm text-navy/70">{t("page.press.kitBody")}</p>
-        <Link href="/contact" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold">
+        <Link href="/contact" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold transition-colors hover:bg-navy hover:text-white">
           {t("cta.contactUs")}
         </Link>
       </Container>
@@ -164,7 +164,7 @@ export function CtaBand({
       )}
       <div className="relative mx-auto max-w-3xl px-6">
         <p className="mb-6 font-accent text-xl leading-relaxed text-navy md:text-2xl">{text}</p>
-        <Link href={href} className="inline-block rounded-full bg-white px-7 py-3 font-semibold text-navy">
+        <Link href={href} className="inline-block rounded-full bg-white px-7 py-3 font-semibold text-navy transition-colors hover:bg-cream">
           {label}
         </Link>
       </div>

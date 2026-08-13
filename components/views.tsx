@@ -52,7 +52,7 @@ export function PricingView() {
           <p className="mb-8 text-navy/80">{t("page.pricing.tailoredSub")}</p>
           <div className="flex flex-wrap justify-center gap-3">
             {EVENT_PRICING.map((p) => (
-              <Link key={p.href} href={p.href} className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-xs font-semibold text-navy">
+              <Link key={p.href} href={p.href} className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-xs font-semibold text-navy transition hover:brightness-95">
                 {t(p.key)} – {t("cta.pricing")}
               </Link>
             ))}
@@ -74,10 +74,10 @@ export function HowItWorksView() {
       <section className="bg-white py-16">
         <StepsGrid steps={STEPS} />
         <div className="flex justify-center gap-4 pt-12">
-          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy">
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy transition hover:brightness-95">
             {t("cta.pricing")}
           </Link>
-          <Link href="/faqs" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold">
+          <Link href="/faqs" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold transition-colors hover:bg-navy hover:text-white">
             {t("cta.faqs")}
           </Link>
         </div>
@@ -151,7 +151,7 @@ export function ReviewsView() {
         <Container className="mx-auto max-w-2xl text-center">
           <h2 className="mb-4 font-accent text-2xl md:text-3xl">{t("reviews.emptyTitle")}</h2>
           <p className="mb-8 text-navy/70">{t("reviews.emptyBody")}</p>
-          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-navy">
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-navy transition hover:brightness-95">
             {t("reviews.emptyCta")}
           </Link>
         </Container>
@@ -288,7 +288,7 @@ export function ContactView() {
               </label>
               <textarea id="message" name="message" rows={5} className="w-full rounded-lg border border-gray-300 px-4 py-3" />
             </div>
-            <button type="submit" className="rounded-full bg-coral px-7 py-3 font-semibold text-navy">
+            <button type="submit" className="rounded-full bg-coral px-7 py-3 font-semibold text-navy transition hover:brightness-95">
               {t("page.contact.send")}
             </button>
             {sent && (
