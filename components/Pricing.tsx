@@ -58,7 +58,7 @@ export function PricingSection({ plans }: { plans: Plan[] }) {
               ))}
             </ul>
             <Link
-              href="/pricing"
+              href="/contact"
               className={`mt-auto block rounded-full py-3 text-center font-semibold ${
                 p.featured ? "bg-coral text-navy" : "border-2 border-navy"
               }`}
