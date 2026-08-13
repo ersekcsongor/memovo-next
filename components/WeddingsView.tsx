@@ -202,7 +202,7 @@ export default function WeddingsView() {
         <Container className="relative text-center">
           <h2 className="mb-4 font-heading text-2xl font-bold text-coral-ink md:text-4xl">{t("wed.inviteTitle")}</h2>
           <p className="mx-auto mb-14 max-w-[70ch] text-white">{t("wed.inviteBody")}</p>
-          <Image src={INVITE_RSVP} alt="" width={640} height={480} className="mx-auto w-full max-w-md drop-shadow-2xl" />
+          <Image src={INVITE_RSVP} alt="" width={640} height={480} sizes="448px" className="mx-auto w-full max-w-md drop-shadow-2xl" />
         </Container>
       </section>
 

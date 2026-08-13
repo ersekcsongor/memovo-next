@@ -1,6 +1,6 @@
 # Memovo — Next.js
 
-The Memovo site: 21 pages in English, Hungarian and Romanian, built with Next.js 16 (App Router), React 19, TypeScript and Tailwind CSS v4.
+The Memovo site: 19 pages in English, Hungarian and Romanian, built with Next.js 16 (App Router), React 19, TypeScript and Tailwind CSS v4.
 
 ## What the product is
 
@@ -16,7 +16,7 @@ The site sells this across seven kinds of event — weddings, engagements, parti
 
 ```bash
 npm run dev     # http://localhost:3000
-npm run build   # production build, prerenders all 21 routes
+npm run build   # production build, prerenders all 19 routes
 npm run start   # serve the production build
 ```
 
@@ -32,7 +32,7 @@ Every page is React styled with Tailwind v4, and all of it ships as prerendered 
 | `/weddings` | `app/weddings/page.tsx` |
 | `/events/[event]` | `app/events/[event]/page.tsx` — one template, 7 pages from `data/events.ts` |
 | `/gallery`, `/gallery-demo` | `app/gallery/page.tsx`, `app/gallery-demo/page.tsx` |
-| `/pricing`, `/how-it-works`, `/our-story`, `/meet-the-founders`, `/press-features`, `/community-events`, `/reviews`, `/faqs`, `/design-themes`, `/contact` | one folder each under `app/` |
+| `/pricing`, `/how-it-works`, `/press-features`, `/community-events`, `/reviews`, `/faqs`, `/design-themes`, `/contact` | one folder each under `app/` |
 
 Every route is static: `next build` prerenders all of them, including the seven event pages via `generateStaticParams`.
 
@@ -87,7 +87,7 @@ Features that need a real server later — gallery uploads, guest accounts, paym
 
 ## Screenshots
 
-`scripts/shots.mjs` renders each route in its own list (19 of the 21) with Puppeteer, reports page height and any broken images, and writes full-page PNGs to `shots/`. It needs the production server running on port 3100 and Puppeteer available:
+`scripts/shots.mjs` renders all 19 routes with Puppeteer, reports page height and any broken images, and writes full-page PNGs to `shots/`. It needs the production server running on port 3100 and Puppeteer available:
 
 ```bash
 npm run build && npm run start -- -p 3100
