@@ -14,13 +14,17 @@ import { EVENTS } from "@/data/events";
 import { useT } from "@/components/LanguageProvider";
 import Wordmark from "@/components/Wordmark";
 
+/**
+ * The accounts do not exist yet, so these render as marks rather than links.
+ * Adding `href` back to the markup is what turns them live.
+ */
 const SOCIAL = [
-  { name: "Instagram", href: "https://www.instagram.com/memovo/", Icon: IconBrandInstagram },
-  { name: "Facebook", href: "https://www.facebook.com/memovo", Icon: IconBrandFacebook },
-  { name: "Pinterest", href: "https://www.pinterest.com.au/memovo/", Icon: IconBrandPinterest },
-  { name: "LinkedIn", href: "https://www.linkedin.com/company/memovo/", Icon: IconBrandLinkedin },
-  { name: "TikTok", href: "https://www.tiktok.com/@memovo", Icon: IconBrandTiktok },
-  { name: "YouTube", href: "https://www.youtube.com/@memovo", Icon: IconBrandYoutube },
+  { name: "Instagram", Icon: IconBrandInstagram },
+  { name: "Facebook", Icon: IconBrandFacebook },
+  { name: "Pinterest", Icon: IconBrandPinterest },
+  { name: "LinkedIn", Icon: IconBrandLinkedin },
+  { name: "TikTok", Icon: IconBrandTiktok },
+  { name: "YouTube", Icon: IconBrandYoutube },
 ];
 
 export default function Footer() {
@@ -64,17 +68,15 @@ export default function Footer() {
             <p className="mb-3 text-sm font-semibold">{t("footer.social")}</p>
             <div className="flex gap-2">
               {SOCIAL.map((s) => (
-                <a
+                <span
                   key={s.name}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
+                  role="img"
                   title={s.name}
                   aria-label={s.name}
-                  className="flex h-11 w-11 items-center justify-center rounded-md bg-white transition-colors hover:bg-coral"
+                  className="flex h-11 w-11 items-center justify-center rounded-md bg-white"
                 >
                   <s.Icon className="h-5 w-5" stroke={1.75} aria-hidden />
-                </a>
+                </span>
               ))}
             </div>
           </div>
