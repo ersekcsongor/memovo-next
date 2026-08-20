@@ -3,7 +3,7 @@ import { PricingView } from "@/components/views";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "One-time pricing for your Memovo event gallery. Classic, Signature and Signature Bundle packages.",
+  description: "One-time pricing for your Memovo event gallery. Starter, Pro and Premium plans.",
 };
 
 export default function Page() {
