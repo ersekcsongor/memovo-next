@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { type Feature, type Step } from "@/data/content";
 import { useT } from "@/components/LanguageProvider";
+import { FAQSection } from "@/components/ui/faq-section-shadcnui";
 
 /* ---------- primitives ---------- */
 
@@ -13,7 +14,7 @@ export function Container({ children, className = "" }: { children: React.ReactN
 
 export function HeroImage({ src, alt, height = "h-[320px] md:h-[530px]" }: { src: string; alt: string; height?: string }) {
   return (
-    <section className={`relative w-full overflow-hidden bg-gray-100 ${height}`}>
+    <section className={`relative w-full overflow-hidden bg-white ${height}`}>
       <Image src={src} alt={alt} fill className="object-cover" priority sizes="100vw" />
     </section>
   );
@@ -21,7 +22,7 @@ export function HeroImage({ src, alt, height = "h-[320px] md:h-[530px]" }: { src
 
 export function PageBanner({ heading, sub }: { heading: string; sub?: string }) {
   return (
-    <section className="bg-blush py-12 text-center">
+    <section className="bg-white py-10 text-center md:py-12">
       <Container>
         <h1 className="font-heading text-2xl font-bold md:text-4xl">{heading}</h1>
         {sub && <p className="mt-3 font-accent text-lg text-navy/80">{sub}</p>}
@@ -38,7 +39,7 @@ export function StepsGrid({ steps }: { steps: Step[] }) {
     <Container className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
       {steps.map((s) => (
         <div key={s.key} className="flex gap-4">
-          <Image src={s.icon} alt="" width={56} height={56} className="h-14 w-14 shrink-0" />
+          <s.Icon className="h-12 w-12 shrink-0 text-coral" stroke={1.5} aria-hidden />
           <div>
             <h2 className="text-sm font-semibold tracking-wide">{t(`${s.key}.title` as never)}</h2>
             <p className="text-sm text-navy/70">{t(`${s.key}.body` as never)}</p>
@@ -56,7 +57,7 @@ export function FeatureGrid({ features }: { features: Feature[] }) {
       <div className="grid grid-cols-2 gap-x-8 gap-y-12 text-center md:grid-cols-4">
         {features.map((f) => (
           <div key={f.key}>
-            <Image src={f.icon} alt="" width={56} height={56} className="mx-auto mb-4 h-14 w-auto" />
+            <f.Icon className="mx-auto mb-4 h-12 w-12 text-coral" stroke={1.5} aria-hidden />
             <h2 className="mb-2 font-heading text-lg">{t(`${f.key}.title` as never)}</h2>
             <p className="text-sm text-navy/70">{t(`${f.key}.body` as never)}</p>
           </div>
@@ -73,7 +74,7 @@ export function FeatureGrid({ features }: { features: Feature[] }) {
 export function PressStrip() {
   const t = useT();
   return (
-    <section className="bg-cream py-14">
+    <section className="bg-white py-10 md:py-14">
       <Container className="text-center">
         <p className="mb-3 font-accent text-lg">{t("page.press.kitTitle")}</p>
         <p className="mx-auto mb-6 max-w-2xl text-sm text-navy/70">{t("page.press.kitBody")}</p>
@@ -86,10 +87,11 @@ export function PressStrip() {
 }
 
 export function QuoteBand({ children, tone = "pink" }: { children: React.ReactNode; tone?: "pink" | "coral" }) {
-  const bg = tone === "coral" ? "bg-coral" : "bg-pinklight";
-  const fg = "text-navy";
+  const bg = tone === "coral" ? "bg-coral" : "bg-white";
+  // The coral band is dark, the pink one light.
+  const fg = tone === "coral" ? "text-white" : "text-navy";
   return (
-    <section className={`${bg} py-14`}>
+    <section className={`${bg} py-10 md:py-14`}>
       <div className="mx-auto max-w-3xl px-6 text-center">
         <p className={`font-accent text-xl leading-relaxed md:text-2xl ${fg}`}>{children}</p>
       </div>
@@ -121,18 +123,21 @@ export function Carousel({
   );
 }
 
-export function FaqAccordion({ items }: { items: string[] }) {
+/**
+ * Turns translation keys into the card accordion. The keys stay the call site's
+ * concern; the look and the animation live in the ui component.
+ */
+export function FaqAccordion({ items, title, subtitle }: { items: string[]; title?: string; subtitle?: string }) {
   const t = useT();
   return (
-    <div className="grid gap-x-6 gap-y-4 md:grid-cols-2">
-      {items.map((key) => (
-        <details key={key} className="rounded-full border-2 border-navy px-6 py-1 open:rounded-2xl">
-          {/* The summary carries the height, so the whole row is one 44px target. */}
-          <summary className="flex min-h-11 items-center font-heading font-medium">{t(`faq.${key}.q` as never)}</summary>
-          <p className="mt-3 text-sm text-navy/70">{t(`faq.${key}.a` as never)}</p>
-        </details>
-      ))}
-    </div>
+    <FAQSection
+      title={title}
+      subtitle={subtitle}
+      items={items.map((key) => ({
+        question: t(`faq.${key}.q` as never),
+        answer: t(`faq.${key}.a` as never),
+      }))}
+    />
   );
 }
 
@@ -151,7 +156,7 @@ export function CtaBand({
   const t = useT();
   const label = cta ?? t("cta.getStarted");
   return (
-    <section className="relative overflow-hidden bg-coral py-16 text-center">
+    <section className="relative overflow-hidden bg-coral py-10 text-center md:py-16">
       {curveFrom && (
         <svg
           viewBox="0 0 1440 90"
@@ -163,7 +168,7 @@ export function CtaBand({
         </svg>
       )}
       <div className="relative mx-auto max-w-3xl px-6">
-        <p className="mb-6 font-accent text-xl leading-relaxed text-navy md:text-2xl">{text}</p>
+        <p className="mb-6 font-accent text-xl leading-relaxed text-white md:text-2xl">{text}</p>
         <Link href={href} className="inline-block rounded-full bg-white px-7 py-3 font-semibold text-navy transition-colors hover:bg-cream">
           {label}
         </Link>
