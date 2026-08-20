@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useT } from "@/components/LanguageProvider";
 
-/** Cookie consent bar, styled from the live site's wpconsent CSS variables. */
+/** Cookie consent bar. Every colour comes from the consent tokens in globals.css. */
 export default function ConsentBar() {
   const [open, setOpen] = useState(true);
   const [showPrefs, setShowPrefs] = useState(false);
@@ -70,8 +70,12 @@ export default function ConsentBar() {
         <button
           onClick={() => setShowPrefs((v) => !v)}
           aria-expanded={showPrefs}
-          className="inline-flex min-h-11 items-center rounded-full px-4 transition hover:brightness-95"
-          style={{ background: "var(--wpconsent-preferences-bg)", color: "var(--wpconsent-preferences-color)" }}
+          className="inline-flex min-h-11 items-center rounded-full border px-4 transition hover:brightness-95"
+          style={{
+            background: "var(--wpconsent-preferences-bg)",
+            color: "var(--wpconsent-preferences-color)",
+            borderColor: "var(--wpconsent-outline-color)",
+          }}
         >
           {t("consent.preferences")}
         </button>
@@ -79,16 +83,27 @@ export default function ConsentBar() {
 
       {showPrefs && (
         <div className="mx-auto mt-3 flex max-w-[1200px] flex-wrap items-center justify-center gap-6 border-t pt-3" style={{ borderColor: "var(--wpconsent-outline-color)" }}>
+          {/* accent-coral keeps the ticks in the brand pink; the browser default is blue. */}
           <label className="flex items-center gap-2 opacity-60">
-            <input type="checkbox" checked readOnly />
+            <input type="checkbox" checked readOnly className="accent-coral" />
             {t("consent.essentialCookies")}
           </label>
           <label className="flex cursor-pointer items-center gap-2">
-            <input type="checkbox" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} />
+            <input
+              type="checkbox"
+              checked={analytics}
+              onChange={(e) => setAnalytics(e.target.checked)}
+              className="accent-coral"
+            />
             {t("consent.analyticsCookies")}
           </label>
           <label className="flex cursor-pointer items-center gap-2">
-            <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} />
+            <input
+              type="checkbox"
+              checked={marketing}
+              onChange={(e) => setMarketing(e.target.checked)}
+              className="accent-coral"
+            />
             {t("consent.marketingCookies")}
           </label>
           <button
