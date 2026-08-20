@@ -2,192 +2,173 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { BLUR_BG, PHONE } from "@/data/assets";
-import { FEATURES, STEPS, THEMES } from "@/data/content";
+import {
+  IconBolt,
+  IconCamera,
+  IconDeviceMobileOff,
+  IconFolderHeart,
+  IconInfinity,
+  IconLock,
+  IconScan,
+  IconUsersGroup,
+} from "@tabler/icons-react";
+import { WEDDING_PLANS } from "@/data/content";
 import type { EventPage } from "@/data/events";
 import { useLang, useT } from "@/components/LanguageProvider";
 import { PricingSection } from "@/components/Pricing";
-import {
-  Container,
-  CtaBand,
-  FeatureGrid,
-  HeroImage,
-  PressStrip,
-  QuoteBand,
-  StepsGrid,
-} from "@/components/Sections";
+import { BenefitBand, Check, ClosingBand, DashboardPreview, PhoneCard, StepsRow } from "@/components/Blocks";
+import { Testimonials } from "@/components/Testimonials";
+import { Container } from "@/components/Sections";
 
-const PLAN_ITEMS = [
-  "plan.galleryQr",
-  "plan.unlimitedMedia",
-  "plan.invite",
-  "plan.guestbook",
-  "plan.moderation",
-  "plan.canva",
-];
+const CARDS = [
+  { Icon: IconCamera, key: "wed2.c1", sub: "wed2.c1sub" },
+  { Icon: IconScan, key: "wed2.c2", sub: "wed2.c2sub" },
+  { Icon: IconLock, key: "wed2.c3", sub: "wed2.c3sub" },
+  { Icon: IconFolderHeart, key: "wed2.c4", sub: "wed2.c4sub" },
+  { Icon: IconBolt, key: "wed2.c5", sub: "wed2.c5sub" },
+  { Icon: IconUsersGroup, key: "wed2.c6", sub: "wed2.c6sub" },
+] as const;
 
+const TRUST = [
+  { Icon: IconDeviceMobileOff, key: "wed2.trust1" },
+  { Icon: IconInfinity, key: "wed2.trust2" },
+  { Icon: IconLock, key: "wed2.trust3" },
+  { Icon: IconFolderHeart, key: "wed2.trust4" },
+] as const;
+
+const GAL_BULLETS = ["gal.b1", "gal.b2", "gal.b3", "gal.b4"] as const;
+
+/** One template behind all seven event pages; the wording comes from the event's own copy block. */
 export default function EventView({ event }: { event: EventPage }) {
   const { lang } = useLang();
   const t = useT();
   const copy = event.copy[lang] ?? event.copy.en;
 
-  const plans = event.prices.map((p, i) => ({
-    name: p.name,
-    usd: p.usd,
-    note: "plan.note.oneTime",
-    featured: i === 1,
-    items: PLAN_ITEMS,
-  }));
-
   return (
     <>
-      <HeroImage src={event.hero} alt={copy.heading} height="h-[360px] md:h-[600px]" />
-
-      <section className="bg-blush py-14 text-center">
-        <Container>
-          <h1 className="mb-5 font-accent text-2xl text-coral-ink md:text-4xl">{copy.heading}</h1>
-          <p className="mx-auto mb-3 max-w-3xl text-navy/80">{copy.intro}</p>
-          <p className="mx-auto max-w-3xl text-navy/80">{copy.sub}</p>
-        </Container>
-      </section>
-
-      <section className="bg-white py-8">
-        <Container className="text-center">
-          <p className="mb-5 font-accent text-coral-ink">{copy.tagline}</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {copy.tabs.map((tab) => (
-              <a
-                key={tab}
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-navy">
+        <Image src={event.hero} alt="" fill className="object-cover opacity-40" priority sizes="100vw" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/40" aria-hidden />
+        <Container className="relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-[1fr_auto]">
+          <div>
+            <p className="mb-5 text-xs font-semibold tracking-[0.18em] text-coral">{copy.badge}</p>
+            <h1 className="font-heading text-4xl leading-[1.12] font-bold text-white md:text-[3.2rem]">
+              {copy.heroLines.map((line, i) => (
+                <span key={line} className={i === copy.heroLines.length - 1 ? "block text-coral" : "block"}>
+                  {line}
+                </span>
+              ))}
+            </h1>
+            <p className="mt-6 max-w-md text-white/80">{copy.heroSub}</p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
                 href="#pricing"
-                className="rounded-full border-2 border-navy px-6 py-2 text-xs font-semibold tracking-wide transition-colors hover:bg-navy hover:text-white"
+                className="inline-flex min-h-12 items-center rounded-full bg-coral px-7 font-semibold text-white transition hover:brightness-95"
               >
-                {tab.toUpperCase()}
-              </a>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="relative overflow-hidden py-20">
-        <Image src={BLUR_BG} alt="" fill className="object-cover" sizes="100vw" />
-        <div className="absolute inset-0 bg-forest/60" />
-        <Container className="relative grid items-center gap-10 md:grid-cols-2">
-          <div>
-            <h2 className="mb-4 font-heading text-2xl font-bold text-white md:text-4xl">{t("wed.noAppTitle")}</h2>
-            <p className="mb-4 max-w-md text-white/85">{t("wed.noAppBody")}</p>
-            <p className="font-accent text-lg text-white">{copy.quote}</p>
-          </div>
-          <div className="flex justify-center">
-            <Image src={PHONE} alt="" width={288} height={288} className="w-64 drop-shadow-2xl md:w-72" />
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-white py-20">
-        <Container className="grid items-center gap-12 md:grid-cols-2">
-          <div className="relative h-[380px] overflow-hidden rounded-2xl shadow-lg">
-            <Image src={event.hero} alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
-          </div>
-          <div>
-            <h2 className="mb-4 font-accent text-2xl md:text-3xl">{copy.whyTitle}</h2>
-            <p className="mb-5 text-navy/80">{copy.whyCopy}</p>
-            <p className="mb-6 font-accent text-lg text-coral-ink">{copy.quote}</p>
-            <div className="flex gap-4">
-              <Link href="/how-it-works" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy transition hover:brightness-95">
-                {t("cta.howItWorks")}
+                {copy.heroCta}
               </Link>
-              <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold transition-colors hover:bg-navy hover:text-white">
-                {t("cta.pricing")}
+              <Link
+                href="/gallery-demo"
+                className="inline-flex min-h-12 items-center rounded-full border border-white/40 px-7 font-semibold text-white transition hover:bg-white/10"
+              >
+                {t("cta.viewDemo")}
               </Link>
             </div>
+            <ul className="mt-10 grid gap-x-8 gap-y-3 text-sm text-white/80 sm:grid-cols-2">
+              {TRUST.map(({ Icon, key }) => (
+                <li key={key} className="flex items-center gap-2">
+                  <Icon className="h-4 w-4 shrink-0 text-coral" stroke={2} aria-hidden />
+                  {t(key as never)}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="hidden justify-self-center lg:block">
+            <PhoneCard />
           </div>
         </Container>
       </section>
 
-      <section className="bg-blush pt-14 pb-16 text-center">
-        <h2 className="font-heading text-2xl font-bold md:text-3xl">{t("steps.title")}</h2>
-        <p className="mt-2 font-accent text-lg">{t("steps.sub")}</p>
-      </section>
-      <section className="bg-white py-16">
-        <StepsGrid steps={STEPS} />
-      </section>
-
-      <section className="bg-coral py-8 text-center">
-        <h2 className="font-heading text-xl font-bold text-navy md:text-2xl">{t("features.bandEvents")}</h2>
-      </section>
-      <section className="bg-white py-16">
-        <FeatureGrid features={FEATURES} />
-      </section>
-
-      <QuoteBand>{copy.band}</QuoteBand>
-
-      {/* Design themes teaser */}
-      <section className="bg-white py-16 text-center">
+      {/* Why it fits this occasion */}
+      <section className="bg-white py-10 md:py-16">
         <Container>
-          <h2 className="mb-2 font-accent text-2xl md:text-3xl">{t("page.themes.heading")}</h2>
-          <p className="mb-10 text-xs font-semibold tracking-wide text-coral-ink">{t("page.themes.tap")}</p>
-          <div className="mb-10 flex flex-wrap justify-center gap-5">
-            {THEMES.slice(0, 10).map((theme) => (
-              <Link key={theme.name} href="/design-themes" className="group w-24">
-                <span
-                  className="mx-auto mb-2 block h-16 w-16 rounded-full border-4 border-white shadow-lg transition-transform group-hover:scale-110"
-                  style={{ background: theme.color }}
-                />
-                <span className="block font-heading text-xs group-hover:text-coral-ink">{theme.name}</span>
-              </Link>
+          <h2 className="text-center font-heading text-2xl font-bold md:text-3xl">{copy.whyTitle}</h2>
+          <p className="mx-auto mt-3 mb-8 max-w-2xl text-center text-sm text-muted-foreground">{copy.intro}</p>
+          <div className="mb-10 flex flex-wrap justify-center gap-3">
+            {copy.tabs.map((tab) => (
+              <span
+                key={tab}
+                className="rounded-full border border-coral bg-white px-4 py-1.5 text-xs font-semibold text-coral-ink"
+              >
+                {tab}
+              </span>
             ))}
           </div>
-          <Link href="/design-themes" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold transition-colors hover:bg-navy hover:text-white">
-            {t("cta.seeAllThemes")}
-          </Link>
-        </Container>
-      </section>
-
-
-      <PressStrip />
-
-      <section id="pricing" className="scroll-mt-6 bg-white py-20">
-        <Container>
-          <div className="mb-4 text-center">
-            <h2 className="font-accent text-2xl text-coral-ink md:text-4xl">{copy.pricingTitle}</h2>
-            <p className="mt-2 text-navy/70">{t("page.pricing.tailoredSub")}</p>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {CARDS.map(({ Icon, key, sub }) => (
+              <div key={key} className="rounded-xl border border-border bg-white px-6 py-7 text-center">
+                <Icon className="mx-auto mb-4 h-8 w-8 text-coral" stroke={1.6} aria-hidden />
+                <h3 className="font-heading text-base font-bold">{t(key as never)}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{t(sub as never)}</p>
+              </div>
+            ))}
           </div>
-          <PricingSection plans={plans} />
-          <p className="mx-auto mt-10 max-w-2xl text-center text-xs text-navy/50">{t("page.pricing.footnote")}</p>
         </Container>
       </section>
 
-      {/* Demo */}
-      <section className="bg-white py-16 text-center">
+      {/* Three steps */}
+      <section className="bg-white py-10 md:py-16">
         <Container>
-          <h2 className="mb-4 font-accent text-2xl text-coral-ink md:text-3xl">{t("wed.demoTitle")}</h2>
-          <p className="mx-auto mb-8 max-w-2xl text-navy/80">{t("wed.demoBody")}</p>
-          <Link href="/how-it-works" className="inline-block rounded-full bg-coral px-7 py-3 font-semibold text-navy transition hover:brightness-95">
-            {t("cta.freeDemo")}
-          </Link>
+          <h2 className="mb-12 text-center font-heading text-2xl font-bold md:text-3xl">{t("works.title")}</h2>
+          <StepsRow />
         </Container>
       </section>
 
-      <section className="bg-coral py-16">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="mx-auto max-w-[65ch] text-navy">{t("wed.embrace")}</p>
-        </div>
-      </section>
-
-      {/* What is memovo */}
-      <section className="bg-white py-20">
-        <div className="mx-auto max-w-[70ch] px-6 text-center">
-          <h2 className="mb-8 font-accent text-2xl md:text-3xl">{t("wed.whatIsTitle")}</h2>
-          <div className="space-y-5 text-navy/75">
-            <p>{t("wed.whatIs1")}</p>
-            <p>{t("wed.whatIs2")}</p>
-            <p>{t("wed.whatIs3")}</p>
-            <p className="font-accent text-lg text-coral-ink">{t("wed.whatIsQuote")}</p>
+      {/* Gallery preview */}
+      <section className="bg-white pb-10 md:pb-16">
+        <Container>
+          <div className="grid items-center gap-10 rounded-2xl bg-white p-8 shadow-sm md:p-10 lg:grid-cols-[minmax(0,22rem)_1fr]">
+            <div>
+              <p className="mb-3 text-xs font-semibold tracking-wide text-coral-ink">{t("gal.eyebrow")}</p>
+              <h2 className="mb-4 font-heading text-2xl font-bold">{t("wed2.galTitle")}</h2>
+              <p className="mb-6 text-sm text-muted-foreground">{copy.whyCopy}</p>
+              <ul className="mb-8 space-y-2.5 text-sm">
+                {GAL_BULLETS.map((k) => (
+                  <li key={k} className="flex gap-2.5">
+                    <Check className="mt-0.5 text-coral" />
+                    <span>{t(k)}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/gallery-demo"
+                className="inline-flex min-h-11 items-center rounded-full border-2 border-coral px-6 text-sm font-semibold text-coral-ink transition hover:bg-blush"
+              >
+                {t("gal.cta")}
+              </Link>
+            </div>
+            <DashboardPreview />
           </div>
-        </div>
+        </Container>
       </section>
 
-      <CtaBand text={copy.closing} />
+      <BenefitBand />
+
+      {/* Pricing. The id is what the header's Pricing menu and the hero button jump to;
+          the scroll margin keeps the heading clear of the sticky bar. */}
+      <section id="pricing" className="scroll-mt-24 bg-white py-10 md:py-16">
+        <Container>
+          <h2 className="text-center font-heading text-2xl font-bold md:text-3xl">{copy.pricingTitle}</h2>
+          <p className="mt-2 mb-10 text-center text-sm text-muted-foreground">{t("price.sub")}</p>
+          <PricingSection plans={WEDDING_PLANS} />
+        </Container>
+      </section>
+
+      <Testimonials titleKey="wed2.lovedTitle" />
+
+      <ClosingBand titleKey="wed2.finalTitle" bodyKey="wed2.finalBody" ctaLabel={copy.heroCta} />
+
     </>
   );
 }
