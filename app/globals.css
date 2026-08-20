@@ -1,59 +1,67 @@
 @import "tailwindcss";
 
-/* Design tokens taken from the live site's Elementor globals. */
+/* Design tokens from the Memovo mockup: vivid pink on near-black, over soft pink surfaces.
+   The names are inherited; remapping the values here restyles every page at once. */
 @theme {
-  --color-navy: #072a47;
+  /* Near-black with a plum cast. Headings and body text. */
+  --color-navy: #171114;
   --color-tan: #e4d2be;
-  --color-coral: #e58783;
-  /* Coral carries the brand on surfaces; text and icons take the darker ink so
-     they clear 4.5:1 on every background the site uses — white 6.2:1, cream 5.7,
-     blush 5.4, pinklight 4.7. */
-  --color-coral-ink: #a63f38;
-  --color-gray-100: #f3f5f8;
-  --color-gray-200: #c8d5dc;
-  --color-gray-300: #cdd4da;
-  --color-offwhite: #f9fafd;
-  --color-cream: #f9f4ef;
-  --color-blush: #fdecea;
-  --color-pinkband: #f7c9c6;
+  /* Brand pink. White text clears 4.5:1 on it, so buttons and bands can carry it. */
+  --color-coral: #db2777;
+  /* One step darker, for pink text and icons on light surfaces: 6.4:1 on white. */
+  --color-coral-ink: #be185d;
+  --color-gray-100: #f7f7f8;
+  --color-gray-200: #e9e4e7;
+  --color-gray-300: #e9e4e7;
+  --color-offwhite: #fdfbfc;
+  /* The two soft pink surfaces the mockup alternates between. */
+  --color-cream: #fff7f9;
+  --color-blush: #fdf2f5;
+  --color-pinkband: #fbd0e0;
   --color-teal: #69c9ca;
   --color-orange: #fcbe87;
-  --color-pinklight: #fcd8d8;
-  --color-footerpink: #fbd9d6;
-  --color-forest: #0b1a12;
+  --color-pinklight: #fce7ef;
+  --color-footerpink: #fdf2f5;
+  /* Hero overlay and the dark bands. */
+  --color-forest: #1a1420;
 
   --font-heading: var(--font-comfortaa), sans-serif;
   --font-body: var(--font-montserrat), sans-serif;
   --font-accent: var(--font-playfair), serif;
 
   /* Semantic tokens in the shadcn naming scheme, mapped onto the palette above.
-     Components copied from shadcn registries reference these names, so this
+     Components taken from shadcn registries expect these names, so this
      mapping lands them on the Memovo colours with no class edits. */
   --color-background: #ffffff;
-  --color-foreground: #072a47;
-  --color-card: #f9f4ef;
-  --color-card-foreground: #072a47;
-  --color-muted: #f3f5f8;
-  /* Navy at ~70%, the body-copy tone used across the site. Reads at 5.5:1 on cream. */
-  --color-muted-foreground: #4f6479;
-  --color-border: #cdd4da;
-  --color-secondary: #fdecea;
-  --color-secondary-foreground: #072a47;
+  --color-foreground: #171114;
+  --color-card: #fff7f9;
+  --color-card-foreground: #171114;
+  --color-muted: #f7f7f8;
+  /* The body-copy grey from the mockup. Reads at 5.1:1 on white. */
+  --color-muted-foreground: #6b6169;
+  --color-border: #e9e4e7;
+  --color-secondary: #fdf2f5;
+  --color-secondary-foreground: #171114;
 }
 
-/* Cookie consent bar tokens, mirrored from the live consent vars. */
+/* Cookie consent bar tokens, on the Memovo palette: white surface, pink primary action.
+   ConsentBar reads only these, so the bar and its preferences panel restyle together. */
 :root {
   /* Stacking scale: 40 chat bubble, 50 menus, 60 consent bar, 70 skip link. */
   --consent-z-index: 60;
-  --consent-background: #faf4ef;
-  --consent-text: #072a46;
-  --consent-outline-color: rgba(7, 42, 70, 0.2);
-  --consent-accept-bg: #eb8782;
+  --consent-background: #ffffff;
+  --consent-text: #171114;
+  /* The same hairline the cards use, for the top edge and the panel divider. */
+  --consent-outline-color: #e9e4e7;
+  /* Primary action. White on this pink clears 4.5:1. */
+  --consent-accept-bg: #db2777;
+  --consent-accept-color: #ffffff;
+  /* Neutral secondary. */
   --consent-cancel-bg: #ffffff;
+  --consent-cancel-color: #171114;
+  /* Tertiary, reading as a link: the darker pink clears 6.4:1 on white. */
   --consent-preferences-bg: #ffffff;
-  --consent-accept-color: #072a46;
-  --consent-cancel-color: #072a46;
-  --consent-preferences-color: #072a46;
+  --consent-preferences-color: #be185d;
   --consent-font-size: 12px;
 }
 
@@ -75,7 +83,6 @@ body.consent-open {
 }
 
 button:not(:disabled),
-summary,
 [role="button"] {
   cursor: pointer;
 }
@@ -83,7 +90,6 @@ summary,
 /* Taps register without the 300ms wait, and every control answers a press. */
 a,
 button,
-summary,
 [role="button"] {
   touch-action: manipulation;
 }
@@ -129,24 +135,6 @@ h1,
 h2,
 h3 {
   font-family: var(--font-heading);
-}
-
-/* FAQ accordion markers */
-details > summary {
-  list-style: none;
-  cursor: pointer;
-}
-details > summary::-webkit-details-marker {
-  display: none;
-}
-details > summary::after {
-  content: "+";
-  float: right;
-  font-size: 1.25rem;
-  color: var(--color-coral);
-}
-details[open] > summary::after {
-  content: "\2212";
 }
 
 /* Auto-scrolling carousel: 350px slides, 8px gap, drifting left,
