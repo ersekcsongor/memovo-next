@@ -23,7 +23,7 @@ export default function GalleryDemoView() {
     <>
       <PageBanner heading={t("gallery.heading")} sub={t("gallery.sub")} />
 
-      <section className="bg-white py-12">
+      <section className="bg-white py-10 md:py-12">
         <Container>
           <p className="mx-auto mb-10 max-w-2xl text-center text-navy/80">{t("gallery.intro")}</p>
 

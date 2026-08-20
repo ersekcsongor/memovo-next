@@ -3,10 +3,9 @@
 import {
   IconBrandFacebook,
   IconBrandInstagram,
-  IconBrandLinkedin,
-  IconBrandPinterest,
   IconBrandTiktok,
   IconBrandYoutube,
+  IconMail,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,59 +20,64 @@ import Wordmark from "@/components/Wordmark";
 const SOCIAL = [
   { name: "Instagram", Icon: IconBrandInstagram },
   { name: "Facebook", Icon: IconBrandFacebook },
-  { name: "Pinterest", Icon: IconBrandPinterest },
-  { name: "LinkedIn", Icon: IconBrandLinkedin },
   { name: "TikTok", Icon: IconBrandTiktok },
   { name: "YouTube", Icon: IconBrandYoutube },
+  { name: "Email", Icon: IconMail },
 ];
 
 export default function Footer() {
-  // The live site paints the home footer cream and every other page's footer pink.
-  const isHome = usePathname() === "/";
+  const pathname = usePathname();
   const t = useT();
 
-  const quick = [
-    { href: "/", label: t("nav.home") },
+  const product = [
     { href: "/how-it-works", label: t("nav.howItWorks") },
     { href: "/pricing", label: t("nav.pricing") },
-    { href: "/design-themes", label: t("footer.designThemes") },
-    { href: "/reviews", label: t("footer.reviews") },
-    { href: "/faqs", label: t("footer.faqs") },
+    { href: "/gallery", label: t("footer.gallery") },
+    { href: "/gallery-demo", label: t("footer.features") },
   ];
 
-  // Every one of these audiences is handled through the contact form, per the contact page copy.
-  const work = [
-    { href: "/contact", label: t("footer.weddingPros") },
-    { href: "/contact", label: t("footer.affiliate") },
-    { href: "/contact", label: t("footer.collab") },
-    { href: "/contact", label: t("footer.media") },
-    { href: "/contact", label: t("footer.charity") },
+  const events = [
+    { href: "/weddings", label: t("event.weddings") },
+    ...EVENTS.slice(0, 4).map((e) => ({ href: `/events/${e.slug}`, label: t(`event.${e.slug}` as never) })),
   ];
 
-  const tools = [
-    { href: "/pricing", label: t("footer.qrGenerator") },
-    { href: "/how-it-works", label: t("footer.photoApp") },
-    { href: "/weddings", label: t("footer.invites") },
-    { href: "/faqs", label: t("footer.hashtag") },
+  const support = [
+    { href: "/faqs", label: t("footer.helpCenter") },
+    { href: "/contact", label: t("footer.contactUs") },
+    { href: "/faqs", label: t("footer.privacy") },
+    { href: "/faqs", label: t("footer.terms2") },
+  ];
+
+  const company = [
+    { href: "/press-features", label: t("footer.about") },
+    { href: "/community-events", label: t("footer.blog") },
+    { href: "/contact", label: t("footer.careers") },
+  ];
+
+  const columns = [
+    { title: t("footer.product"), items: product },
+    { title: t("footer.events"), items: events },
+    { title: t("footer.support"), items: support },
+    { title: t("footer.company"), items: company },
   ];
 
   return (
-    <footer className={`${isHome ? "bg-cream" : "bg-pinklight"} pt-16 pb-8`}>
+    <footer className="bg-white pt-10 pb-6 md:pt-14">
       <div className="mx-auto max-w-[1140px] px-6">
-        <div className="mb-12 grid gap-10 md:grid-cols-5">
-          <div className="md:col-span-2">
-            <Link href="/" className="mb-6 inline-flex min-h-11 items-center">
+        <div className="grid gap-10 md:grid-cols-[minmax(0,18rem)_1fr]">
+          <div>
+            <Link href="/" className="mb-4 inline-flex min-h-11 items-center">
               <Wordmark className="text-3xl" />
             </Link>
-            <p className="mb-3 text-sm font-semibold">{t("footer.social")}</p>
-            <div className="flex gap-2">
+            <p className="mb-6 max-w-xs text-sm text-muted-foreground">{t("footer.tagline")}</p>
+            <div className="flex gap-4">
               {SOCIAL.map((s) => (
                 <span
                   key={s.name}
                   role="img"
                   title={s.name}
                   aria-label={s.name}
-                  className="flex h-11 w-11 items-center justify-center rounded-md bg-white"
+                  className="text-navy/70"
                 >
                   <s.Icon className="h-5 w-5" stroke={1.75} aria-hidden />
                 </span>
@@ -81,64 +85,34 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
-            <p className="mb-4 font-heading text-sm font-semibold">{t("footer.quickLinks")}</p>
-            <ul className="text-sm">
-              {quick.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="block py-3">{l.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <p className="mb-4 font-heading text-sm font-semibold">{t("footer.events")}</p>
-            <ul className="text-sm">
-              <li>
-                <Link href="/weddings" className="block py-3">{t("event.weddings")}</Link>
-              </li>
-              {EVENTS.map((e) => (
-                <li key={e.slug}>
-                  <Link href={`/events/${e.slug}`} className="block py-3">{t(`event.${e.slug}` as never)}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <p className="mb-4 font-heading text-sm font-semibold">{t("footer.workWithUs")}</p>
-            <ul className="text-sm">
-              {work.map((w) => (
-                <li key={w.label}>
-                  <Link href={w.href} className="block py-3 hover:text-coral-ink">
-                    {w.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 mb-4 font-heading text-sm font-semibold">{t("footer.freeTools")}</p>
-            <ul className="text-sm">
-              {tools.map((tool) => (
-                <li key={tool.label}>
-                  <Link href={tool.href} className="block py-3 hover:text-coral-ink">
-                    {tool.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {columns.map((col) => (
+              <div key={col.title}>
+                <p className="mb-4 font-heading text-xs font-bold tracking-wide">{col.title}</p>
+                <ul className="space-y-2.5 text-sm">
+                  {col.items.map((l, i) => (
+                    <li key={`${l.href}-${i}`}>
+                      <Link
+                        href={l.href}
+                        aria-current={pathname === l.href ? "page" : undefined}
+                        className={`inline-flex min-h-8 items-center hover:text-coral-ink ${
+                          pathname === l.href ? "font-semibold text-coral-ink" : "text-muted-foreground"
+                        }`}
+                      >
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-navy/10 pt-6 text-sm sm:flex-row">
-          <span>© 2026 Memovo™</span>
-          <span className="flex gap-4">
-            <Link href="/faqs" className="inline-flex min-h-11 items-center hover:text-coral-ink">
-              {t("footer.terms")}
-            </Link>
-            <Link href="/faqs" className="inline-flex min-h-11 items-center hover:text-coral-ink">
-              {t("footer.privacy")}
-            </Link>
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-navy/10 pt-6 text-xs text-muted-foreground sm:flex-row">
+          <span>© 2026 Memovo. {t("footer.rights")}</span>
+          <span className="flex items-center gap-1">
+            {t("footer.madeWith")} <span className="text-coral">♥</span> {t("footer.forMemories")}
           </span>
         </div>
       </div>
