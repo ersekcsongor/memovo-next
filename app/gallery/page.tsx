@@ -32,8 +32,9 @@ const galleryItems: GalleryItem[] = GALLERY_PHOTOS.map((photo, i) => ({
 
 export default function GalleryPage() {
   return (
-    /* The outer container provides the scrollable height that drives the rotation. */
-    <div className="w-full bg-cream text-foreground" style={{ height: "500vh" }}>
+    /* GalleryView owns the page rhythm: intro, the ring on its scroll runway,
+       the steps behind the photos, then the closing band. */
+    <div className="w-full bg-white text-foreground">
       <GalleryView items={galleryItems} />
     </div>
   );
