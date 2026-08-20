@@ -37,13 +37,16 @@ async function bootstrap() {
     credentials: true,
   });
 
-  const swagger = new DocumentBuilder()
+  // The docs map the whole API surface, so they stay off outside development.
+  if (!isProduction) {
+    const swagger = new DocumentBuilder()
     .setTitle("Memovo API")
     .setDescription("Events, guest photo uploads and contact leads.")
     .setVersion("0.1.0")
     .addBearerAuth()
     .build();
   SwaggerModule.setup("api/docs", app, SwaggerModule.createDocument(app, swagger));
+  }
 
   const port = config.get<number>("PORT", 4000);
   await app.listen(port);
