@@ -9,25 +9,8 @@ export const HERO_WEDDING = `${U}/hero-wedding.jpg`;
 export const HERO_HOME = `${U}/hero-home.jpg`;
 export const INVITE_RSVP = `${U}/invite-rsvp.png`;
 
-export const STEP_ICONS = {
-  create: `${U}/create-infographic.png`,
-  scan: `${U}/scan-qr-code-infographic.png`,
-  upload: `${U}/upload-infographic.png`,
-  enjoy: `${U}/BuildEngagement_Seashell-e1775711547958.png`,
-  download: `${U}/download-infographic.png`,
-  features: `${U}/features-infographic.png`,
-} as const;
-
-export const FEATURE_ICONS = {
-  social: `${U}/MEMOVO-social-engagement-galleries.png`,
-  slideshow: `${U}/Infographics_Pink_-34-e1764633161323.png`,
-  guestbook: `${U}/Infographics_Pink_Guestnbook_Written-e1766025211351.png`,
-  invite: `${U}/digitial-invitations-and-rsvp-infographgic-1024x1024.png`,
-  qr: `${U}/Infographics_Pink_QRCode-e1766025365541.png`,
-  canva: `${U}/Infographics_Pink_CanvaTemplate-e1766025417959.png`,
-  albums: `${U}/Infographics_Pink_-23-e1764632906576.png`,
-  zip: `${U}/Infographics_Pink_-24-e1764633884638.png`,
-} as const;
+/* The step and feature icons are Tabler components, named in data/content.ts.
+   They inherit the brand pink from `text-coral`, so they cannot drift off-palette. */
 
 export const TEMPLATE_PHOTOS = [
   { src: `${U}/floral-qr-sign.jpg`, alt: "Floral display with a QR code sign on an easel at an outdoor ceremony" },

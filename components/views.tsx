@@ -37,7 +37,7 @@ export function PricingView() {
     <>
       <PageBanner heading={t("page.pricing.heading")} sub={t("page.pricing.sub")} />
 
-      <section className="bg-white py-16">
+      <section className="bg-white py-10 md:py-16">
         <Container>
           <div className="mb-10 flex justify-center">
             <span className="rounded-full bg-pinklight px-4 py-1.5 text-center text-xs font-bold text-coral-ink">
@@ -49,7 +49,7 @@ export function PricingView() {
         </Container>
       </section>
 
-      <section className="bg-cream py-16 text-center">
+      <section className="bg-white py-10 md:py-16 text-center">
         <Container>
           <h2 className="mb-3 font-accent text-2xl text-coral-ink md:text-3xl">{t("page.pricing.tailored")}</h2>
           <p className="mb-8 text-navy/80">{t("page.pricing.tailoredSub")}</p>
@@ -74,10 +74,11 @@ export function HowItWorksView() {
     <>
       <PageBanner heading={t("steps.title")} sub={t("steps.sub")} />
 
-      <section className="bg-white py-16">
+      {/* Tighter on a phone, where 64px above and below leaves the page feeling empty. */}
+      <section className="bg-white py-10 md:py-16">
         <StepsGrid steps={STEPS} />
-        <div className="flex justify-center gap-4 pt-12">
-          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-navy transition hover:brightness-95">
+        <div className="flex justify-center gap-4 pt-8 md:pt-12">
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-6 text-sm font-semibold text-white transition hover:brightness-95">
             {t("cta.pricing")}
           </Link>
           <Link href="/faqs" className="inline-flex min-h-11 items-center rounded-full border-2 border-navy px-6 text-sm font-semibold transition-colors hover:bg-navy hover:text-white">
@@ -88,10 +89,16 @@ export function HowItWorksView() {
 
       <QuoteBand>{t("page.how.quote")}</QuoteBand>
 
-      <section className="bg-coral py-8 text-center">
-        <h2 className="font-heading text-xl font-bold text-navy md:text-2xl">{t("features.bandEvents")}</h2>
+      {/* Inset and rounded, on the same gradient the home page bands use, so the
+          pink stops at the container and the page edges stay white. */}
+      <section className="bg-white py-10 md:py-8">
+        <Container>
+          <div className="rounded-2xl bg-gradient-to-r from-coral to-coral-ink px-8 py-6 text-center">
+            <h2 className="font-heading text-xl font-bold text-white md:text-2xl">{t("features.bandEvents")}</h2>
+          </div>
+        </Container>
       </section>
-      <section className="bg-white py-16">
+      <section className="bg-white py-10 md:py-16">
         <FeatureGrid features={FEATURES} />
       </section>
 
@@ -106,7 +113,7 @@ export function PressView() {
       <PageBanner heading={t("page.press.heading")} sub={t("page.press.sub")} />
 
       {/* Nothing has been written about Memovo yet, so this says so rather than inventing coverage. */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-10 md:py-20">
         <Container className="mx-auto max-w-2xl text-center">
           <h2 className="mb-4 font-accent text-2xl md:text-3xl">{t("page.press.emptyTitle")}</h2>
           <p className="text-navy/70">{t("page.press.emptyBody")}</p>
@@ -126,7 +133,7 @@ export function CommunityView() {
     <>
       <PageBanner heading={t("page.community.heading")} sub={t("page.community.sub")} />
 
-      <section className="bg-white py-20">
+      <section className="bg-white py-10 md:py-20">
         <Container className="mx-auto max-w-3xl space-y-5 text-center text-navy/80">
           <p>{t("page.community.p1")}</p>
           <p>{t("page.community.p2")}</p>
@@ -134,7 +141,7 @@ export function CommunityView() {
         </Container>
       </section>
 
-      <section className="overflow-hidden bg-cream py-10">
+      <section className="overflow-hidden bg-white py-10">
         <Carousel photos={GALLERY_PHOTOS} short />
       </section>
 
@@ -150,11 +157,11 @@ export function ReviewsView() {
       <PageBanner heading={t("page.reviews.heading")} sub={t("page.reviews.sub")} />
 
       {/* No testimonials until real hosts have written them. */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-10 md:py-20">
         <Container className="mx-auto max-w-2xl text-center">
           <h2 className="mb-4 font-accent text-2xl md:text-3xl">{t("reviews.emptyTitle")}</h2>
           <p className="mb-8 text-navy/70">{t("reviews.emptyBody")}</p>
-          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-navy transition hover:brightness-95">
+          <Link href="/pricing" className="inline-flex min-h-11 items-center rounded-full bg-coral px-7 font-semibold text-white transition hover:brightness-95">
             {t("reviews.emptyCta")}
           </Link>
         </Container>
@@ -173,7 +180,7 @@ export function FaqsView() {
     <>
       <PageBanner heading={t("page.faqs.heading")} sub={t("page.faqs.sub")} />
 
-      <section className="bg-white py-16">
+      <section className="bg-white py-10 md:py-16">
         <div className="mx-auto max-w-4xl px-6">
           <FaqAccordion items={ALL_FAQS} />
           <p className="mt-10 text-center text-sm">
@@ -198,7 +205,7 @@ export function ThemesView() {
     <>
       <PageBanner heading={t("page.themes.heading")} sub={t("page.themes.sub")} />
 
-      <section className="bg-white py-16">
+      <section className="bg-white py-10 md:py-16">
         <Container>
           <p className="mb-12 text-center font-accent text-coral-ink">{t("page.themes.tap")}</p>
           <div className="grid grid-cols-2 gap-8 text-center sm:grid-cols-3 md:grid-cols-5">
@@ -235,7 +242,7 @@ export function ThemesView() {
         </Container>
       </section>
 
-      <section className="bg-blush py-16 text-center">
+      <section className="bg-white py-10 md:py-16 text-center">
         <Container>
           <p className="mx-auto max-w-2xl text-navy/80">{t("page.themes.body")}</p>
         </Container>
@@ -284,7 +291,7 @@ export function ContactView() {
     <>
       <PageBanner heading={t("page.contact.heading")} sub={t("page.contact.sub")} />
 
-      <section className="bg-white py-16">
+      <section className="bg-white py-10 md:py-16">
         <Container className="grid gap-12 md:grid-cols-2">
           <form className="space-y-5" onSubmit={handleSubmit}>
             <h2 className="font-heading text-xl font-bold">{t("page.contact.formTitle")}</h2>
@@ -311,7 +318,7 @@ export function ContactView() {
             <button
               type="submit"
               disabled={state === "sending"}
-              className="rounded-full bg-coral px-7 py-3 font-semibold text-navy transition hover:brightness-95 disabled:opacity-50"
+              className="rounded-full bg-coral px-7 py-3 font-semibold text-white transition hover:brightness-95 disabled:opacity-50"
             >
               {state === "sending" ? t("page.contact.sending") : t("page.contact.send")}
             </button>

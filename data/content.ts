@@ -1,74 +1,73 @@
-import { FEATURE_ICONS, STEP_ICONS } from "./assets";
+import {
+  IconCirclePlus,
+  IconDownload,
+  IconFileZip,
+  IconHeartHandshake,
+  IconMailHeart,
+  IconMessage2Heart,
+  IconPhotoHeart,
+  IconPhotoUp,
+  IconQrcode,
+  IconScan,
+  IconSettings,
+  IconSlideshow,
+  IconSparkles,
+  IconTemplate,
+  type Icon,
+} from "@tabler/icons-react";
 
 /** `key` names the translation entries `<key>.title` and `<key>.body`. */
-export type Step = { icon: string; key: string };
-export type Feature = { icon: string; key: string };
+export type Step = { Icon: Icon; key: string };
+export type Feature = { Icon: Icon; key: string };
 /**
  * `usd` is the base amount; a null amount renders the "Contact Us" label instead.
  * `note` and `items` hold translation keys.
  */
-export type Plan = { name: string; usd: number | null; note: string; items: string[]; featured?: boolean };
+export type Plan = { name: string; usd: number | null; note: string; items: string[]; featured?: boolean; cta?: string };
 
 export const STEPS: Step[] = [
-  { icon: STEP_ICONS.create, key: "steps.create" },
-  { icon: STEP_ICONS.scan, key: "steps.scan" },
-  { icon: STEP_ICONS.upload, key: "steps.upload" },
-  { icon: STEP_ICONS.enjoy, key: "steps.enjoy" },
-  { icon: STEP_ICONS.download, key: "steps.download" },
-  { icon: STEP_ICONS.features, key: "steps.features" },
+  { Icon: IconCirclePlus, key: "steps.create" },
+  { Icon: IconScan, key: "steps.scan" },
+  { Icon: IconPhotoUp, key: "steps.upload" },
+  { Icon: IconSparkles, key: "steps.enjoy" },
+  { Icon: IconDownload, key: "steps.download" },
+  { Icon: IconSettings, key: "steps.features" },
 ];
 
 export const FEATURES: Feature[] = [
-  { icon: FEATURE_ICONS.social, key: "features.social" },
-  { icon: FEATURE_ICONS.slideshow, key: "features.slideshow" },
-  { icon: FEATURE_ICONS.guestbook, key: "features.guestbook" },
-  { icon: FEATURE_ICONS.invite, key: "features.invite" },
-  { icon: FEATURE_ICONS.qr, key: "features.qr" },
-  { icon: FEATURE_ICONS.canva, key: "features.canva" },
-  { icon: FEATURE_ICONS.albums, key: "features.albums" },
-  { icon: FEATURE_ICONS.zip, key: "features.zip" },
+  { Icon: IconHeartHandshake, key: "features.social" },
+  { Icon: IconSlideshow, key: "features.slideshow" },
+  { Icon: IconMessage2Heart, key: "features.guestbook" },
+  { Icon: IconMailHeart, key: "features.invite" },
+  { Icon: IconQrcode, key: "features.qr" },
+  { Icon: IconTemplate, key: "features.canva" },
+  { Icon: IconPhotoHeart, key: "features.albums" },
+  { Icon: IconFileZip, key: "features.zip" },
 ];
 
+/** Three tiers priced per event, as set out in the design. */
 export const WEDDING_PLANS: Plan[] = [
   {
-    name: "CLASSIC",
-    usd: 49,
-    note: "plan.note.one",
-    items: [
-      "plan.gallery1",
-      "plan.unlimitedAll",
-      "plan.moderation",
-      "plan.guestbook",
-      "plan.hosting3",
-      "plan.canva",
-    ],
+    name: "Starter",
+    usd: 19,
+    note: "plan.note.starter",
+    items: ["plan.photos500", "plan.qrForGuests", "plan.privateGallery", "plan.hqDownload"],
+    cta: "plan.chooseStarter",
   },
   {
-    name: "SIGNATURE",
-    usd: 89,
-    note: "plan.note.one",
+    name: "Pro",
+    usd: 29,
+    note: "plan.note.pro",
     featured: true,
-    items: [
-      "plan.gallery1",
-      "plan.theme",
-      "plan.superAlbums",
-      "plan.moderationGuestbook",
-      "plan.hosting12",
-      "plan.canva",
-    ],
+    items: ["plan.unlimitedPhotos", "plan.customEventPage", "plan.advancedSettings", "plan.prioritySupport"],
+    cta: "plan.choosePro",
   },
   {
-    name: "SIGNATURE BUNDLE",
-    usd: 119,
-    note: "plan.note.three",
-    items: [
-      "plan.galleries3",
-      "plan.qr3",
-      "plan.theme",
-      "plan.superAlbums",
-      "plan.hosting24",
-      "plan.canva",
-    ],
+    name: "Premium",
+    usd: 49,
+    note: "plan.note.premium",
+    items: ["plan.everythingInPro", "plan.multipleQr", "plan.branding", "plan.dedicatedSupport"],
+    cta: "plan.choosePremium",
   },
 ];
 
