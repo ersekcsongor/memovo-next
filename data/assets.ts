@@ -13,25 +13,25 @@ export const INVITE_RSVP = `${U}/invite-rsvp.png`;
    They inherit the brand pink from `text-coral`, so they cannot drift off-palette. */
 
 export const TEMPLATE_PHOTOS = [
-  { src: `${U}/floral-qr-sign.jpg`, alt: "Floral display with a QR code sign on an easel at an outdoor ceremony" },
-  { src: `${U}/i-spy-card.jpg`, alt: "I Spy game card with a QR code" },
-  { src: `${U}/qr-signage.jpg`, alt: "Wedding QR code signage" },
-  { src: `${U}/welcome-banner.jpg`, alt: "Wedding banner with the couple's names and a QR code" },
-  { src: `${U}/take-home-card.jpg`, alt: "Mini take-home QR code card" },
-  { src: `${U}/table-card.jpg`, alt: "Wedding table card template" },
-  { src: `${U}/guest-scanning.jpg`, alt: "Guest scanning a wedding QR code" },
-  { src: `${U}/video-message.jpg`, alt: "Two champagne glasses with a video message card at a reception" },
+  { src: `${U}/reception-venue.jpg`, alt: "A reception room laid out with florals and the cake" },
+  { src: `${U}/outdoor-table.jpg`, alt: "An outdoor table laid under string lights" },
+  { src: `${U}/phone-confetti.jpg`, alt: "A phone catching a cascade of confetti" },
+  { src: `${U}/welcome-sign.jpg`, alt: "A wooden sign asking guests to capture the day" },
+  { src: `${U}/floral-table.jpg`, alt: "A floral centrepiece on a rustic table" },
+  { src: `${U}/couple-dancing.jpg`, alt: "The couple dancing among their guests" },
+  { src: `${U}/toast.jpg`, alt: "Guests raising their glasses for a toast" },
+  { src: `${U}/table-setting.jpg`, alt: "Glasses, plates and candles laid for dinner" },
 ] as const;
 
 export const GALLERY_PHOTOS = [
-  { src: `${U}/guests-celebrating.jpg`, alt: "Guests enjoying an event" },
-  { src: `${U}/qr-signage-2.jpg`, alt: "Wedding QR code signage" },
-  { src: `${U}/welcome-banner.jpg`, alt: "Wedding welcome banner with a QR code" },
-  { src: `${U}/floral-qr-sign.jpg`, alt: "Floral display with a QR code sign" },
-  { src: `${U}/i-spy-card.jpg`, alt: "I Spy game card with a QR code" },
-  { src: `${U}/couple-celebrating.jpg`, alt: "Couple celebrating their wedding day" },
-  { src: `${U}/take-home-card.jpg`, alt: "Mini take-home QR code card" },
-  { src: `${U}/video-message.jpg`, alt: "Video message card at a reception" },
+  { src: `${U}/guests-celebrating.jpg`, alt: "Friends in party hats among falling confetti" },
+  { src: `${U}/phones-out.jpg`, alt: "A guest photographing her friends on a phone" },
+  { src: `${U}/welcome-sign.jpg`, alt: "A wooden sign asking guests to capture the day" },
+  { src: `${U}/floral-table.jpg`, alt: "A floral centrepiece on a rustic table" },
+  { src: `${U}/table-setting.jpg`, alt: "Glasses, plates and candles laid for dinner" },
+  { src: `${U}/couple-dancing.jpg`, alt: "The couple dancing among their guests" },
+  { src: `${U}/printed-keepsakes.jpg`, alt: "Instant prints scattered with confetti" },
+  { src: `${U}/toast.jpg`, alt: "Guests raising their glasses for a toast" },
 ] as const;
 
 export const HOME_TILES = [

@@ -18,3 +18,21 @@ on record.
 
 - `hero-party.png` — AI generated, no third-party rights
 - `hero-kids-parties.jpg` — Pexels photo 19670 by Padrinan
+
+## Gallery photographs
+
+Same [Pexels licence](https://www.pexels.com/license/).
+
+| File | Source | Shows |
+| --- | --- | --- |
+| `guests-celebrating.jpg` | [Pexels 32333372](https://www.pexels.com/photo/32333372/) | Friends in party hats among falling confetti |
+| `phones-out.jpg` | [Pexels 7337030](https://www.pexels.com/photo/7337030/) | A guest photographing her friends on a phone |
+| `welcome-sign.jpg` | [Pexels 1721929](https://www.pexels.com/photo/1721929/) | Rustic wedding signage under string lights |
+| `floral-table.jpg` | [Pexels 38893464](https://www.pexels.com/photo/38893464/) | A floral centrepiece on a rustic table |
+| `table-setting.jpg` | [Pexels 6659504](https://www.pexels.com/photo/6659504/) | Glasses, plates and candles laid for dinner |
+| `couple-dancing.jpg` | [Pexels 20885653](https://www.pexels.com/photo/20885653/) | The couple dancing among their guests |
+| `printed-keepsakes.jpg` | [Pexels 6429514](https://www.pexels.com/photo/6429514/) | Instant prints scattered with copper confetti |
+| `toast.jpg` | [Pexels 3171820](https://www.pexels.com/photo/3171820/) | Guests raising glasses for a toast |
+| `reception-venue.jpg` | [Pexels 20013453](https://www.pexels.com/photo/20013453/) | The reception room with florals and the cake |
+| `outdoor-table.jpg` | [Pexels 30539610](https://www.pexels.com/photo/30539610/) | An outdoor table laid under string lights |
+| `phone-confetti.jpg` | [Pexels 5310001](https://www.pexels.com/photo/5310001/) | A phone catching a cascade of confetti |

@@ -40,7 +40,7 @@ const en = {
   "ring.a11yLabel": "Rotating photo gallery",
   "ring.keyHint": "Scroll, or use the arrow keys",
   "ring.subStatic": "Every photo from the gallery",
-  "ring.intro": "Scroll through a whole event, from the welcome sign to the last video message.",
+  "ring.intro": "Scroll through a whole event, from the welcome sign to the last toast.",
 
   // Event names
   "event.weddings": "Weddings",
@@ -351,7 +351,7 @@ const hu: Record<BaseKey, string> = {
   "ring.a11yLabel": "Forgó fotógaléria",
   "ring.keyHint": "Görgess, vagy használd a nyílbillentyűket",
   "ring.subStatic": "A galéria összes fotója",
-  "ring.intro": "Görgess végig egy egész eseményen, a köszöntőtáblától az utolsó videóüzenetig.",
+  "ring.intro": "Görgess végig egy egész eseményen, a köszöntőtáblától az utolsó pohárköszöntőig.",
 
   "event.weddings": "Esküvők",
   "event.engagements": "Eljegyzések",
@@ -636,7 +636,7 @@ const ro: Record<BaseKey, string> = {
   "ring.a11yLabel": "Galerie foto rotativă",
   "ring.keyHint": "Derulează sau folosește tastele săgeți",
   "ring.subStatic": "Toate fotografiile din galerie",
-  "ring.intro": "Derulează printr-un eveniment întreg, de la panoul de bun venit până la ultimul mesaj video.",
+  "ring.intro": "Derulează printr-un eveniment întreg, de la panoul de bun venit până la ultimul toast.",
 
   "event.weddings": "Nunți",
   "event.engagements": "Logodne",

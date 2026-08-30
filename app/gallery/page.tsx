@@ -11,13 +11,13 @@ export const metadata: Metadata = {
 /* Captions sit alongside GALLERY_PHOTOS, so the gallery follows the data file. */
 const CAPTIONS = [
   { common: "Guests in the moment", binomial: "Candid shots from the floor" },
-  { common: "Scan and share", binomial: "QR signage at the venue" },
-  { common: "Welcome banner", binomial: "The first thing guests see" },
-  { common: "Floral display", binomial: "Ceremony styling" },
-  { common: "I Spy game", binomial: "A prompt card for guests" },
-  { common: "The couple", binomial: "Their wedding day" },
-  { common: "Take-home card", binomial: "A keepsake with the gallery link" },
-  { common: "Video messages", binomial: "Recorded at the reception" },
+  { common: "Everyone's a photographer", binomial: "Phones out all evening" },
+  { common: "Help us capture the day", binomial: "The sign at the entrance" },
+  { common: "Ceremony styling", binomial: "Flowers on every table" },
+  { common: "The table settings", binomial: "Details worth keeping" },
+  { common: "The first dance", binomial: "Surrounded by everyone" },
+  { common: "Printed keepsakes", binomial: "Photos guests took home" },
+  { common: "The toast", binomial: "Glasses up at the reception" },
 ] as const;
 
 const galleryItems: GalleryItem[] = GALLERY_PHOTOS.map((photo, i) => ({
