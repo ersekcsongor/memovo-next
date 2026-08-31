@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import { useT } from "@/components/LanguageProvider";
 import { Container } from "@/components/Sections";
 import { Reveal } from "@/components/Reveal";
@@ -29,7 +30,56 @@ function QuoteMark() {
 
 export function Testimonials({ titleKey = "tst.title" }: { titleKey?: string }) {
   const t = useT();
+  const reduced = useReducedMotion();
+  const trackRef = useRef<HTMLUListElement>(null);
+  /* A smooth scroll fires the listener the whole way, which would drag the dot
+     back to whichever card is passing. The click owns the state until it lands. */
+  const lockUntil = useRef(0);
   const [active, setActive] = useState(0);
+
+  /* Below md the cards sit on one swipeable track, so the dots have something to
+     move. From md up all three are on screen at once and the dots are hidden;
+     a control that cannot change anything should not be there to press. */
+  /* Distances are read from bounding boxes rather than offsetLeft: the track is
+     statically positioned, so a card's offsetParent is the body and its offsetLeft
+     is a page coordinate, not a scroll offset inside the track. */
+  const offsetOf = useCallback((i: number) => {
+    const track = trackRef.current;
+    const card = track?.children[i] as HTMLElement | undefined;
+    if (!track || !card) return null;
+    return track.scrollLeft + (card.getBoundingClientRect().left - track.getBoundingClientRect().left);
+  }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const onScroll = () => {
+      if (Date.now() < lockUntil.current) return;
+      // The gap makes width-based maths drift, so the nearest card wins instead.
+      let nearest = 0;
+      let best = Infinity;
+      for (let i = 0; i < track.children.length; i += 1) {
+        const left = (track.children[i] as HTMLElement).getBoundingClientRect().left;
+        const distance = Math.abs(left - track.getBoundingClientRect().left);
+        if (distance < best) {
+          best = distance;
+          nearest = i;
+        }
+      }
+      setActive((prev) => (prev === nearest ? prev : nearest));
+    };
+    track.addEventListener("scroll", onScroll, { passive: true });
+    return () => track.removeEventListener("scroll", onScroll);
+  }, []);
+
+  function goTo(i: number) {
+    const track = trackRef.current;
+    const left = offsetOf(i);
+    if (!track || left === null) return;
+    lockUntil.current = Date.now() + (reduced ? 0 : 700);
+    track.scrollTo({ left, behavior: reduced ? "auto" : "smooth" });
+    setActive(i);
+  }
 
   return (
     <section className="bg-white py-10 md:py-16">
@@ -38,9 +88,16 @@ export function Testimonials({ titleKey = "tst.title" }: { titleKey?: string }) 
 
         {/* Column layout on each card + `mt-auto` on its footer: the quotes run to
             different lengths, and this keeps every name row on the same baseline. */}
-        <ul className="grid gap-6 md:grid-cols-3">
-          {QUOTES.map((c, i) => (
-            <Reveal as="li" key={c.q} index={i} className="flex h-full flex-col rounded-2xl bg-white p-7 shadow-sm">
+      <Reveal>
+        <ul
+          ref={trackRef}
+          className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:overflow-visible md:pb-0"
+        >
+          {QUOTES.map((c) => (
+            <li
+              key={c.q}
+              className="flex h-auto w-full shrink-0 snap-center flex-col rounded-2xl bg-white p-7 shadow-sm md:h-full md:w-auto"
+            >
               <QuoteMark />
               <p className="mb-6 text-sm leading-relaxed text-navy/80">{t(c.q)}</p>
               <div className="mt-auto flex items-center gap-3">
@@ -58,17 +115,18 @@ export function Testimonials({ titleKey = "tst.title" }: { titleKey?: string }) 
                   <span className="block text-xs text-muted-foreground">{t(c.r)}</span>
                 </span>
               </div>
-            </Reveal>
+            </li>
           ))}
         </ul>
+      </Reveal>
 
-        <div className="mt-8 flex justify-center gap-2">
+        <div className="mt-8 flex justify-center gap-2 md:hidden">
           {QUOTES.map((c, i) => (
             <button
               key={c.q}
               type="button"
-              onClick={() => setActive(i)}
-              aria-label={`${i + 1}`}
+              onClick={() => goTo(i)}
+              aria-label={t(c.n)}
               aria-current={i === active ? "true" : undefined}
               className={`h-2.5 rounded-full transition-all ${i === active ? "w-6 bg-coral" : "w-2.5 bg-coral/30"}`}
             />
