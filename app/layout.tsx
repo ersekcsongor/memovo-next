@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ConsentBar from "@/components/ConsentBar";
 import ChatBubble from "@/components/ChatBubble";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { AuthProvider } from "@/components/AuthProvider";
 
 const comfortaa = Comfortaa({ subsets: ["latin"], weight: ["400", "600", "700"], variable: "--font-comfortaa" });
 const montserrat = Montserrat({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-montserrat" });
@@ -25,11 +26,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${comfortaa.variable} ${montserrat.variable} ${playfair.variable}`}>
         <LanguageProvider>
-          <ConsentBar />
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
-          <ChatBubble />
+          <AuthProvider>
+            <ConsentBar />
+            <Header />
+            <main id="main">{children}</main>
+            <Footer />
+            <ChatBubble />
+          </AuthProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -17,6 +17,7 @@ import { PricingSection } from "@/components/Pricing";
 import { BenefitBand, Check, ClosingBand, DashboardPreview, PhoneCard, StepsRow } from "@/components/Blocks";
 import { Testimonials } from "@/components/Testimonials";
 import { Container, FaqAccordion } from "@/components/Sections";
+import { Reveal } from "@/components/Reveal";
 
 const CARDS = [
   { Icon: IconCamera, key: "wed2.c1", sub: "wed2.c1sub" },
@@ -87,12 +88,12 @@ export default function WeddingsView() {
           <h2 className="text-center font-heading text-2xl font-bold md:text-3xl">{t("wed2.perfectTitle")}</h2>
           <p className="mt-2 mb-10 text-center text-sm text-muted-foreground">{t("wed2.perfectSub")}</p>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {CARDS.map(({ Icon, key, sub }) => (
-              <div key={key} className="rounded-xl border border-border bg-white px-6 py-7 text-center">
+            {CARDS.map(({ Icon, key, sub }, i) => (
+              <Reveal key={key} index={i} className="rounded-xl border border-border bg-white px-6 py-7 text-center">
                 <Icon className="mx-auto mb-4 h-8 w-8 text-coral" stroke={1.6} aria-hidden />
                 <h3 className="font-heading text-base font-bold">{t(key as never)}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{t(sub as never)}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </Container>

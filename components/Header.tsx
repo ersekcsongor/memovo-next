@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { HERO_HOME, HERO_WEDDING } from "@/data/assets";
 import { EVENTS } from "@/data/events";
+import { useAuth } from "@/components/AuthProvider";
 import { LANGS } from "@/data/i18n";
 import { useLang, useT } from "@/components/LanguageProvider";
 import { IconMenu2, IconX } from "@tabler/icons-react";
@@ -110,6 +111,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const reduced = useReducedMotion();
+  const { user, ready } = useAuth();
   const t = useT();
 
   /**
@@ -265,15 +267,23 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-4">
+          {/* Signed in, the circle carries the initial and opens the account; signed
+              out it opens the form. `ready` keeps it from flickering between the two. */}
           <Link
-            href="/contact"
-            aria-label={t("nav.account")}
+            href={user ? "/account" : "/login"}
+            aria-label={user ? t("auth.accountHeading") : t("nav.account")}
             className="flex h-11 w-11 items-center justify-center text-navy"
           >
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-coral"><svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
-              <circle cx="12" cy="8" r="3.6" />
-              <path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6z" />
-            </svg></span>
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-coral text-xs font-bold text-white">
+              {ready && user ? (
+                user.name.trim().slice(0, 1).toUpperCase()
+              ) : (
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
+                  <circle cx="12" cy="8" r="3.6" />
+                  <path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6z" />
+                </svg>
+              )}
+            </span>
           </Link>
 
           <LanguagePicker onDark={onDark} />

@@ -187,7 +187,7 @@ export const EVENTS: EventPage[] = [
     label: "Business",
     title: "Memovo for Business",
     description: "Effortless photo sharing and attendee engagement for conferences, galas and product launches.",
-    hero: `${U}/hero-business.png`,
+    hero: `${U}/hero-business.jpg`,
     copy: {
       en: {
         badge: "BUSINESS EVENT PHOTO SHARING",

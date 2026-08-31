@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { type Feature, type Step } from "@/data/content";
 import { useT } from "@/components/LanguageProvider";
+import { Reveal } from "@/components/Reveal";
 import { FAQSection } from "@/components/ui/faq-section-shadcnui";
 
 /* ---------- primitives ---------- */
@@ -55,12 +56,12 @@ export function FeatureGrid({ features }: { features: Feature[] }) {
   return (
     <Container>
       <div className="grid grid-cols-2 gap-x-8 gap-y-12 text-center md:grid-cols-4">
-        {features.map((f) => (
-          <div key={f.key}>
+        {features.map((f, i) => (
+          <Reveal key={f.key} index={i}>
             <f.Icon className="mx-auto mb-4 h-12 w-12 text-coral" stroke={1.5} aria-hidden />
             <h2 className="mb-2 font-heading text-lg">{t(`${f.key}.title` as never)}</h2>
             <p className="text-sm text-navy/70">{t(`${f.key}.body` as never)}</p>
-          </div>
+          </Reveal>
         ))}
       </div>
     </Container>
