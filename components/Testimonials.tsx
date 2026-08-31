@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { useT } from "@/components/LanguageProvider";
 import { Container } from "@/components/Sections";
@@ -21,8 +21,8 @@ const QUOTES: { q: string; n: string; r: string; img?: string }[] = [
   { q: "tst.q1", n: "tst.n1", r: "tst.r1", img: "/images/martina_r.jpeg" },
   { q: "tst.q2", n: "tst.n2", r: "tst.r2", img: "/images/david_and_friends.jpeg" },
   { q: "tst.q3", n: "tst.n3", r: "tst.r3", img: "/images/alex_k.jpeg" },
-  { q: "tst.q4", n: "tst.n4", r: "tst.r4" },
-  { q: "tst.q5", n: "tst.n5", r: "tst.r5" },
+  { q: "tst.q4", n: "tst.n4", r: "tst.r4", img: "/images/nora_and_tom.png" },
+  { q: "tst.q5", n: "tst.n5", r: "tst.r5", img: "/images/priya_s.png" },
 ];
 
 function QuoteMark() {
@@ -42,33 +42,19 @@ export function Testimonials({ titleKey = "tst.title" }: { titleKey?: string }) 
   const lockUntil = useRef(0);
   const [active, setActive] = useState(0);
 
-  /* Distances are read from bounding boxes rather than offsetLeft: the track is
-     statically positioned, so a card's offsetLeft is a page coordinate, not a
-     scroll offset inside the track. */
-  const offsetOf = useCallback((i: number) => {
-    const track = trackRef.current;
-    const card = track?.children[i] as HTMLElement | undefined;
-    if (!track || !card) return null;
-    return track.scrollLeft + (card.getBoundingClientRect().left - track.getBoundingClientRect().left);
-  }, []);
+  /* Three stops along the track rather than one dot per card. The row stays the
+     same width however long the list grows, and each stop still moves something
+     at every breakpoint. */
+  const STOPS = 3;
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
     const onScroll = () => {
       if (Date.now() < lockUntil.current) return;
-      // The gap makes width-based maths drift, so the nearest card wins instead.
-      let nearest = 0;
-      let best = Infinity;
-      for (let i = 0; i < track.children.length; i += 1) {
-        const left = (track.children[i] as HTMLElement).getBoundingClientRect().left;
-        const distance = Math.abs(left - track.getBoundingClientRect().left);
-        if (distance < best) {
-          best = distance;
-          nearest = i;
-        }
-      }
-      setActive((prev) => (prev === nearest ? prev : nearest));
+      const max = track.scrollWidth - track.clientWidth;
+      const at = max <= 0 ? 0 : Math.round((track.scrollLeft / max) * (STOPS - 1));
+      setActive((prev) => (prev === at ? prev : at));
     };
     track.addEventListener("scroll", onScroll, { passive: true });
     return () => track.removeEventListener("scroll", onScroll);
@@ -76,10 +62,10 @@ export function Testimonials({ titleKey = "tst.title" }: { titleKey?: string }) 
 
   function goTo(i: number) {
     const track = trackRef.current;
-    const left = offsetOf(i);
-    if (!track || left === null) return;
+    if (!track) return;
+    const max = track.scrollWidth - track.clientWidth;
     lockUntil.current = Date.now() + (reduced ? 0 : 700);
-    track.scrollTo({ left, behavior: reduced ? "auto" : "smooth" });
+    track.scrollTo({ left: (max * i) / (STOPS - 1), behavior: reduced ? "auto" : "smooth" });
     setActive(i);
   }
 
@@ -134,12 +120,12 @@ export function Testimonials({ titleKey = "tst.title" }: { titleKey?: string }) 
         </Reveal>
 
         <div className="mt-8 flex justify-center gap-2">
-          {QUOTES.map((c, i) => (
+          {Array.from({ length: STOPS }).map((_, i) => (
             <button
-              key={c.q}
+              key={i}
               type="button"
               onClick={() => goTo(i)}
-              aria-label={t(c.n as never)}
+              aria-label={`${i + 1} / ${STOPS}`}
               aria-current={i === active ? "true" : undefined}
               className={`h-2.5 rounded-full transition-all ${i === active ? "w-6 bg-coral" : "w-2.5 bg-coral/30"}`}
             />
