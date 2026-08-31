@@ -8,12 +8,26 @@ import { useReducedMotion } from "framer-motion";
 import { HERO_HOME, HERO_WEDDING } from "@/data/assets";
 import { EVENTS } from "@/data/events";
 import { useAuth } from "@/components/AuthProvider";
+import { Lamp } from "@/components/ui/tubelight-navbar";
 import { LANGS } from "@/data/i18n";
 import { useLang, useT } from "@/components/LanguageProvider";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import Wordmark from "@/components/Wordmark";
 
-function Dropdown({ label, items, onDark = false }: { label: string; items: { href: string; label: string }[]; onDark?: boolean }) {
+function Dropdown({
+  label,
+  items,
+  onDark = false,
+  active = false,
+  reduced = false,
+}: {
+  label: string;
+  items: { href: string; label: string }[];
+  onDark?: boolean;
+  /** True while the visitor is on a page this menu opens. */
+  active?: boolean;
+  reduced?: boolean;
+}) {
   // Hover opens it on a mouse; the click toggle is what makes it work on a touch screen.
   const [open, setOpen] = useState(false);
 
@@ -23,9 +37,10 @@ function Dropdown({ label, items, onDark = false }: { label: string; items: { hr
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className={`flex items-center gap-1.5 py-7 font-heading text-base ${onDark ? "text-white/90 hover:text-white" : "text-coral-ink"}`}
+        className={`relative flex items-center gap-1.5 py-7 font-heading text-base ${onDark ? "text-white/90 hover:text-white" : "text-coral-ink"}`}
       >
         {label}
+        {active && <Lamp layoutId="headerLamp" edge="bottom" reduced={reduced} />}
         <svg viewBox="0 0 12 8" className="h-2 w-3" fill="none" aria-hidden>
           <path d="M1 1l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
@@ -184,10 +199,14 @@ export default function Header() {
   }, [mobileOpen]);
 
   // The current page is marked in the nav, so the visitor can see where they are.
-  const navClass = (href: string) =>
-    `inline-flex min-h-11 items-center font-heading text-base ${onDark ? "text-white/90 hover:text-white" : "text-coral-ink"}${
-      pathname === href ? " underline decoration-2 underline-offset-8" : ""
-    }`;
+  /* The lamp marks the current page now, so the link only carries colour. */
+  const navClass = () =>
+    `relative inline-flex min-h-11 items-center px-1 font-heading text-base ${onDark ? "text-white/90 hover:text-white" : "text-coral-ink"}`;
+
+  /* Which menu owns the page. A dropdown has no route of its own, so it names
+     the sections it opens. */
+  const inSection = (prefixes: string[]) =>
+    prefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 
   const eventLinks = [
     { href: "/weddings", label: t("event.weddings") },
@@ -249,20 +268,42 @@ export default function Header() {
         </Link>
 
         <nav className="hidden items-center gap-9 lg:flex">
-          <Dropdown label={t("nav.events")} items={eventLinks} onDark={onDark} />
-          <Link href="/how-it-works" aria-current={pathname === "/how-it-works" ? "page" : undefined} className={navClass("/how-it-works")}>
+          <Dropdown
+            label={t("nav.events")}
+            items={eventLinks}
+            onDark={onDark}
+            active={inSection(["/weddings", "/events"])}
+            reduced={!!reduced}
+          />
+          <Link href="/how-it-works" aria-current={pathname === "/how-it-works" ? "page" : undefined} className={navClass()}>
             {t("nav.howItWorks")}
+            {pathname === "/how-it-works" && <Lamp layoutId="headerLamp" edge="bottom" reduced={!!reduced} />}
           </Link>
-          <Dropdown label={t("nav.pricing")} items={pricing} onDark={onDark} />
-          <Dropdown label={t("nav.about")} items={about} onDark={onDark} />
-          <Link href="/faqs" aria-current={pathname === "/faqs" ? "page" : undefined} className={navClass("/faqs")}>
+          <Dropdown
+            label={t("nav.pricing")}
+            items={pricing}
+            onDark={onDark}
+            active={inSection(["/pricing"])}
+            reduced={!!reduced}
+          />
+          <Dropdown
+            label={t("nav.about")}
+            items={about}
+            onDark={onDark}
+            active={inSection(["/press-features", "/community-events", "/reviews"])}
+            reduced={!!reduced}
+          />
+          <Link href="/faqs" aria-current={pathname === "/faqs" ? "page" : undefined} className={navClass()}>
             {t("nav.helpCenter")}
+            {pathname === "/faqs" && <Lamp layoutId="headerLamp" edge="bottom" reduced={!!reduced} />}
           </Link>
-          <Link href="/gallery-demo" aria-current={pathname === "/gallery-demo" ? "page" : undefined} className={navClass("/gallery-demo")}>
+          <Link href="/gallery-demo" aria-current={pathname === "/gallery-demo" ? "page" : undefined} className={navClass()}>
             {t("nav.gallery")}
+            {pathname === "/gallery-demo" && <Lamp layoutId="headerLamp" edge="bottom" reduced={!!reduced} />}
           </Link>
-          <Link href="/gallery" aria-current={pathname === "/gallery" ? "page" : undefined} className={navClass("/gallery")}>
+          <Link href="/gallery" aria-current={pathname === "/gallery" ? "page" : undefined} className={navClass()}>
             {t("nav.photoGallery")}
+            {pathname === "/gallery" && <Lamp layoutId="headerLamp" edge="bottom" reduced={!!reduced} />}
           </Link>
         </nav>
 

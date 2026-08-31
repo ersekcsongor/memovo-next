@@ -6,6 +6,44 @@ import type { Icon } from "@tabler/icons-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+/**
+ * The lit bar that slides between items, with its glow bleeding off the edge.
+ *
+ * `edge` says which side it clings to: the bottom bar lights from above, a top
+ * header lights from below. Items sharing a `layoutId` hand it between them.
+ */
+export function Lamp({
+  layoutId,
+  edge = "top",
+  reduced = false,
+}: {
+  layoutId: string;
+  edge?: "top" | "bottom";
+  reduced?: boolean;
+}) {
+  const onTop = edge === "top";
+  return (
+    <motion.span
+      layoutId={layoutId}
+      className="absolute inset-0 -z-10 rounded-full bg-primary/5"
+      initial={false}
+      transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }}
+      aria-hidden
+    >
+      <span
+        className={cn(
+          "absolute left-1/2 h-1 w-8 -translate-x-1/2 bg-primary",
+          onTop ? "-top-1 rounded-t-full" : "-bottom-1 rounded-b-full",
+        )}
+      >
+        <span className={cn("absolute -left-2 h-6 w-12 rounded-full bg-primary/25 blur-md", onTop ? "-top-2" : "-bottom-2")} />
+        <span className={cn("absolute h-6 w-8 rounded-full bg-primary/20 blur-md", onTop ? "-top-1" : "-bottom-1")} />
+        <span className={cn("absolute left-2 h-4 w-4 rounded-full bg-primary/20 blur-sm", onTop ? "top-0" : "bottom-0")} />
+      </span>
+    </motion.span>
+  );
+}
+
 export interface NavItem {
   name: string;
   url: string;
@@ -61,23 +99,7 @@ export function NavBar({ items, className }: { items: NavItem[]; className?: str
               <item.icon size={20} stroke={2} aria-hidden />
               <span>{item.name}</span>
 
-              {isActive && (
-                <motion.span
-                  layoutId="tubelight"
-                  className="absolute inset-0 -z-10 rounded-full bg-primary/5"
-                  initial={false}
-                  transition={
-                    reduced ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }
-                  }
-                >
-                  {/* The lamp: a bright bar on the rim with its glow bleeding out. */}
-                  <span className="absolute -top-1 left-1/2 h-1 w-8 -translate-x-1/2 rounded-t-full bg-primary">
-                    <span className="absolute -top-2 -left-2 h-6 w-12 rounded-full bg-primary/25 blur-md" />
-                    <span className="absolute -top-1 h-6 w-8 rounded-full bg-primary/20 blur-md" />
-                    <span className="absolute top-0 left-2 h-4 w-4 rounded-full bg-primary/20 blur-sm" />
-                  </span>
-                </motion.span>
-              )}
+              {isActive && <Lamp layoutId="tubelight" reduced={!!reduced} />}
             </Link>
           );
         })}
