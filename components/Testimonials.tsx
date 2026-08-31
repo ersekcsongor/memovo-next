@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useT } from "@/components/LanguageProvider";
 import { Container } from "@/components/Sections";
+import { Reveal } from "@/components/Reveal";
 
 /**
  * PLACEHOLDER CONTENT. The three quotes, the names attached to them and the
@@ -38,8 +39,8 @@ export function Testimonials({ titleKey = "tst.title" }: { titleKey?: string }) 
         {/* Column layout on each card + `mt-auto` on its footer: the quotes run to
             different lengths, and this keeps every name row on the same baseline. */}
         <ul className="grid gap-6 md:grid-cols-3">
-          {QUOTES.map((c) => (
-            <li key={c.q} className="flex h-full flex-col rounded-2xl bg-white p-7 shadow-sm">
+          {QUOTES.map((c, i) => (
+            <Reveal as="li" key={c.q} index={i} className="flex h-full flex-col rounded-2xl bg-white p-7 shadow-sm">
               <QuoteMark />
               <p className="mb-6 text-sm leading-relaxed text-navy/80">{t(c.q)}</p>
               <div className="mt-auto flex items-center gap-3">
@@ -57,7 +58,7 @@ export function Testimonials({ titleKey = "tst.title" }: { titleKey?: string }) 
                   <span className="block text-xs text-muted-foreground">{t(c.r)}</span>
                 </span>
               </div>
-            </li>
+            </Reveal>
           ))}
         </ul>
 

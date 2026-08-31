@@ -16,6 +16,7 @@ import {
 import { GALLERY_PHOTOS } from "@/data/assets";
 import { useT } from "@/components/LanguageProvider";
 import { Container } from "@/components/Sections";
+import { Reveal } from "@/components/Reveal";
 
 /** The building blocks the home and weddings pages share, so the two stay in step. */
 
@@ -108,7 +109,7 @@ export function StepsRow() {
   return (
     <ol className="grid gap-10 md:grid-cols-3">
       {STEPS.map(({ Icon, title, body }, i) => (
-        <li key={title} className="relative text-center">
+        <Reveal as="li" key={title} index={i} className="relative text-center">
           {/* The connector sits between the circles on wide screens. */}
           {i < STEPS.length - 1 && (
             <span
@@ -122,7 +123,7 @@ export function StepsRow() {
           <Icon className="mx-auto mb-4 h-10 w-10 text-coral" stroke={1.5} aria-hidden />
           <h3 className="mb-2 font-heading text-base font-bold">{t(title as never)}</h3>
           <p className="mx-auto max-w-[34ch] text-sm text-muted-foreground">{t(body as never)}</p>
-        </li>
+        </Reveal>
       ))}
     </ol>
   );
@@ -142,12 +143,12 @@ export function BenefitBand() {
     <section className="bg-white py-10 md:py-14">
       <Container>
         <ul className="grid gap-8 rounded-2xl bg-gradient-to-r from-coral to-coral-ink px-8 py-10 text-center text-white sm:grid-cols-2 lg:grid-cols-4">
-          {BAND.map(({ Icon, title, sub }) => (
-            <li key={title}>
+          {BAND.map(({ Icon, title, sub }, i) => (
+            <Reveal as="li" key={title} index={i}>
               <Icon className="mx-auto mb-3 h-7 w-7" stroke={1.6} aria-hidden />
               <p className="font-heading text-lg font-bold">{t(title as never)}</p>
               <p className="mt-1 text-sm text-white/80">{t(sub as never)}</p>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </Container>

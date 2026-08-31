@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CURRENCIES, type Currency, formatPrice } from "@/data/currency";
 import { type Plan } from "@/data/content";
 import { useT } from "@/components/LanguageProvider";
+import { Reveal } from "@/components/Reveal";
 
 function Check() {
   return (
@@ -43,9 +44,10 @@ export function PricingSection({ plans }: { plans: Plan[] }) {
 
       {/* The cards stretch to a shared height so the three CTAs line up. */}
       <div className="grid items-stretch gap-8 md:grid-cols-3">
-        {plans.map((p) => (
-          <div
+        {plans.map((p, i) => (
+          <Reveal
             key={p.name}
+            index={i}
             className={
               p.featured
                 ? "relative flex flex-col rounded-2xl border-2 border-coral bg-white p-8 shadow-xl md:-translate-y-3"
@@ -83,7 +85,7 @@ export function PricingSection({ plans }: { plans: Plan[] }) {
             >
               {t((p.cta ?? "pricing.createGallery") as never)}
             </Link>
-          </div>
+          </Reveal>
         ))}
       </div>
     </>

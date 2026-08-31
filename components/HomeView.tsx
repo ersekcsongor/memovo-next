@@ -19,6 +19,7 @@ import { PricingSection } from "@/components/Pricing";
 import { Container } from "@/components/Sections";
 import { Testimonials } from "@/components/Testimonials";
 import { BenefitBand, Check, ClosingBand, DashboardPreview, PhoneCard, StepsRow } from "@/components/Blocks";
+import { Reveal } from "@/components/Reveal";
 
 const OCCASIONS = [
   { Icon: IconHeart, key: "occ.weddings", sub: "occ.weddingsSub", href: "/weddings" },
@@ -124,16 +125,17 @@ export default function HomeView() {
         <Container>
           <h2 className="mb-10 text-center font-heading text-2xl font-bold md:text-3xl">{t("occ.title")}</h2>
           <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-6">
-            {OCCASIONS.map(({ Icon, key, sub, href }) => (
-              <Link
-                key={key}
-                href={href}
-                className="rounded-xl border border-border bg-white px-4 py-6 text-center transition hover:-translate-y-1 hover:shadow-lg"
-              >
-                <Icon className="mx-auto mb-3 h-8 w-8 text-coral" stroke={1.6} aria-hidden />
-                <p className="font-heading text-sm font-bold">{t(key as never)}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{t(sub as never)}</p>
-              </Link>
+            {OCCASIONS.map(({ Icon, key, sub, href }, i) => (
+              <Reveal key={key} index={i}>
+                <Link
+                  href={href}
+                  className="block h-full rounded-xl border border-border bg-white px-4 py-6 text-center transition hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <Icon className="mx-auto mb-3 h-8 w-8 text-coral" stroke={1.6} aria-hidden />
+                  <p className="font-heading text-sm font-bold">{t(key as never)}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{t(sub as never)}</p>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </Container>
