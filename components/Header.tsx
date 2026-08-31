@@ -37,7 +37,7 @@ function Dropdown({
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className={`relative flex items-center gap-1.5 py-7 font-heading text-base ${onDark ? "text-white/90 hover:text-white" : "text-coral-ink"}`}
+        className={`relative flex h-[68px] items-center gap-1.5 px-3 font-heading text-[15px] font-medium ${onDark ? "text-white/90 hover:text-white" : "text-coral-ink"}`}
       >
         {label}
         {active && <Lamp layoutId="headerLamp" edge="bottom" reduced={reduced} />}
@@ -110,7 +110,7 @@ function LanguagePicker({ onDark = false }: { onDark?: boolean }) {
 }
 
 /** Height of the bar. Past this the hero is gone, so the bar has to carry its own surface. */
-const BAR = 82;
+const BAR = 68;
 
 /** The picture each page opens on, reused as the bar's own surface once the hero scrolls away. */
 function heroFor(pathname: string) {
@@ -201,7 +201,7 @@ export default function Header() {
   // The current page is marked in the nav, so the visitor can see where they are.
   /* The lamp marks the current page now, so the link only carries colour. */
   const navClass = () =>
-    `relative inline-flex min-h-11 items-center px-1 font-heading text-base ${onDark ? "text-white/90 hover:text-white" : "text-coral-ink"}`;
+    `relative inline-flex h-[68px] items-center px-3 font-heading text-[15px] font-medium ${onDark ? "text-white/90 hover:text-white" : "text-coral-ink"}`;
 
   /* Which menu owns the page. A dropdown has no route of its own, so it names
      the sections it opens. */
@@ -228,13 +228,13 @@ export default function Header() {
 
   return (
     /* Dark pages: fixed, so the hero runs underneath and the bar can return over any
-       content. Light pages: sticky, so the bar keeps its 82px slot in the flow and
+       content. Light pages: sticky, so the bar keeps its 68px slot in the flow and
        hiding it shifts nothing. */
     <header
       id="siteHeader"
       /* Tailwind v4 writes these utilities to the `translate` property, not `transform`,
          so naming `transform` here would leave the bar snapping instead of sliding. */
-      /* No overflow clipping here: the menus open below the 82px bar, and hiding the
+      /* No overflow clipping here: the menus open below the 68px bar, and hiding the
          overflow would cut every one of them off. The picture behind is clipped by
          its own wrapper instead. */
       className={`z-50 w-full transition-[translate,background-color] duration-300 ease-out motion-reduce:transition-none ${
@@ -262,12 +262,12 @@ export default function Header() {
         {t("nav.skip")}
       </a>
       {/* Positioned, so it paints above the picture behind it. */}
-      <div className="relative mx-auto flex h-[82px] max-w-[1440px] items-center justify-between px-6 xl:px-[88px]">
+      <div className="relative mx-auto flex h-[68px] max-w-[1280px] items-center justify-between gap-6 px-6">
         <Link href="/" className="flex min-h-11 shrink-0 items-center">
           <Wordmark className="text-[28px]" tone={onDark ? "light" : "brand"} />
         </Link>
 
-        <nav className="hidden items-center gap-9 lg:flex">
+        <nav className="hidden items-center lg:flex">
           <Dropdown
             label={t("nav.events")}
             items={eventLinks}
@@ -308,30 +308,35 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-4">
-          {/* Signed in, the circle carries the initial and opens the account; signed
-              out it opens the form. `ready` keeps it from flickering between the two. */}
-          <Link
-            href={user ? "/account" : "/login"}
-            aria-label={user ? t("auth.accountHeading") : t("nav.account")}
-            className="flex h-11 w-11 items-center justify-center text-navy"
-          >
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-coral text-xs font-bold text-white">
-              {ready && user ? (
-                user.name.trim().slice(0, 1).toUpperCase()
-              ) : (
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
-                  <circle cx="12" cy="8" r="3.6" />
-                  <path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6z" />
-                </svg>
-              )}
-            </span>
-          </Link>
-
           <LanguagePicker onDark={onDark} />
+
+          {/* Signed out the bar offers a way in beside the way to buy; signed in the
+              circle takes that place, so the row never carries both. `ready` keeps
+              it from flickering between the two. */}
+          {ready && user ? (
+            <Link
+              href="/account"
+              aria-label={t("auth.accountHeading")}
+              className="flex h-11 w-11 items-center justify-center"
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-coral text-xs font-bold text-white">
+                {user.name.trim().slice(0, 1).toUpperCase()}
+              </span>
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className={`hidden min-h-11 items-center rounded-full border px-5 text-sm font-semibold whitespace-nowrap transition sm:inline-flex ${
+                onDark ? "border-white/40 text-white hover:bg-white/10" : "border-border text-navy hover:bg-cream"
+              }`}
+            >
+              {t("auth.signIn")}
+            </Link>
+          )}
 
           <Link
             href="/pricing"
-            className="inline-flex min-h-11 items-center rounded-full bg-coral px-4 text-sm font-semibold whitespace-nowrap text-white transition hover:brightness-95 sm:px-6"
+            className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-sm font-semibold whitespace-nowrap text-white transition hover:brightness-95"
           >
             {t("nav.getStarted")}
           </Link>
