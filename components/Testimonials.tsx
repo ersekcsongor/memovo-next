@@ -8,17 +8,22 @@ import { Container } from "@/components/Sections";
 import { Reveal } from "@/components/Reveal";
 
 /**
- * PLACEHOLDER CONTENT. The three quotes, the names attached to them and the
+ * PLACEHOLDER CONTENT. The five quotes, the names attached to them and the
  * portraits are invented for the layout preview and describe customers Memovo
  * does not have yet. The faces are AI-generated, so no real person is shown.
  * Swap `QUOTES` for real, attributable reviews before this ships, or drop
  * the section — presenting these as genuine would misrepresent the product.
+ *
+ * `img` is optional: an entry without one falls back to a monogram, which is
+ * how the section looked before any portraits existed.
  */
-const QUOTES = [
+const QUOTES: { q: string; n: string; r: string; img?: string }[] = [
   { q: "tst.q1", n: "tst.n1", r: "tst.r1", img: "/images/martina_r.jpeg" },
   { q: "tst.q2", n: "tst.n2", r: "tst.r2", img: "/images/david_and_friends.jpeg" },
   { q: "tst.q3", n: "tst.n3", r: "tst.r3", img: "/images/alex_k.jpeg" },
-] as const;
+  { q: "tst.q4", n: "tst.n4", r: "tst.r4" },
+  { q: "tst.q5", n: "tst.n5", r: "tst.r5" },
+];
 
 function QuoteMark() {
   return (
@@ -37,12 +42,9 @@ export function Testimonials({ titleKey = "tst.title" }: { titleKey?: string }) 
   const lockUntil = useRef(0);
   const [active, setActive] = useState(0);
 
-  /* Below md the cards sit on one swipeable track, so the dots have something to
-     move. From md up all three are on screen at once and the dots are hidden;
-     a control that cannot change anything should not be there to press. */
   /* Distances are read from bounding boxes rather than offsetLeft: the track is
-     statically positioned, so a card's offsetParent is the body and its offsetLeft
-     is a page coordinate, not a scroll offset inside the track. */
+     statically positioned, so a card's offsetLeft is a page coordinate, not a
+     scroll offset inside the track. */
   const offsetOf = useCallback((i: number) => {
     const track = trackRef.current;
     const card = track?.children[i] as HTMLElement | undefined;
@@ -86,47 +88,58 @@ export function Testimonials({ titleKey = "tst.title" }: { titleKey?: string }) 
       <Container>
         <h2 className="mb-10 text-center font-heading text-2xl font-bold md:text-3xl">{t(titleKey as never)}</h2>
 
-        {/* Column layout on each card + `mt-auto` on its footer: the quotes run to
-            different lengths, and this keeps every name row on the same baseline. */}
-      <Reveal>
-        <ul
-          ref={trackRef}
-          className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:overflow-visible md:pb-0"
-        >
-          {QUOTES.map((c) => (
-            <li
-              key={c.q}
-              className="flex h-auto w-full shrink-0 snap-center flex-col rounded-2xl bg-white p-7 shadow-sm md:h-full md:w-auto"
-            >
-              <QuoteMark />
-              <p className="mb-6 text-sm leading-relaxed text-navy/80">{t(c.q)}</p>
-              <div className="mt-auto flex items-center gap-3">
-                {/* No `sizes`: at a fixed size next/image ships a 1x/2x pair, which keeps
-                    the 40px avatar sharp on retina screens. */}
-                <Image
-                  src={c.img}
-                  alt=""
-                  width={80}
-                  height={80}
-                  className="h-10 w-10 shrink-0 rounded-full object-cover"
-                />
-                <span>
-                  <span className="block text-sm font-semibold">{t(c.n)}</span>
-                  <span className="block text-xs text-muted-foreground">{t(c.r)}</span>
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </Reveal>
+        {/* One snapping track at every width. Five cards against three columns means
+            there is always something left to reach, so the dots keep their job on a
+            wide screen too. Column layout on each card, with `mt-auto` on its footer,
+            holds every name row on one baseline whatever length the quote runs to. */}
+        <Reveal>
+          <ul
+            ref={trackRef}
+            className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {QUOTES.map((c) => (
+              <li
+                key={c.q}
+                className="flex w-full shrink-0 snap-start flex-col rounded-2xl bg-white p-7 shadow-sm sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
+              >
+                <QuoteMark />
+                <p className="mb-6 text-sm leading-relaxed text-navy/80">{t(c.q as never)}</p>
+                <div className="mt-auto flex items-center gap-3">
+                  {c.img ? (
+                    /* No `sizes`: at a fixed size next/image ships a 1x/2x pair, which
+                       keeps the 40px avatar sharp on retina screens. */
+                    <Image
+                      src={c.img}
+                      alt=""
+                      width={80}
+                      height={80}
+                      className="h-10 w-10 shrink-0 rounded-full object-cover"
+                    />
+                  ) : (
+                    <span
+                      aria-hidden
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-coral text-xs font-bold text-white"
+                    >
+                      {t(c.n as never).trim().slice(0, 1).toUpperCase()}
+                    </span>
+                  )}
+                  <span>
+                    <span className="block text-sm font-semibold">{t(c.n as never)}</span>
+                    <span className="block text-xs text-muted-foreground">{t(c.r as never)}</span>
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
 
-        <div className="mt-8 flex justify-center gap-2 md:hidden">
+        <div className="mt-8 flex justify-center gap-2">
           {QUOTES.map((c, i) => (
             <button
               key={c.q}
               type="button"
               onClick={() => goTo(i)}
-              aria-label={t(c.n)}
+              aria-label={t(c.n as never)}
               aria-current={i === active ? "true" : undefined}
               className={`h-2.5 rounded-full transition-all ${i === active ? "w-6 bg-coral" : "w-2.5 bg-coral/30"}`}
             />
