@@ -307,9 +307,22 @@ export default function Header() {
             </Link>
           )}
 
+          {/* The pill is the widest thing in the bar and it cannot wrap, so it is what
+              gives way when the row runs out of room.
+
+              Signed in it stands down on a phone: the circle, the pill and the
+              hamburger together ran 25px past a 390px screen and 95px past a 320px
+              one, pushing the hamburger off the edge. A signed-in visitor has no use
+              for "get started" anyway.
+
+              Signed out it stays, because it is the reason the page exists, and it
+              hides only below 360px where the wordmark and the hamburger leave it
+              nothing. The phone menu carries the same action in its footer either way. */}
           <Link
             href="/pricing"
-            className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-sm font-semibold whitespace-nowrap text-white transition hover:brightness-95"
+            className={`min-h-11 items-center rounded-full bg-coral px-4 text-sm font-semibold whitespace-nowrap text-white transition hover:brightness-95 sm:px-5 ${
+              ready && user ? "hidden sm:inline-flex" : "inline-flex max-[359px]:hidden"
+            }`}
           >
             {t("nav.getStarted")}
           </Link>
