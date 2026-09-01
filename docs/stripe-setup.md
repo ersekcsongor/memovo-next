@@ -10,13 +10,16 @@ at the end is the one Stripe publishes for exactly this.
 ## 1. Three prices
 
 In the Stripe dashboard, with the **Test mode** switch on, create three products
-under Product catalogue. Each one needs a **recurring, monthly** price:
+under Product catalogue. Each needs a **one-off** price.
+
+Nothing here may be recurring. The site promises no subscription and no
+auto-renewal, and Checkout is opened in payment mode, which cannot set one up.
 
 | Product | Price | Matches the card on /pricing |
 | --- | --- | --- |
-| Memovo Starter | 19 USD / month | Starter |
-| Memovo Pro | 29 USD / month | Pro |
-| Memovo Premium | 49 USD / month | Premium |
+| Memovo Starter | 19 USD, one-off | Starter |
+| Memovo Pro | 29 USD, one-off | Pro |
+| Memovo Premium | 49 USD, one-off | Premium |
 
 Open each price and copy its id. They look like `price_1Ab2Cd...`.
 
@@ -88,24 +91,27 @@ Other cards Stripe publishes for test mode:
 
 | Stripe event | Effect |
 | --- | --- |
-| `checkout.session.completed` | Reads the new subscription and applies it |
-| `customer.subscription.created` / `.updated` | Writes the plan and the period end |
-| `customer.subscription.deleted` | Drops the account to FREE |
+| `checkout.session.completed`, paid | Writes the purchase and covers one month |
+| `checkout.session.completed`, unpaid | Ignored; nothing is granted |
+| `charge.refunded` | Marks the purchase refunded and drops the account to FREE |
 
-The subscription's own status decides whether the plan is granted:
+A month runs to the same day of the next month: paying on the 1st covers you to
+the 1st. Paying on the 31st of a month the next one has no 31st for falls back to
+its last day rather than spilling over.
 
-| Status | Plan |
-| --- | --- |
-| `active`, `trialing` | Granted |
-| `past_due` | Granted until the period ends, while Stripe retries the card |
-| `incomplete`, `unpaid`, `canceled` | FREE at once |
+Buying while a month is still running **adds** to it. The new month starts where
+the old one ends, so paying early never costs the buyer the days they had.
 
 Every event id is recorded, so the retries Stripe sends until it gets a `200`
 apply once. A payload whose signature does not check out is refused with a `400`
 and changes nothing.
 
+Nothing renews. When the month runs out the account reads as FREE and buys
+another month when it wants one.
+
 ## Going live
 
 Swap the five values for their live-mode equivalents and point a real webhook
-endpoint at `https://<the API's address>/api/billing/webhook`. The signing secret
-then comes from the dashboard's webhook page rather than from `stripe listen`.
+endpoint at `https://<the API address>/api/billing/webhook`, subscribed to
+`checkout.session.completed` and `charge.refunded`. The signing secret then comes
+from the dashboard webhook page rather than from `stripe listen`.

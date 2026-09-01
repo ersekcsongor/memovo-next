@@ -148,8 +148,6 @@ export const api = {
     checkout: (token: string, plan: Exclude<Plan, "FREE">) =>
       request<{ url: string }>("/billing/checkout", { method: "POST", body: JSON.stringify({ plan }) }, token),
 
-    portal: (token: string) => request<{ url: string }>("/billing/portal", { method: "POST" }, token),
-
     /** Development only; the API refuses it once payments are configured. */
     devPlan: (token: string, plan: Plan) =>
       request<{ plan: Plan; planExpiresAt: string | null }>(

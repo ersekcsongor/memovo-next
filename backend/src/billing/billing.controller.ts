@@ -44,7 +44,7 @@ export class BillingController {
         galleries: Number.isFinite(limits.galleries) ? limits.galleries : null,
         photosPerGallery: Number.isFinite(limits.photosPerGallery) ? limits.photosPerGallery : null,
       },
-      // The account page shows a different call to action when there is nothing to manage.
+      // The account page offers a different action when there is nothing to buy with.
       paymentsConfigured: this.billing.stripeEnabled,
     };
   }
@@ -56,15 +56,6 @@ export class BillingController {
   checkout(@CurrentUser() user: AuthUser, @Body() dto: CheckoutDto) {
     if (!isPaidPlan(dto.plan)) throw new BadRequestException("That plan cannot be bought");
     return this.billing.createCheckoutSession(user.id, dto.plan);
-  }
-
-  @Post("portal")
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
-  @HttpCode(200)
-  @ApiOperation({ summary: "Open the Stripe portal to manage or cancel" })
-  portal(@CurrentUser() user: AuthUser) {
-    return this.billing.createPortalSession(user.id);
   }
 
   /**

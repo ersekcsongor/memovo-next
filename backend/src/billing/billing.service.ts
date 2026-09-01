@@ -16,14 +16,19 @@ import { isPaidPlan, PLAN_LIMITS, type PaidPlan, type PlanLimits } from "./plan-
 type PriceMap = Partial<Record<PaidPlan, string>>;
 
 /**
- * The subscription states that keep the doors open.
+ * One month on from a date, landing on the same day of the next month.
  *
- * `past_due` is in: Stripe is still retrying the card and the period the account
- * paid for has not run out, so taking the galleries away mid-retry would punish an
- * expired card rather than a decision. Everything absent from this set — canceled,
- * unpaid, incomplete, incomplete_expired, paused — closes them at once.
+ * Paying on the 1st covers you to the 1st. The 31st has no counterpart in a
+ * shorter month, so it falls back to that month's last day rather than spilling
+ * into the one after.
  */
-const GRANTS_ACCESS = new Set<string>(["active", "trialing", "past_due"]);
+function addOneMonth(from: Date): Date {
+  const to = new Date(from);
+  const day = to.getDate();
+  to.setMonth(to.getMonth() + 1);
+  if (to.getDate() !== day) to.setDate(0);
+  return to;
+}
 
 @Injectable()
 export class BillingService {
@@ -119,7 +124,9 @@ export class BillingService {
     const customerId = user.stripeCustomerId ?? (await this.createCustomer(stripe, user));
 
     const session = await stripe.checkout.sessions.create({
-      mode: "subscription",
+      // One payment for one month. The site promises no subscription and no
+      // auto-renewal, so nothing here may set up a recurring charge.
+      mode: "payment",
       customer: customerId,
       line_items: [{ price, quantity: 1 }],
       success_url: `${this.returnUrl}?checkout=success`,
@@ -127,24 +134,11 @@ export class BillingService {
       // Both are read back on the webhook, so the payment finds its way home even
       // if the customer record is somehow not the one we expect.
       client_reference_id: user.id,
-      subscription_data: { metadata: { userId: user.id, plan } },
+      payment_intent_data: { metadata: { userId: user.id, plan } },
       metadata: { userId: user.id, plan },
     });
 
     if (!session.url) throw new ServiceUnavailableException("Stripe returned no checkout URL");
-    return { url: session.url };
-  }
-
-  /** Where the account manages or cancels what it bought. */
-  async createPortalSession(userId: string) {
-    const stripe = this.requireStripe();
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    if (!user?.stripeCustomerId) throw new BadRequestException("This account has bought nothing yet");
-
-    const session = await stripe.billingPortal.sessions.create({
-      customer: user.stripeCustomerId,
-      return_url: this.returnUrl,
-    });
     return { url: session.url };
   }
 
@@ -170,22 +164,12 @@ export class BillingService {
     await this.prisma.stripeEvent.create({ data: { id: event.id, type: event.type } });
 
     switch (event.type) {
-      case "checkout.session.completed": {
-        const session = event.data.object;
-        if (session.subscription) {
-          const subscription = await stripe.subscriptions.retrieve(
-            typeof session.subscription === "string" ? session.subscription : session.subscription.id,
-          );
-          await this.applySubscription(subscription, session.client_reference_id ?? undefined);
-        }
+      case "checkout.session.completed":
+        await this.applyPayment(event.data.object);
         break;
-      }
-      case "customer.subscription.created":
-      case "customer.subscription.updated":
-      case "customer.subscription.deleted": {
-        await this.applySubscription(event.data.object);
+      case "charge.refunded":
+        await this.applyRefund(event.data.object);
         break;
-      }
       default:
         this.logger.debug(`Ignoring ${event.type}`);
     }
@@ -193,58 +177,103 @@ export class BillingService {
     return { received: true, repeat: false };
   }
 
-  /** Writes what Stripe says about a subscription onto the account. */
-  private async applySubscription(subscription: Stripe.Subscription, fallbackUserId?: string) {
-    const userId = await this.resolveUser(subscription, fallbackUserId);
-    if (!userId) {
-      this.logger.warn(`Subscription ${subscription.id} matches no account`);
+  /**
+   * A paid Checkout session buys one month of a plan.
+   *
+   * Buying again while the current month still has time left adds to it rather
+   * than replacing it, so paying early never costs the buyer the days they had.
+   */
+  private async applyPayment(session: Stripe.Checkout.Session) {
+    if (session.payment_status !== "paid") {
+      this.logger.debug(`Session ${session.id} completed without payment`);
       return;
     }
 
-    const priceId = subscription.items.data[0]?.price.id ?? "";
-    const plan = this.planForPrice(priceId, subscription.metadata?.plan);
-    const periodEnd = this.periodEnd(subscription);
-    const live = GRANTS_ACCESS.has(subscription.status);
+    const userId = await this.resolveUser(session);
+    if (!userId) {
+      this.logger.warn(`Session ${session.id} matches no account`);
+      return;
+    }
 
-    await this.prisma.subscription.upsert({
-      where: { stripeSubscriptionId: subscription.id },
+    const priceId = await this.priceOf(session);
+    const plan = this.planForPrice(priceId, session.metadata?.plan);
+
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return;
+
+    // The plan they already hold runs on, and this month is added to the end of it.
+    const standing = this.activePlan(user) !== Plan.FREE && user.planExpiresAt;
+    const from = standing && user.planExpiresAt! > new Date() ? user.planExpiresAt! : new Date();
+    const coversUntil = addOneMonth(from);
+
+    await this.prisma.purchase.upsert({
+      where: { stripeSessionId: session.id },
       create: {
         userId,
-        stripeSubscriptionId: subscription.id,
+        stripeSessionId: session.id,
+        stripePaymentIntentId:
+          typeof session.payment_intent === "string" ? session.payment_intent : (session.payment_intent?.id ?? null),
         stripePriceId: priceId,
         plan,
-        status: subscription.status,
-        currentPeriodEnd: periodEnd,
+        amountTotal: session.amount_total ?? 0,
+        currency: session.currency ?? "usd",
+        coversUntil,
       },
-      update: {
-        stripePriceId: priceId,
-        plan,
-        status: subscription.status,
-        currentPeriodEnd: periodEnd,
-      },
+      update: {},
     });
 
     await this.prisma.user.update({
       where: { id: userId },
-      data: {
-        plan: live ? plan : Plan.FREE,
-        // The date is written either way. While the subscription is live it is what
-        // activePlan measures against; once it has ended the plan is already FREE
-        // and the date is only a record of what was paid for.
-        planExpiresAt: periodEnd,
-      },
+      data: { plan, planExpiresAt: coversUntil },
     });
   }
 
-  private async resolveUser(subscription: Stripe.Subscription, fallbackUserId?: string) {
-    const fromMetadata = subscription.metadata?.userId;
-    if (fromMetadata) return fromMetadata;
-    if (fallbackUserId) return fallbackUserId;
+  /** Money given back closes the plan the payment opened. */
+  private async applyRefund(charge: Stripe.Charge) {
+    const intentId = typeof charge.payment_intent === "string" ? charge.payment_intent : charge.payment_intent?.id;
+    if (!intentId) return;
 
-    const customerId =
-      typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id;
+    const purchase = await this.prisma.purchase.findFirst({
+      where: { stripePaymentIntentId: intentId },
+    });
+    if (!purchase) {
+      this.logger.warn(`Refunded charge ${charge.id} matches no purchase`);
+      return;
+    }
+
+    await this.prisma.purchase.update({
+      where: { id: purchase.id },
+      data: { refundedAt: new Date() },
+    });
+    await this.prisma.user.update({
+      where: { id: purchase.userId },
+      data: { plan: Plan.FREE, planExpiresAt: null },
+    });
+  }
+
+  /** Which account the payment belongs to, by the two markers Checkout carries. */
+  private async resolveUser(session: Stripe.Checkout.Session) {
+    const fromMetadata = session.metadata?.userId;
+    if (fromMetadata) return fromMetadata;
+    if (session.client_reference_id) return session.client_reference_id;
+
+    const customerId = typeof session.customer === "string" ? session.customer : session.customer?.id;
+    if (!customerId) return undefined;
     const user = await this.prisma.user.findUnique({ where: { stripeCustomerId: customerId } });
     return user?.id;
+  }
+
+  /** The price the session sold, which the session itself does not carry. */
+  private async priceOf(session: Stripe.Checkout.Session) {
+    const inlined = session.line_items?.data[0]?.price?.id;
+    if (inlined) return inlined;
+    try {
+      const items = await this.requireStripe().checkout.sessions.listLineItems(session.id, { limit: 1 });
+      return items.data[0]?.price?.id ?? "";
+    } catch (error) {
+      this.logger.warn(`Could not read the line items of ${session.id}: ${(error as Error).message}`);
+      return "";
+    }
   }
 
   private planForPrice(priceId: string, fromMetadata?: string): Plan {
@@ -256,19 +285,6 @@ export class BillingService {
     if (fromMetadata && isPaidPlan(fromMetadata)) return fromMetadata;
     this.logger.warn(`Price ${priceId} maps to no plan; treating it as STARTER`);
     return Plan.STARTER;
-  }
-
-  /**
-   * Stripe moved the period end onto the subscription item. Reading the item
-   * first and the subscription second keeps this working across both shapes.
-   */
-  private periodEnd(subscription: Stripe.Subscription): Date {
-    const item = subscription.items.data[0] as { current_period_end?: number } | undefined;
-    const legacy = subscription as unknown as { current_period_end?: number };
-    const seconds = item?.current_period_end ?? legacy.current_period_end;
-    if (seconds) return new Date(seconds * 1000);
-    // Nothing to go on: a month out keeps the account working until Stripe says otherwise.
-    return new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
   }
 
   private async createCustomer(stripe: Stripe, user: { id: string; email: string; name: string }) {
@@ -297,7 +313,8 @@ export class BillingService {
    * a way to hand out plans on a live site.
    */
   async setPlanForDevelopment(userId: string, plan: Plan) {
-    const expires = plan === Plan.FREE ? null : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+    // The same month a payment buys, so the dates on screen match either way.
+    const expires = plan === Plan.FREE ? null : addOneMonth(new Date());
     const user = await this.prisma.user.update({
       where: { id: userId },
       data: { plan, planExpiresAt: expires },

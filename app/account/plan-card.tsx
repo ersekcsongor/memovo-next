@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { IconCreditCard, IconSparkles } from "@tabler/icons-react";
-import { api, ApiError, type PlanStatus } from "@/lib/api";
+import { api, type PlanStatus } from "@/lib/api";
 import { fill } from "@/lib/fill";
 import { useAuth } from "@/components/AuthProvider";
 import { useLang, useT } from "@/components/LanguageProvider";
@@ -47,19 +47,6 @@ export default function PlanCard() {
     return () => clearTimeout(again);
   }, [checkout, token, refresh, load]);
 
-  const openPortal = useCallback(async () => {
-    if (!token) return;
-    setBusy(true);
-    setError(null);
-    try {
-      const { url } = await api.billing.portal(token);
-      window.location.href = url;
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : "network");
-      setBusy(false);
-    }
-  }, [token]);
-
   const paid = status && status.plan !== "FREE";
   const until = status?.planExpiresAt
     ? new Date(status.planExpiresAt).toLocaleDateString(LOCALE[lang], {
@@ -101,32 +88,21 @@ export default function PlanCard() {
           </span>
         </div>
 
-        {/* The portal is the only thing that can change a plan, and it exists only
-            once payments are configured. An account that already has a plan is
-            never invited to buy one, so with no portal to open it gets no button. */}
-        {paid ? (
-          status?.paymentsConfigured && (
-            <button
-              type="button"
-              onClick={openPortal}
-              disabled={busy}
-              className="inline-flex min-h-11 items-center rounded-full border border-border px-5 text-sm font-semibold text-navy transition hover:bg-cream disabled:opacity-60"
-            >
-              {t("plan.manage")}
-            </button>
-          )
-        ) : (
-          <Link
-            href="/pricing"
-            className="inline-flex min-h-11 items-center rounded-full bg-coral px-5 text-sm font-semibold text-white transition hover:brightness-95"
-          >
-            {t("plan.choose")}
-          </Link>
-        )}
+        {/* Nothing renews itself, so the action on a paid account is to buy the
+            next month when they want it, quietly, beside the date it would follow. */}
+        <Link
+          href="/pricing"
+          className={`inline-flex min-h-11 items-center rounded-full px-5 text-sm font-semibold transition ${
+            paid
+              ? "border border-border text-navy hover:bg-cream"
+              : "bg-coral text-white hover:brightness-95"
+          }`}
+        >
+          {paid ? t("plan.extend") : t("plan.choose")}
+        </Link>
       </div>
 
-      {!paid && <p className="mt-4 text-sm text-muted-foreground">{t("plan.needed")}</p>}
-      {error && <p className="mt-4 text-sm text-coral-ink">{error}</p>}
+      {!paid && <p className="mt-4 text-sm text-muted-foreground">{t("plan.needed")}</p>}
     </div>
   );
 }

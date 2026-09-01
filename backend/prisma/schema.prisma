@@ -22,8 +22,8 @@ model User {
 
   /// Set the first time the account reaches Checkout, so a second purchase
   /// lands on the same Stripe customer.
-  stripeCustomerId String?        @unique
-  subscriptions    Subscription[]
+  stripeCustomerId String?    @unique
+  purchases        Purchase[]
 }
 
 enum Plan {
@@ -33,18 +33,25 @@ enum Plan {
   PREMIUM
 }
 
-model Subscription {
-  id                   String   @id @default(uuid())
-  userId               String
-  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  stripeSubscriptionId String   @unique
-  stripePriceId        String
-  plan                 Plan
-  /// Stripe's own status, verbatim: active, past_due, canceled, incomplete.
-  status               String
-  currentPeriodEnd     DateTime
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+/// One payment for one plan. Nothing renews itself, so each row is a whole
+/// transaction rather than a period of an ongoing agreement.
+model Purchase {
+  id                    String    @id @default(uuid())
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// The Checkout session, which is also what makes a repeated webhook harmless.
+  stripeSessionId       String    @unique
+  stripePaymentIntentId String?
+  stripePriceId         String
+  plan                  Plan
+  /// In the smallest unit of the currency, as Stripe reports it.
+  amountTotal           Int
+  currency              String
+  /// When the plan this payment bought stops working.
+  coversUntil           DateTime
+  /// Set if the payment was given back, which closes the plan at once.
+  refundedAt            DateTime?
+  createdAt             DateTime  @default(now())
 
   @@index([userId])
 }
