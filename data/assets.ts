@@ -6,6 +6,8 @@ export const PHONE = `${U}/phone-invite.png`;
 export const BLUR_BG = `${U}/backdrop-blur.jpg`;
 export const BLUR_BG_2 = `${U}/backdrop-blur-2.jpg`;
 export const HERO_WEDDING = `${U}/hero-wedding.jpg`;
+/** The hero photo carries the page now, so it is described rather than hidden. */
+export const HERO_WEDDING_ALT = "A bride and groom together on their wedding day";
 export const HERO_HOME = `${U}/hero-home.jpg`;
 export const INVITE_RSVP = `${U}/invite-rsvp.png`;
 

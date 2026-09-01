@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import {
   IconCamera,
@@ -10,13 +9,13 @@ import {
   IconLock,
   IconScan,
 } from "@tabler/icons-react";
-import { HERO_WEDDING } from "@/data/assets";
+import { HERO_WEDDING, HERO_WEDDING_ALT } from "@/data/assets";
 import { WEDDING_FAQS, WEDDING_PLANS } from "@/data/content";
 import { useT } from "@/components/LanguageProvider";
 import { PricingSection } from "@/components/Pricing";
-import { BenefitBand, Check, ClosingBand, DashboardPreview, PhoneCard, StepsRow } from "@/components/Blocks";
+import { BenefitBand, Check, ClosingBand, DashboardPreview, HeroPhoto, StepsRow } from "@/components/Blocks";
 import { Testimonials } from "@/components/Testimonials";
-import { Container, FaqAccordion } from "@/components/Sections";
+import { Container, FaqAccordion, HeroSurface } from "@/components/Sections";
 import { Reveal } from "@/components/Reveal";
 
 const CARDS = [
@@ -40,19 +39,20 @@ export default function WeddingsView() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-navy">
-        <Image src={HERO_WEDDING} alt="" fill className="object-cover opacity-40" priority sizes="100vw" />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/40" aria-hidden />
-        <Container className="relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-[1fr_auto]">
-          <div>
-            <p className="mb-5 text-xs font-semibold tracking-[0.18em] text-coral">{t("wed2.eyebrow")}</p>
-            <h1 className="font-heading text-4xl leading-[1.12] font-bold text-white md:text-[3.4rem]">
+      {/* Hero. The bar is fixed over this section, so the top padding clears its 68px. */}
+      <HeroSurface>
+        {/* Three children in one grid. On a phone they stack copy, picture, trust line,
+            so the photograph lands on the first screen. From lg the copy and the trust
+            line share the left column and the picture stands beside both. */}
+        <Container className="relative grid items-center gap-x-12 gap-y-10 pt-28 pb-12 md:pt-32 md:pb-20 lg:grid-cols-[1fr_minmax(0,26rem)]">
+          <div className="lg:col-start-1 lg:row-start-1">
+            <p className="mb-5 text-xs font-semibold tracking-[0.18em] text-coral-ink">{t("wed2.eyebrow")}</p>
+            <h1 className="font-heading text-4xl leading-[1.12] font-bold text-navy md:text-[3.4rem]">
               <span className="block">{t("wed2.title1")}</span>
               <span className="block">{t("wed2.title2")}</span>
               <span className="block text-coral">{t("wed2.title3")}</span>
             </h1>
-            <p className="mt-6 max-w-sm text-white/80">{t("wed2.sub")}</p>
+            <p className="mt-6 max-w-sm text-navy/70">{t("wed2.sub")}</p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/pricing"
@@ -62,25 +62,25 @@ export default function WeddingsView() {
               </Link>
               <Link
                 href="/gallery-demo"
-                className="inline-flex min-h-12 items-center rounded-full border border-white/40 px-7 font-semibold text-white transition hover:bg-white/10"
+                className="inline-flex min-h-12 items-center rounded-full border border-border bg-white px-7 font-semibold text-navy transition hover:bg-cream"
               >
                 {t("cta.viewDemo")}
               </Link>
             </div>
-            <ul className="mt-10 grid gap-x-8 gap-y-3 text-sm text-white/80 sm:grid-cols-2">
-              {TRUST.map(({ Icon, key }) => (
-                <li key={key} className="flex items-center gap-2">
-                  <Icon className="h-4 w-4 shrink-0 text-coral" stroke={2} aria-hidden />
-                  {t(key as never)}
-                </li>
-              ))}
-            </ul>
           </div>
-          <div className="hidden justify-self-center lg:block">
-            <PhoneCard />
+          <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
+            <HeroPhoto src={HERO_WEDDING} alt={HERO_WEDDING_ALT} />
           </div>
+          <ul className="grid gap-x-8 gap-y-3 text-sm text-navy/70 sm:grid-cols-2 lg:col-start-1 lg:row-start-2">
+            {TRUST.map(({ Icon, key }) => (
+              <li key={key} className="flex items-center gap-2">
+                <Icon className="h-4 w-4 shrink-0 text-coral" stroke={2} aria-hidden />
+                {t(key as never)}
+              </li>
+            ))}
+          </ul>
         </Container>
-      </section>
+      </HeroSurface>
 
       {/* Why it fits a wedding */}
       <section className="bg-white py-10 md:py-16">
@@ -110,7 +110,9 @@ export default function WeddingsView() {
       {/* Gallery preview */}
       <section className="bg-white pb-10 md:pb-16">
         <Container>
-          <div className="grid items-center gap-10 rounded-2xl bg-white p-8 shadow-sm md:p-10 lg:grid-cols-[minmax(0,22rem)_1fr]">
+          {/* The panel lifts as one object. Revealing its two columns separately
+              would show an empty white slab first. */}
+          <Reveal className="grid items-center gap-10 rounded-2xl bg-white p-8 shadow-sm md:p-10 lg:grid-cols-[minmax(0,22rem)_1fr]">
             <div>
               <p className="mb-3 text-xs font-semibold tracking-wide text-coral-ink">{t("gal.eyebrow")}</p>
               <h2 className="mb-4 font-heading text-2xl font-bold">{t("wed2.galTitle")}</h2>
@@ -131,7 +133,7 @@ export default function WeddingsView() {
               </Link>
             </div>
             <DashboardPreview />
-          </div>
+          </Reveal>
         </Container>
       </section>
 

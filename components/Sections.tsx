@@ -21,6 +21,31 @@ export function HeroImage({ src, alt, height = "h-[320px] md:h-[530px]" }: { src
   );
 }
 
+/**
+ * The light ground the home and category heroes stand on: a blush-to-white
+ * gradient, soft blooms drawn behind the visual, and a fade that melts into the
+ * white section below so the two meet with no seam.
+ *
+ * The blooms are kept clear of the bottom edge. The section clips its overflow,
+ * and a blurred circle cut off there leaves a hard line across the page.
+ */
+export function HeroSurface({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <section className={`relative overflow-hidden bg-gradient-to-b from-blush via-cream to-white to-85% ${className}`}>
+      <span aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <span className="absolute -top-28 -right-20 block h-[28rem] w-[28rem] rounded-full bg-pinklight blur-2xl" />
+        <span className="absolute top-36 right-1/3 block h-56 w-56 rounded-full bg-pinkband/50 blur-2xl" />
+        <span className="absolute bottom-40 -left-24 block h-64 w-64 rounded-full bg-pinklight/80 blur-2xl" />
+      </span>
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 block h-64 bg-gradient-to-b from-transparent to-white"
+      />
+      {children}
+    </section>
+  );
+}
+
 export function PageBanner({ heading, sub }: { heading: string; sub?: string }) {
   return (
     <section className="bg-white py-10 text-center md:py-12">

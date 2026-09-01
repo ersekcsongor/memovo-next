@@ -25,6 +25,8 @@ export type EventPage = {
   title: string;
   description: string;
   hero: string;
+  /** What the hero photo shows. It carries the page now, so it is described rather than hidden. */
+  heroAlt: string;
   copy: Record<Lang, EventCopy>;
 };
 
@@ -35,6 +37,7 @@ export const EVENTS: EventPage[] = [
     title: "Effortless Engagement Photo Sharing with QR Codes",
     description: "Guest photo collection and digital invitations for proposals, bridal showers and engagement parties.",
     hero: `${U}/hero-engagements.jpg`,
+    heroAlt: "A proposal under the arches of Bethesda Terrace",
     copy: {
       en: {
         badge: "ENGAGEMENT PHOTO SHARING",
@@ -86,6 +89,7 @@ export const EVENTS: EventPage[] = [
     title: "Party Photo Sharing",
     description: "The easiest QR code photo sharing for parties, birthdays, anniversaries and reunions.",
     hero: `${U}/hero-party.png`,
+    heroAlt: "Three friends laughing over a phone under string lights",
     copy: {
       en: {
         badge: "PARTY PHOTO SHARING",
@@ -137,6 +141,7 @@ export const EVENTS: EventPage[] = [
     title: "Kids Parties",
     description: "Kids party photo collection and digital invitations for birthdays, christenings and school events.",
     hero: `${U}/hero-kids-parties.jpg`,
+    heroAlt: "A girl at her birthday cake under a cluster of balloons",
     copy: {
       en: {
         badge: "KIDS PARTY PHOTO SHARING",
@@ -188,6 +193,7 @@ export const EVENTS: EventPage[] = [
     title: "Memovo for Business",
     description: "Effortless photo sharing and attendee engagement for conferences, galas and product launches.",
     hero: `${U}/hero-business.jpg`,
+    heroAlt: "Colleagues raising a glass at a company celebration",
     copy: {
       en: {
         badge: "BUSINESS EVENT PHOTO SHARING",
@@ -239,6 +245,7 @@ export const EVENTS: EventPage[] = [
     title: "Memorial Photo Sharing & Guestbook",
     description: "A gentle, private digital photo album and guestbook for celebrations of life.",
     hero: `${U}/hero-memorials.jpg`,
+    heroAlt: "Lit candles among white flowers",
     copy: {
       en: {
         badge: "MEMORIAL PHOTO SHARING",
@@ -290,6 +297,7 @@ export const EVENTS: EventPage[] = [
     title: "Effortless Holiday Photo Sharing with QR Codes",
     description: "Seasonal holiday photo collection for Christmas, New Year's Eve, Thanksgiving and Easter.",
     hero: `${U}/hero-seasonal-holidays.jpg`,
+    heroAlt: "Friends toasting around a decorated table",
     copy: {
       en: {
         badge: "HOLIDAY PHOTO SHARING",
@@ -341,6 +349,7 @@ export const EVENTS: EventPage[] = [
     title: "Company Christmas Parties",
     description: "Company Christmas party photo sharing with a branded QR code and content moderation.",
     hero: `${U}/hero-company-christmas.jpg`,
+    heroAlt: "Colleagues together at an office Christmas party",
     copy: {
       en: {
         badge: "COMPANY CHRISTMAS PARTY PHOTOS",

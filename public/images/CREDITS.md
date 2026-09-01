@@ -13,11 +13,11 @@ on record.
 | `hero-memorials.jpg` | Rubis | [Pexels 30285499](https://www.pexels.com/photo/30285499/) | Lit candles with white flowers |
 | `hero-seasonal-holidays.jpg` | Olia Danilevich | [Pexels 5881726](https://www.pexels.com/photo/5881726/) | Friends toasting around a decorated table |
 | `hero-company-christmas.jpg` | Pavel Danilyuk | [Pexels 6405768](https://www.pexels.com/photo/6405768/) | Colleagues at an office party |
+| `hero-kids-parties.jpg` | Ivan S | [Pexels 8104171](https://www.pexels.com/photo/8104171/) | A girl at her birthday cake under a cluster of balloons |
 
 ## Kept as they were
 
 - `hero-party.png` — AI generated, no third-party rights
-- `hero-kids-parties.jpg` — Pexels photo 19670 by Padrinan
 
 ## Gallery photographs
 
