@@ -232,7 +232,7 @@ export function ThemesView() {
           </div>
 
           {/* Preview of the picked theme, so the "tap the colour wheels" line does something. */}
-          <div className="mx-auto mt-14 max-w-md overflow-hidden rounded-2xl border border-gray-300 shadow-lg">
+          <div className="mx-auto mt-14 max-w-md overflow-hidden rounded-2xl border border-border shadow-lg">
             <div className="h-28" style={{ background: selected.color }} />
             <div className="bg-white px-6 py-5 text-center">
               <p className="font-heading text-lg font-semibold">{selected.name}</p>
@@ -305,7 +305,7 @@ export function ContactView() {
                   name={f.id}
                   type={f.type}
                   autoComplete={f.autoComplete}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-3"
+                  className="w-full rounded-lg border border-border px-4 py-3"
                 />
               </div>
             ))}
@@ -313,7 +313,7 @@ export function ContactView() {
               <label htmlFor="message" className="mb-1 block text-sm font-semibold">
                 {t("page.contact.message")}
               </label>
-              <textarea id="message" name="message" rows={5} className="w-full rounded-lg border border-gray-300 px-4 py-3" />
+              <textarea id="message" name="message" rows={5} className="w-full rounded-lg border border-border px-4 py-3" />
             </div>
             <button
               type="submit"

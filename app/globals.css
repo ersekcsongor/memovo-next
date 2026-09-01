@@ -5,25 +5,15 @@
 @theme {
   /* Near-black with a plum cast. Headings and body text. */
   --color-navy: #171114;
-  --color-tan: #e4d2be;
   /* Brand pink. White text clears 4.5:1 on it, so buttons and bands can carry it. */
   --color-coral: #db2777;
   /* One step darker, for pink text and icons on light surfaces: 6.4:1 on white. */
   --color-coral-ink: #be185d;
-  --color-gray-100: #f7f7f8;
-  --color-gray-200: #e9e4e7;
-  --color-gray-300: #e9e4e7;
-  --color-offwhite: #fdfbfc;
   /* The two soft pink surfaces the mockup alternates between. */
   --color-cream: #fff7f9;
   --color-blush: #fdf2f5;
   --color-pinkband: #fbd0e0;
-  --color-teal: #69c9ca;
-  --color-orange: #fcbe87;
   --color-pinklight: #fce7ef;
-  --color-footerpink: #fdf2f5;
-  /* Hero overlay and the dark bands. */
-  --color-forest: #1a1420;
 
   --font-heading: var(--font-comfortaa), sans-serif;
   --font-body: var(--font-montserrat), sans-serif;
@@ -189,17 +179,4 @@ h3 {
   .carousel-track {
     animation: none;
   }
-}
-
-/* Event category tiles */
-.event-tile {
-  position: relative;
-  display: block;
-  overflow: hidden;
-}
-.event-tile img {
-  transition: transform 0.4s ease;
-}
-.event-tile:hover img {
-  transform: scale(1.05);
 }

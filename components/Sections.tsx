@@ -13,14 +13,6 @@ export function Container({ children, className = "" }: { children: React.ReactN
   return <div className={`mx-auto max-w-[1140px] px-6 ${className}`}>{children}</div>;
 }
 
-export function HeroImage({ src, alt, height = "h-[320px] md:h-[530px]" }: { src: string; alt: string; height?: string }) {
-  return (
-    <section className={`relative w-full overflow-hidden bg-white ${height}`}>
-      <Image src={src} alt={alt} fill className="object-cover" priority sizes="100vw" />
-    </section>
-  );
-}
-
 /**
  * The light ground the home and category heroes stand on: a blush-to-white
  * gradient, soft blooms drawn behind the visual, and a fade that melts into the

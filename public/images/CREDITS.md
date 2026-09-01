@@ -6,7 +6,6 @@ on record.
 
 | File | Photographer | Source | Shows |
 | --- | --- | --- | --- |
-| `hero-home.jpg` | Trung Nguyen Photog | [Pexels 5096300](https://www.pexels.com/photo/5096300/) | Guests taking a selfie with the newlyweds |
 | `hero-wedding.jpg` | Pavel Danilyuk | [Pexels 8815289](https://www.pexels.com/photo/8815289/) | A phone capturing the couple during the ceremony |
 | `hero-engagements.jpg` | Caleb Oquendo | [Pexels 3038145](https://www.pexels.com/photo/3038145/) | A proposal under Bethesda Terrace |
 | `hero-business.jpg` | Pavel Danilyuk | [Pexels 6762296](https://www.pexels.com/photo/6762296/) | Colleagues raising a glass at a company celebration |
