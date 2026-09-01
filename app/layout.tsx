@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ConsentBar from "@/components/ConsentBar";
 import ChatBubble from "@/components/ChatBubble";
+import BottomNav from "@/components/BottomNav";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { AuthProvider } from "@/components/AuthProvider";
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main id="main">{children}</main>
             <Footer />
             <ChatBubble />
+            <BottomNav />
           </AuthProvider>
         </LanguageProvider>
       </body>

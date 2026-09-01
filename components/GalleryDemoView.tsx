@@ -1,14 +1,27 @@
 "use client";
 
-import Image from "next/image";
 import { GALLERY_PHOTOS, TEMPLATE_PHOTOS } from "@/data/assets";
 import { useT } from "@/components/LanguageProvider";
 import { Container, CtaBand, PageBanner } from "@/components/Sections";
+import { GalleryGridBlock, type GalleryImage } from "@/components/ui/gallery-grid-block-shadcnui";
 
-/** Guest names shown on each tile, the way a real gallery labels uploads. */
-const UPLOADERS = ["Anna", "Máté", "Sofia", "Andrei", "Kate", "Bence", "Elena", "Chris"];
-
-const PHOTOS = [...GALLERY_PHOTOS, ...TEMPLATE_PHOTOS];
+/**
+ * Which album each photo belongs to. Keyed by file so the mapping survives the
+ * arrays being reordered, and translated at render rather than stored in English.
+ */
+const ALBUM: Record<string, string> = {
+  "guests-celebrating.jpg": "gallery.albumGuests",
+  "phones-out.jpg": "gallery.albumGuests",
+  "phone-confetti.jpg": "gallery.albumGuests",
+  "welcome-sign.jpg": "gallery.albumDetails",
+  "floral-table.jpg": "gallery.albumDetails",
+  "table-setting.jpg": "gallery.albumDetails",
+  "printed-keepsakes.jpg": "gallery.albumDetails",
+  "couple-dancing.jpg": "gallery.albumReception",
+  "toast.jpg": "gallery.albumReception",
+  "reception-venue.jpg": "gallery.albumVenue",
+  "outdoor-table.jpg": "gallery.albumVenue",
+};
 
 export default function GalleryDemoView() {
   const t = useT();
@@ -18,6 +31,25 @@ export default function GalleryDemoView() {
     { n: "86", label: t("gallery.guests") },
     { n: "4", label: t("gallery.albums") },
   ];
+
+  /* Both arrays overlap, so the photos are deduplicated by file before they are
+     numbered: two cards sharing an id would break the lightbox. */
+  const seen = new Set<string>();
+  const images: GalleryImage[] = [...GALLERY_PHOTOS, ...TEMPLATE_PHOTOS]
+    .filter((p) => {
+      if (seen.has(p.src)) return false;
+      seen.add(p.src);
+      return true;
+    })
+    .map((p, i) => {
+      const file = p.src.split("/").pop() ?? "";
+      return {
+        id: i,
+        url: p.src,
+        title: p.alt,
+        category: t((ALBUM[file] ?? "gallery.albumDetails") as never),
+      };
+    });
 
   return (
     <>
@@ -36,22 +68,16 @@ export default function GalleryDemoView() {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {PHOTOS.map((p, i) => (
-              <figure key={`${p.src}-${i}`} className="group relative aspect-square overflow-hidden rounded-xl">
-                <Image
-                  src={p.src}
-                  alt={p.alt}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-3 pt-8 pb-2 text-xs text-white">
-                  {UPLOADERS[i % UPLOADERS.length]}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+          <GalleryGridBlock
+            images={images}
+            allLabel={t("gallery.filterAll")}
+            badgeLabel={t("gallery.gridBadge")}
+            heading={t("gallery.gridHeading")}
+            subheading={t("gallery.gridSub")}
+            closeLabel={t("gallery.close")}
+            prevLabel={t("gallery.prev")}
+            nextLabel={t("gallery.next")}
+          />
         </Container>
       </section>
 

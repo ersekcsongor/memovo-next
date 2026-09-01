@@ -5,6 +5,9 @@ import { useT } from "@/components/LanguageProvider";
 
 const STORAGE_KEY = "memovo-consent";
 
+/** Fired the moment the visitor answers, so the bottom bar knows the edge is free. */
+export const CONSENT_EVENT = "memovo-consent-answered";
+
 type Consent = { analytics: boolean; marketing: boolean; at: string };
 
 /** What the visitor last chose, or null if they have not been asked yet. */
@@ -54,6 +57,8 @@ export default function ConsentBar() {
     setAnalytics(choice.analytics);
     setMarketing(choice.marketing);
     setOpen(false);
+    // Anything holding back until the visitor has answered can come forward now.
+    window.dispatchEvent(new Event(CONSENT_EVENT));
   }
 
   // The bar is fixed to the bottom, so the page reserves exactly its height underneath.

@@ -46,7 +46,7 @@ export default function HomeView() {
 
   return (
     <>
-      {/* Hero. The bar is fixed over this section, so the top padding clears its 82px. */}
+      {/* Hero. The bar is fixed over this section, so the top padding clears its 68px. */}
       <section className="relative overflow-hidden bg-gradient-to-b from-blush via-cream to-white to-85%">
         {/* Soft blooms behind the phone, drawn rather than shipped as an image. They are
             kept clear of the bottom edge: the section clips its overflow, and a blurred

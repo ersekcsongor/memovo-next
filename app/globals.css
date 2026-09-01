@@ -42,6 +42,10 @@
   --color-border: #e9e4e7;
   --color-secondary: #fdf2f5;
   --color-secondary-foreground: #171114;
+  /* Registry components reach for `primary` as the accent that carries a brand.
+     Without it their highlights render with no colour at all. */
+  --color-primary: #db2777;
+  --color-primary-foreground: #ffffff;
 }
 
 /* Cookie consent bar tokens, on the Memovo palette: white surface, pink primary action.
@@ -69,10 +73,16 @@ html {
   scroll-behavior: smooth;
 }
 
-/* The consent bar is fixed to the bottom edge; ConsentBar publishes its height
-   so the page keeps that much room free underneath. */
-body.consent-open {
+/* Two things can sit over the bottom edge: the consent bar, which publishes its
+   height, and the bottom nav on a phone. The page keeps room free for whichever
+   is showing, so neither ever covers the last line of a section. */
+body {
   padding-bottom: var(--consent-height, 0px);
+}
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(4.75rem + var(--consent-height, 0px));
+  }
 }
 
 /* One focus treatment for every control, visible on white, cream and coral. */

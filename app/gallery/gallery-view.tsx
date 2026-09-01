@@ -68,7 +68,7 @@ export default function GalleryView({ items }: { items: GalleryItem[] }) {
       {/* 2. The journey. The tall parent is the runway the rotation reads from; under
           reduced motion the gallery is a grid and needs none of it. */}
       <div className="h-[400vh] w-full motion-reduce:h-auto">
-        <div className="sticky top-[82px] flex h-[calc(100vh-82px)] w-full flex-col items-center justify-center overflow-hidden motion-reduce:static motion-reduce:h-auto motion-reduce:overflow-visible">
+        <div className="sticky top-[68px] flex h-[calc(100vh-68px)] w-full flex-col items-center justify-center overflow-hidden motion-reduce:static motion-reduce:h-auto motion-reduce:overflow-visible">
           <div
             className="min-h-0 w-full flex-1 motion-reduce:h-auto motion-reduce:flex-none"
             style={{ transform: reduced ? undefined : `scale(${scale})` }}
