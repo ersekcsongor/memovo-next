@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { IconLogout } from "@tabler/icons-react";
 import { useAuth } from "@/components/AuthProvider";
 import { useT } from "@/components/LanguageProvider";
 import { Container } from "@/components/Sections";
+import GalleryList from "./gallery-list";
+import PlanCard from "./plan-card";
 
 export default function AccountView() {
   const { user, ready, logout } = useAuth();
@@ -68,14 +70,12 @@ export default function AccountView() {
             </button>
           </div>
 
-          <p className="mt-8 text-sm text-muted-foreground">{t("auth.accountEmpty")}</p>
-
-          <Link
-            href="/pricing"
-            className="mt-6 inline-flex min-h-12 items-center rounded-full bg-coral px-7 font-semibold text-white transition hover:brightness-95"
-          >
-            {t("cta.getStarted")}
-          </Link>
+          {/* PlanCard reads the checkout flag off the query string, and a component
+              that does that has to be suspended for the page to prerender. */}
+          <Suspense fallback={null}>
+            <PlanCard />
+          </Suspense>
+          <GalleryList />
         </div>
       </Container>
     </section>

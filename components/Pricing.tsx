@@ -5,6 +5,8 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CURRENCIES, type Currency, formatPrice } from "@/data/currency";
 import { type Plan } from "@/data/content";
+import { api } from "@/lib/api";
+import { useAuth } from "@/components/AuthProvider";
 import { useT } from "@/components/LanguageProvider";
 import { Reveal } from "@/components/Reveal";
 
@@ -13,6 +15,77 @@ function Check() {
     <svg viewBox="0 0 20 20" className="mt-0.5 h-4 w-4 shrink-0 text-coral" fill="none" aria-hidden>
       <path d="M4 10.5l4 4 8-9" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  );
+}
+
+/**
+ * The card's call to action. Signed in it opens Checkout for that plan; signed
+ * out it sends the visitor to register first, carrying the plan so they land back
+ * on the same choice. A plan the API cannot sell falls back to the contact page.
+ */
+function PlanButton({ plan, featured, label }: { plan: string; featured: boolean; label: string }) {
+  const { token, ready, user } = useAuth();
+  const t = useT();
+  const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  const className = `mt-auto flex min-h-11 items-center justify-center rounded-full px-4 text-center font-semibold transition ${
+    featured ? "bg-coral text-white hover:brightness-95" : "border-2 border-coral text-coral-ink hover:bg-blush"
+  }`;
+
+  const sellable = (["STARTER", "PRO", "PREMIUM"] as const).find((p) => p === plan.toUpperCase());
+
+  // A plan the API cannot sell has nothing to open, so the card asks instead.
+  if (!sellable) {
+    return (
+      <Link href="/contact" className={className}>
+        {label}
+      </Link>
+    );
+  }
+
+  if (ready && !user) {
+    return (
+      <Link href={`/register?plan=${sellable}`} className={className}>
+        {label}
+      </Link>
+    );
+  }
+
+  return (
+    <div className="mt-auto">
+      <button
+        type="button"
+        disabled={busy || !token}
+        onClick={async () => {
+          if (!token) return;
+          setBusy(true);
+          setFailed(false);
+          try {
+            const { url } = await api.billing.checkout(token, sellable);
+            window.location.href = url;
+          } catch {
+            setFailed(true);
+            setBusy(false);
+          }
+        }}
+        className={`${className} w-full disabled:opacity-60`}
+      >
+        {busy ? t("plan.opening") : label}
+      </button>
+
+      {/* Silently swapping the button for a link left the tap doing nothing
+          visible. It says what happened, keeps the button for another go, and
+          offers the way through beside it. */}
+      {failed && (
+        <p className="mt-2 text-center text-xs text-coral-ink" role="status">
+          {t("plan.checkoutFailed")}{" "}
+          <Link href="/contact" className="underline">
+            {t("plan.checkoutFailedHelp")}
+          </Link>
+        </p>
+      )}
+    </div>
   );
 }
 
@@ -103,16 +176,11 @@ export function PricingSection({ plans }: { plans: Plan[] }) {
                 </li>
               ))}
             </ul>
-            <Link
-              href="/contact"
-              className={`mt-auto flex min-h-11 items-center justify-center rounded-full font-semibold transition ${
-                p.featured
-                  ? "bg-coral text-white hover:brightness-95"
-                  : "border-2 border-coral text-coral-ink hover:bg-blush"
-              }`}
-            >
-              {t((p.cta ?? "pricing.createGallery") as never)}
-            </Link>
+            <PlanButton
+              plan={p.name}
+              featured={!!p.featured}
+              label={t((p.cta ?? "pricing.createGallery") as never)}
+            />
           </Reveal>
         ))}
       </div>

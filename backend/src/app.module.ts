@@ -5,6 +5,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { resolve } from "node:path";
 import { AuthModule } from "./auth/auth.module";
+import { BillingModule } from "./billing/billing.module";
 import { EventsModule } from "./events/events.module";
 import { LeadsModule } from "./leads/leads.module";
 import { MailModule } from "./mail/mail.module";
@@ -32,6 +33,7 @@ import { StorageModule } from "./storage/storage.module";
     StorageModule,
     MailModule,
     AuthModule,
+    BillingModule,
     EventsModule,
     PhotosModule,
     LeadsModule,

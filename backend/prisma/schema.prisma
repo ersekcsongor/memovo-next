@@ -14,21 +14,86 @@ model User {
   name      String
   createdAt DateTime @default(now())
   events    Event[]
+
+  /// What the account may do. Only BillingService.activePlan reads these two
+  /// together, so the answer to "has this account paid" comes from one place.
+  plan          Plan      @default(FREE)
+  planExpiresAt DateTime?
+
+  /// Set the first time the account reaches Checkout, so a second purchase
+  /// lands on the same Stripe customer.
+  stripeCustomerId String?    @unique
+  purchases        Purchase[]
+}
+
+enum Plan {
+  FREE
+  STARTER
+  PRO
+  PREMIUM
+}
+
+/// One payment for one plan. Nothing renews itself, so each row is a whole
+/// transaction rather than a period of an ongoing agreement.
+model Purchase {
+  id                    String    @id @default(uuid())
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// The Checkout session, which is also what makes a repeated webhook harmless.
+  stripeSessionId       String    @unique
+  stripePaymentIntentId String?
+  stripePriceId         String
+  plan                  Plan
+  /// In the smallest unit of the currency, as Stripe reports it.
+  amountTotal           Int
+  currency              String
+  /// When the plan this payment bought stops working.
+  coversUntil           DateTime
+  /// Set if the payment was given back, which closes the plan at once.
+  refundedAt            DateTime?
+  createdAt             DateTime  @default(now())
+
+  @@index([userId])
+}
+
+/// Stripe re-sends an event until it is acknowledged, and a retry can arrive
+/// after the first copy was handled. The row is the receipt.
+model StripeEvent {
+  id         String   @id
+  type       String
+  receivedAt DateTime @default(now())
 }
 
 model Event {
-  id               String    @id @default(uuid())
-  slug             String    @unique
+  id               String        @id @default(uuid())
+  slug             String        @unique
   name             String
   ownerId          String
-  owner            User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  isPublic         Boolean   @default(true)
-  requiresApproval Boolean   @default(false)
+  owner            User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  /// The occasion the gallery is for. Anything the site has no page for is OTHER.
+  category         EventCategory @default(OTHER)
+  isPublic         Boolean       @default(true)
+  requiresApproval Boolean       @default(false)
+  /// Whether a guest sees the approved photos under the uploader, or only uploads.
+  guestsCanView    Boolean       @default(true)
   expiresAt        DateTime?
-  createdAt        DateTime  @default(now())
+  createdAt        DateTime      @default(now())
   photos           Photo[]
 
   @@index([ownerId])
+}
+
+/// The seven event pages the site carries, plus weddings and a catch-all.
+enum EventCategory {
+  WEDDING
+  ENGAGEMENT
+  PARTY
+  KIDS_PARTY
+  BUSINESS
+  MEMORIAL
+  SEASONAL_HOLIDAY
+  COMPANY_CHRISTMAS
+  OTHER
 }
 
 model Photo {
