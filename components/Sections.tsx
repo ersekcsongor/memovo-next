@@ -41,7 +41,11 @@ export function HeroSurface({ children, className = "" }: { children: React.Reac
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 block h-64 bg-gradient-to-b from-transparent to-white"
       />
-      {children}
+      {/* The fade is positioned, so it paints over anything in the normal flow.
+          On a tall hero it lands below the copy and goes unnoticed; on a short one
+          it washes the heading out. Positioning the content lifts it clear, here
+          rather than in every caller. */}
+      <div className="relative">{children}</div>
     </section>
   );
 }

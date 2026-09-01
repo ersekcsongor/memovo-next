@@ -7,10 +7,14 @@ const STORAGE_KEY = "memovo-token";
 
 type AuthState = {
   user: AuthUser | null;
+  /** The pages that call the API need it; only this provider writes it. */
+  token: string | null;
   /** False until the stored token has been checked, so the header does not flicker. */
   ready: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
+  /** Re-reads the account, so a plan bought in another tab shows up here. */
+  refresh: () => Promise<void>;
   logout: () => void;
 };
 
@@ -26,6 +30,7 @@ const AuthContext = createContext<AuthState | null>(null);
  */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -34,6 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setReady(true);
       return;
     }
+    setToken(token);
     let cancelled = false;
     api
       .me(token)
@@ -55,6 +61,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const accept = useCallback((result: { accessToken: string; user: AuthUser }) => {
     localStorage.setItem(STORAGE_KEY, result.accessToken);
+    setToken(result.accessToken);
     setUser(result.user);
   }, []);
 
@@ -68,12 +75,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [accept],
   );
 
+  /* Checkout leaves the site and comes back, so the plan on the account has
+     changed under a page that never unmounted. */
+  const refresh = useCallback(async () => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return;
+    setUser(await api.me(stored));
+  }, []);
+
   const logout = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY);
+    setToken(null);
     setUser(null);
   }, []);
 
-  const value = useMemo(() => ({ user, ready, login, register, logout }), [user, ready, login, register, logout]);
+  const value = useMemo(
+    () => ({ user, token, ready, login, register, refresh, logout }),
+    [user, token, ready, login, register, refresh, logout],
+  );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
