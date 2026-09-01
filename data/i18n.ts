@@ -54,6 +54,9 @@ const en = {
   "plan.galleriesUnlimited": "{used} galleries, no limit",
   "plan.checkoutSuccess": "Payment received. Your plan is active.",
   "plan.checkoutCancelled": "Payment cancelled. Nothing was charged.",
+  "plan.checkoutFailed": "Checkout could not be opened.",
+  "plan.checkoutFailedHelp": "Get in touch and we will set this plan up with you.",
+  "plan.opening": "Opening checkout…",
 
   "gal.mine": "My galleries",
   "gal.new": "New gallery",
@@ -486,6 +489,9 @@ const hu: Record<BaseKey, string> = {
   "plan.galleriesUnlimited": "{used} galéria, korlát nélkül",
   "plan.checkoutSuccess": "Megérkezett a fizetés. A csomagod aktív.",
   "plan.checkoutCancelled": "Megszakítottad a fizetést. Nem terheltünk meg semmit.",
+  "plan.checkoutFailed": "A fizetés nem indult el.",
+  "plan.checkoutFailedHelp": "Írj nekünk, és beállítjuk veled ezt a csomagot.",
+  "plan.opening": "Fizetés megnyitása…",
 
   "gal.mine": "A galériáim",
   "gal.new": "Új galéria",
@@ -891,6 +897,9 @@ const ro: Record<BaseKey, string> = {
   "plan.galleriesUnlimited": "{used} galerii, fără limită",
   "plan.checkoutSuccess": "Plata a ajuns. Abonamentul este activ.",
   "plan.checkoutCancelled": "Ați anulat plata. Nu am reținut nimic.",
+  "plan.checkoutFailed": "Plata nu a pornit.",
+  "plan.checkoutFailedHelp": "Scrieți-ne și configurăm împreună acest abonament.",
+  "plan.opening": "Se deschide plata…",
 
   "gal.mine": "Galeriile mele",
   "gal.new": "Galerie nouă",

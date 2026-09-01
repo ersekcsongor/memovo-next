@@ -25,6 +25,7 @@ function Check() {
  */
 function PlanButton({ plan, featured, label }: { plan: string; featured: boolean; label: string }) {
   const { token, ready, user } = useAuth();
+  const t = useT();
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -34,8 +35,8 @@ function PlanButton({ plan, featured, label }: { plan: string; featured: boolean
 
   const sellable = (["STARTER", "PRO", "PREMIUM"] as const).find((p) => p === plan.toUpperCase());
 
-  // Checkout needs a plan the API knows and an account to bill.
-  if (!sellable || failed) {
+  // A plan the API cannot sell has nothing to open, so the card asks instead.
+  if (!sellable) {
     return (
       <Link href="/contact" className={className}>
         {label}
@@ -52,26 +53,39 @@ function PlanButton({ plan, featured, label }: { plan: string; featured: boolean
   }
 
   return (
-    <button
-      type="button"
-      disabled={busy || !token}
-      onClick={async () => {
-        if (!token) return;
-        setBusy(true);
-        try {
-          const { url } = await api.billing.checkout(token, sellable);
-          window.location.href = url;
-        } catch {
-          // No payment provider configured yet, or Checkout refused: the contact
-          // page is a way through rather than a dead button.
-          setFailed(true);
-          setBusy(false);
-        }
-      }}
-      className={`${className} disabled:opacity-60`}
-    >
-      {label}
-    </button>
+    <div className="mt-auto">
+      <button
+        type="button"
+        disabled={busy || !token}
+        onClick={async () => {
+          if (!token) return;
+          setBusy(true);
+          setFailed(false);
+          try {
+            const { url } = await api.billing.checkout(token, sellable);
+            window.location.href = url;
+          } catch {
+            setFailed(true);
+            setBusy(false);
+          }
+        }}
+        className={`${className} w-full disabled:opacity-60`}
+      >
+        {busy ? t("plan.opening") : label}
+      </button>
+
+      {/* Silently swapping the button for a link left the tap doing nothing
+          visible. It says what happened, keeps the button for another go, and
+          offers the way through beside it. */}
+      {failed && (
+        <p className="mt-2 text-center text-xs text-coral-ink" role="status">
+          {t("plan.checkoutFailed")}{" "}
+          <Link href="/contact" className="underline">
+            {t("plan.checkoutFailedHelp")}
+          </Link>
+        </p>
+      )}
+    </div>
   );
 }
 

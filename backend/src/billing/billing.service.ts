@@ -15,6 +15,16 @@ import { isPaidPlan, PLAN_LIMITS, type PaidPlan, type PlanLimits } from "./plan-
 /** The plan a Stripe price sells, read from config so the ids stay out of the code. */
 type PriceMap = Partial<Record<PaidPlan, string>>;
 
+/**
+ * The subscription states that keep the doors open.
+ *
+ * `past_due` is in: Stripe is still retrying the card and the period the account
+ * paid for has not run out, so taking the galleries away mid-retry would punish an
+ * expired card rather than a decision. Everything absent from this set — canceled,
+ * unpaid, incomplete, incomplete_expired, paused — closes them at once.
+ */
+const GRANTS_ACCESS = new Set<string>(["active", "trialing", "past_due"]);
+
 @Injectable()
 export class BillingService {
   private readonly logger = new Logger(BillingService.name);
@@ -194,8 +204,7 @@ export class BillingService {
     const priceId = subscription.items.data[0]?.price.id ?? "";
     const plan = this.planForPrice(priceId, subscription.metadata?.plan);
     const periodEnd = this.periodEnd(subscription);
-    // Stripe keeps a cancelled subscription readable; only a live one grants a plan.
-    const live = subscription.status === "active" || subscription.status === "trialing";
+    const live = GRANTS_ACCESS.has(subscription.status);
 
     await this.prisma.subscription.upsert({
       where: { stripeSubscriptionId: subscription.id },
@@ -219,8 +228,9 @@ export class BillingService {
       where: { id: userId },
       data: {
         plan: live ? plan : Plan.FREE,
-        // A cancelled plan keeps its end date, so the account holds what it paid
-        // for until the period it already bought runs out.
+        // The date is written either way. While the subscription is live it is what
+        // activePlan measures against; once it has ended the plan is already FREE
+        // and the date is only a record of what was paid for.
         planExpiresAt: periodEnd,
       },
     });
