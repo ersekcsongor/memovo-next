@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { HERO_HOME, HERO_WEDDING } from "@/data/assets";
 import { EVENTS } from "@/data/events";
@@ -11,8 +11,21 @@ import { useAuth } from "@/components/AuthProvider";
 import { Lamp } from "@/components/ui/tubelight-navbar";
 import { LANGS } from "@/data/i18n";
 import { useLang, useT } from "@/components/LanguageProvider";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import {
+  IconCalendarHeart,
+  IconCamera,
+  IconHelpCircle,
+  IconHome,
+  IconMail,
+  IconMenu2,
+  IconPhoto,
+  IconRoute,
+  IconTag,
+  IconUsers,
+  IconX,
+} from "@tabler/icons-react";
 import Wordmark from "@/components/Wordmark";
+import MobileMenu, { type MenuEntry } from "@/components/MobileMenu";
 
 function Dropdown({
   label,
@@ -122,6 +135,7 @@ function heroFor(pathname: string) {
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -224,6 +238,20 @@ export default function Header() {
     { href: "/pricing", label: t("nav.allPricing") },
     // En dash, not em dash: it is the dash Hungarian and Romanian use between words.
     ...eventLinks.map((e) => ({ href: `${e.href}#pricing`, label: `${e.label} – ${t("nav.pricing")}` })),
+  ];
+
+  /* The same site the desktop bar carries, folded for a phone: the three long
+     lists become groups, everything else stays one tap away. */
+  const mobileEntries: MenuEntry[] = [
+    { href: "/", label: t("nav.home"), Icon: IconHome },
+    { label: t("nav.events"), Icon: IconCalendarHeart, items: eventLinks },
+    { href: "/how-it-works", label: t("nav.howItWorks"), Icon: IconRoute },
+    { label: t("nav.pricing"), Icon: IconTag, items: pricing },
+    { label: t("nav.about"), Icon: IconUsers, items: about },
+    { href: "/gallery-demo", label: t("nav.gallery"), Icon: IconPhoto },
+    { href: "/gallery", label: t("nav.photoGallery"), Icon: IconCamera },
+    { href: "/faqs", label: t("nav.helpCenter"), Icon: IconHelpCircle },
+    { href: "/contact", label: t("nav.contact"), Icon: IconMail },
   ];
 
   return (
@@ -342,6 +370,7 @@ export default function Header() {
           </Link>
 
           <button
+            ref={menuButtonRef}
             className={`-mr-2 flex h-11 w-11 items-center justify-center lg:hidden ${onDark ? "text-white" : ""}`}
             aria-label={t("nav.toggleMenu")}
             aria-expanded={mobileOpen}
@@ -352,36 +381,12 @@ export default function Header() {
         </div>
       </div>
 
-      {mobileOpen && (
-        <nav className="border-t border-border bg-white px-6 py-2 text-sm lg:hidden">
-          <Link href="/" aria-current={pathname === "/" ? "page" : undefined} className="flex min-h-11 items-center aria-[current=page]:font-semibold">
-            {t("nav.home")}
-          </Link>
-          {eventLinks.map((i) => (
-            <Link key={i.href} href={i.href} aria-current={pathname === i.href ? "page" : undefined} className="flex min-h-11 items-center aria-[current=page]:font-semibold">
-              {i.label}
-            </Link>
-          ))}
-          <Link href="/how-it-works" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
-            {t("nav.howItWorks")}
-          </Link>
-          <Link href="/pricing" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
-            {t("nav.pricing")}
-          </Link>
-          <Link href="/contact" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
-            {t("nav.contact")}
-          </Link>
-          <Link href="/faqs" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
-            {t("nav.helpCenter")}
-          </Link>
-          <Link href="/gallery-demo" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
-            {t("nav.gallery")}
-          </Link>
-          <Link href="/gallery" className="flex min-h-11 items-center aria-[current=page]:font-semibold">
-            {t("nav.photoGallery")}
-          </Link>
-        </nav>
-      )}
+      <MobileMenu
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        entries={mobileEntries}
+        returnFocusTo={menuButtonRef}
+      />
     </header>
   );
 }
