@@ -5,7 +5,9 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { AppModule } from "./app.module";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // Stripe signs the bytes it sent, so the webhook has to compare against those
+  // rather than against a re-serialised body.
+  const app = await NestFactory.create(AppModule, { rawBody: true });
   const config = app.get(ConfigService);
 
   app.setGlobalPrefix("api");

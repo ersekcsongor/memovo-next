@@ -1,5 +1,6 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { PhotoStatus } from "@prisma/client";
+import { BillingService } from "../billing/billing.service";
 import { EventsService } from "../events/events.service";
 import { PrismaService } from "../prisma/prisma.service";
 import { StorageService } from "../storage/storage.service";
@@ -13,6 +14,7 @@ export class PhotosService {
     private readonly prisma: PrismaService,
     private readonly storage: StorageService,
     private readonly events: EventsService,
+    private readonly billing: BillingService,
   ) {}
 
   /** Public path: a guest scans the QR code and uploads without an account. */
@@ -24,6 +26,8 @@ export class PhotosService {
     const event = await this.prisma.event.findUnique({ where: { slug } });
     if (!event) throw new NotFoundException("No such gallery");
     if (!this.events.isOpen(event)) throw new ForbiddenException("This gallery has closed");
+    // The guest has no account, so the ceiling comes from whoever owns the gallery.
+    await this.billing.assertRoomForPhoto(event);
 
     const stored = await this.storage.saveImage(event.id, file);
     return this.prisma.photo.create({
@@ -41,9 +45,13 @@ export class PhotosService {
     });
   }
 
-  /** What a guest sees: approved photos only. */
+  /**
+   * What a guest sees: approved photos only, and only when the owner has left the
+   * gallery view on. With it off the guest still uploads, and sees nothing back.
+   */
   async listPublic(slug: string) {
     const event = await this.events.findPublic(slug);
+    if (!event.guestsCanView) return [];
     return this.prisma.photo.findMany({
       where: { eventId: event.id, status: PhotoStatus.APPROVED },
       orderBy: { uploadedAt: "desc" },
