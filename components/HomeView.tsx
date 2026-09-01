@@ -16,7 +16,7 @@ import { GALLERY_PHOTOS } from "@/data/assets";
 import { WEDDING_PLANS } from "@/data/content";
 import { useT } from "@/components/LanguageProvider";
 import { PricingSection } from "@/components/Pricing";
-import { Container } from "@/components/Sections";
+import { Container, HeroSurface } from "@/components/Sections";
 import { Testimonials } from "@/components/Testimonials";
 import { BenefitBand, Check, ClosingBand, DashboardPreview, PhoneCard, StepsRow } from "@/components/Blocks";
 import { Reveal } from "@/components/Reveal";
@@ -47,23 +47,7 @@ export default function HomeView() {
   return (
     <>
       {/* Hero. The bar is fixed over this section, so the top padding clears its 68px. */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blush via-cream to-white to-85%">
-        {/* Soft blooms behind the phone, drawn rather than shipped as an image. They are
-            kept clear of the bottom edge: the section clips its overflow, and a blurred
-            circle cut off there leaves a hard line across the page. */}
-        <span aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-          <span className="absolute -top-28 -right-20 block h-[28rem] w-[28rem] rounded-full bg-pinklight blur-2xl" />
-          <span className="absolute top-36 right-1/3 block h-56 w-56 rounded-full bg-pinkband/50 blur-2xl" />
-          <span className="absolute bottom-40 -left-24 block h-64 w-64 rounded-full bg-pinklight/80 blur-2xl" />
-        </span>
-
-        {/* Everything above melts into the white of the next section, so the two meet
-            with no seam. Painted after the blooms and before the content. */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 block h-64 bg-gradient-to-b from-transparent to-white"
-        />
-
+      <HeroSurface>
         <Container className="relative grid items-center gap-14 pt-28 pb-12 md:pt-32 md:pb-20 lg:grid-cols-[1fr_minmax(0,28rem)]">
           <div>
             <p className="mb-5 flex items-center gap-2 text-xs font-semibold tracking-[0.18em] text-coral-ink">
@@ -118,7 +102,7 @@ export default function HomeView() {
             </div>
           </div>
         </Container>
-      </section>
+      </HeroSurface>
 
       {/* Occasions */}
       <section className="bg-white py-10 md:py-16">
@@ -152,7 +136,9 @@ export default function HomeView() {
       {/* Gallery preview */}
       <section className="bg-white pb-10 md:pb-16">
         <Container>
-          <div className="grid items-center gap-10 rounded-2xl bg-white p-8 shadow-sm md:p-10 lg:grid-cols-[minmax(0,22rem)_1fr]">
+          {/* The panel lifts as one object. Revealing its two columns separately
+              would show an empty white slab first. */}
+          <Reveal className="grid items-center gap-10 rounded-2xl bg-white p-8 shadow-sm md:p-10 lg:grid-cols-[minmax(0,22rem)_1fr]">
             <div>
               <p className="mb-3 text-xs font-semibold tracking-wide text-coral-ink">{t("gal.eyebrow")}</p>
               <h2 className="mb-4 font-heading text-2xl font-bold">{t("gal.title")}</h2>
@@ -173,7 +159,7 @@ export default function HomeView() {
               </Link>
             </div>
             <DashboardPreview />
-          </div>
+          </Reveal>
         </Container>
       </section>
 

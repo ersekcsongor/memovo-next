@@ -34,18 +34,22 @@ export function Reveal({
   const reduced = useReducedMotion();
   const Tag = as === "li" ? motion.li : motion.div;
 
-  if (reduced) {
-    const Plain = as === "li" ? "li" : "div";
-    return <Plain className={className}>{children}</Plain>;
-  }
-
+  /* Reduced motion renders the element at its resting values and skips the entry
+     entirely. Swapping in a plain element here left every card at opacity 0: the
+     hidden state ships in the server markup, and framer holds a reduced-motion
+     element at the values it was given rather than animating it forward. Naming
+     no initial state means there is nothing to animate away from. */
   return (
     <Tag
       className={className}
-      initial={{ opacity: 0, y: 24 }}
+      initial={reduced ? false : { opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: inTrack ? "0px 9999px -80px 9999px" : "0px 0px -80px 0px" }}
-      transition={{ duration: 0.45, delay: Math.min(index, 6) * 0.07, ease: [0.22, 0.61, 0.36, 1] }}
+      transition={
+        reduced
+          ? { duration: 0 }
+          : { duration: 0.45, delay: Math.min(index, 6) * 0.07, ease: [0.22, 0.61, 0.36, 1] }
+      }
     >
       {children}
     </Tag>

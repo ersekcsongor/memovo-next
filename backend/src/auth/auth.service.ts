@@ -1,10 +1,21 @@
 import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
+import type { Plan } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 import { PrismaService } from "../prisma/prisma.service";
 import type { LoginDto, RegisterDto } from "./dto/auth.dto";
 
-export type AuthUser = { id: string; email: string; name: string };
+/**
+ * Carries the plan as well as the identity: the account page and every gate read
+ * it, so resolving it once on the request saves a second query everywhere.
+ */
+export type AuthUser = {
+  id: string;
+  email: string;
+  name: string;
+  plan: Plan;
+  planExpiresAt: Date | null;
+};
 
 @Injectable()
 export class AuthService {
@@ -36,10 +47,16 @@ export class AuthService {
     return this.sign(user);
   }
 
-  private sign(user: { id: string; email: string; name: string }) {
+  private sign(user: { id: string; email: string; name: string; plan: Plan; planExpiresAt: Date | null }) {
     return {
       accessToken: this.jwt.sign({ sub: user.id, email: user.email }),
-      user: { id: user.id, email: user.email, name: user.name },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        plan: user.plan,
+        planExpiresAt: user.planExpiresAt,
+      },
     };
   }
 }

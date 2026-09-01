@@ -51,7 +51,8 @@
 /* Cookie consent bar tokens, on the Memovo palette: white surface, pink primary action.
    ConsentBar reads only these, so the bar and its preferences panel restyle together. */
 :root {
-  /* Stacking scale: 40 chat bubble, 50 menus, 60 consent bar, 70 skip link. */
+  /* Stacking scale: 40 chat bubble and bottom nav, 50 header and its dropdowns,
+     60 consent bar, 65/66 the phone menu over everything it covers, 70 skip link. */
   --consent-z-index: 60;
   --consent-background: #ffffff;
   --consent-text: #171114;
@@ -85,11 +86,12 @@ body {
   }
 }
 
-/* One focus treatment for every control, visible on white, cream and coral. */
+/* One focus treatment for every control, visible on white, cream and coral.
+   The outline follows whatever shape the control already has, so a round button
+   gets a round ring: setting a radius here squared off every pill on the site. */
 :focus-visible {
   outline: 2px solid var(--color-navy);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
 button:not(:disabled),

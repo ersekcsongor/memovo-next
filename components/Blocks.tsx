@@ -28,6 +28,36 @@ export function Check({ className = "" }: { className?: string }) {
   );
 }
 
+/**
+ * The photograph a category hero opens on, framed and at full strength, with the
+ * phone tucked into its bottom-left corner where there is room for it.
+ *
+ * It stays in the layout on a phone, wider than tall so it reads at that size.
+ * The picture is the subject of the page, and hiding it below `lg` left the hero
+ * with nothing to look at on the screen most visitors arrive with.
+ */
+export function HeroPhoto({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="relative mx-auto w-full max-w-[26rem]">
+      <figure className="overflow-hidden rounded-3xl border-4 border-white shadow-xl">
+        <span className="relative block aspect-[16/10] w-full lg:aspect-[5/6]">
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            priority
+            className="object-cover"
+            sizes="(min-width: 1024px) 26rem, 100vw"
+          />
+        </span>
+      </figure>
+      <div className="absolute -bottom-6 -left-14 hidden origin-bottom-left scale-[0.62] lg:block">
+        <PhoneCard />
+      </div>
+    </div>
+  );
+}
+
 /** The invite card the hero phone displays. Drawn rather than shipped as an image. */
 export function PhoneCard() {
   const t = useT();

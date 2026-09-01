@@ -1,26 +1,50 @@
 import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { EventCategory } from "@prisma/client";
 import { randomBytes } from "node:crypto";
+import * as QRCode from "qrcode";
+import { BillingService } from "../billing/billing.service";
 import { PrismaService } from "../prisma/prisma.service";
 import type { CreateEventDto, UpdateEventDto } from "./dto/event.dto";
 
 @Injectable()
 export class EventsService {
-  constructor(private readonly prisma: PrismaService) {}
+  /** Where a scanned code lands. FRONTEND_ORIGIN is a list; the first entry is the site. */
+  private readonly siteOrigin: string;
+
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly billing: BillingService,
+    config: ConfigService,
+  ) {
+    this.siteOrigin = (config.get<string>("FRONTEND_ORIGIN", "http://localhost:3000").split(",")[0] ?? "")
+      .trim()
+      .replace(/\/+$/, "");
+  }
 
   async create(ownerId: string, dto: CreateEventDto) {
+    // A gallery is what the plan buys, so the plan is checked before one exists.
+    await this.billing.assertCanCreateGallery(ownerId);
+
     return this.prisma.event.create({
       data: {
         name: dto.name,
         slug: await this.uniqueSlug(dto.name),
         ownerId,
+        category: dto.category ?? EventCategory.OTHER,
         isPublic: dto.isPublic ?? true,
         requiresApproval: dto.requiresApproval ?? false,
+        guestsCanView: dto.guestsCanView ?? true,
         expiresAt: dto.expiresAt ?? null,
       },
     });
   }
 
-  /** What the gallery page may show a guest: no owner, no counts of hidden photos. */
+  /**
+   * What the guest page may show. `isPublic` decides whether the gallery is listed
+   * at all; uploads keep working on a private one, which is what a host wants when
+   * the photos are for them alone.
+   */
   async findPublic(slug: string) {
     const event = await this.prisma.event.findUnique({
       where: { slug },
@@ -28,22 +52,84 @@ export class EventsService {
         id: true,
         slug: true,
         name: true,
+        category: true,
         isPublic: true,
         requiresApproval: true,
+        guestsCanView: true,
         expiresAt: true,
         createdAt: true,
       },
     });
-    if (!event || !event.isPublic) throw new NotFoundException("No such gallery");
-    return event;
+    if (!event) throw new NotFoundException("No such gallery");
+    return { ...event, isOpen: this.isOpen(event), uploadUrl: this.uploadUrl(event.slug) };
   }
 
-  findMine(ownerId: string) {
-    return this.prisma.event.findMany({
+  /** The address printed on the code. */
+  uploadUrl(slug: string) {
+    return `${this.siteOrigin}/u/${slug}`;
+  }
+
+  /**
+   * The code carries a public address and nothing else, so both formats are open.
+   * SVG renders in the page; the PNG is the one that gets printed and put on a table.
+   */
+  async qrSvg(slug: string) {
+    await this.assertExists(slug);
+    return QRCode.toString(this.uploadUrl(slug), {
+      type: "svg",
+      margin: 1,
+      color: { dark: "#171114", light: "#ffffff" },
+    });
+  }
+
+  async qrPng(slug: string, size: number) {
+    await this.assertExists(slug);
+    return QRCode.toBuffer(this.uploadUrl(slug), {
+      type: "png",
+      width: Math.min(Math.max(size, 128), 2048),
+      margin: 2,
+      color: { dark: "#171114", light: "#ffffff" },
+    });
+  }
+
+  private async assertExists(slug: string) {
+    const event = await this.prisma.event.findUnique({ where: { slug }, select: { id: true } });
+    if (!event) throw new NotFoundException("No such gallery");
+  }
+
+  /** The owner's list, each row carrying its own share link and what waits on them. */
+  async findMine(ownerId: string) {
+    const events = await this.prisma.event.findMany({
       where: { ownerId },
       orderBy: { createdAt: "desc" },
       include: { _count: { select: { photos: true } } },
     });
+
+    const pending = await this.prisma.photo.groupBy({
+      by: ["eventId"],
+      where: { event: { ownerId }, status: "PENDING" },
+      _count: { _all: true },
+    });
+    const waiting = new Map(pending.map((row) => [row.eventId, row._count._all]));
+
+    return events.map((event) => ({
+      ...event,
+      uploadUrl: this.uploadUrl(event.slug),
+      pendingCount: waiting.get(event.id) ?? 0,
+    }));
+  }
+
+  /** One owned gallery with everything the detail page needs. */
+  async findOwned(id: string, ownerId: string) {
+    await this.assertOwner(id, ownerId);
+    const event = await this.prisma.event.findUnique({
+      where: { id },
+      include: { _count: { select: { photos: true } } },
+    });
+    if (!event) throw new NotFoundException("No such event");
+
+    const pending = await this.prisma.photo.count({ where: { eventId: id, status: "PENDING" } });
+    return { ...event, uploadUrl: this.uploadUrl(event.slug), pendingCount: pending, isOpen: this.isOpen(event) };
   }
 
   async update(id: string, ownerId: string, dto: UpdateEventDto) {
