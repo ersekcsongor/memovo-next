@@ -34,10 +34,23 @@ read customers.
 Stripe has to reach this machine to report a payment, and a laptop has no public
 address. The Stripe CLI forwards for it.
 
-```powershell
-# Install once
-winget install Stripe.StripeCLI
+Install it once. With a package manager:
 
+```powershell
+winget install Stripe.StripeCLI   # or: scoop install stripe
+```
+
+Without one — which is the case on a stock Windows 11 that has never had the App
+Installer set up — take the zip straight from the releases page:
+
+1. Open <https://github.com/stripe/stripe-cli/releases/latest> and download
+   `stripe_<version>_windows_x86_64.zip`.
+2. Unpack it somewhere that stays put, for example `C:\Tools\stripe`.
+3. Add that folder to PATH, or call `stripe.exe` by its full path.
+
+Then:
+
+```powershell
 stripe login
 stripe listen --forward-to localhost:4000/api/billing/webhook
 ```
